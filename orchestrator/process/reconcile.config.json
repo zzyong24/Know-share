@@ -11,7 +11,7 @@
     { "stage": "05-light-domain-model", "path": "aies/01-product/LIGHT_DOMAIN_MODEL.md" },
     { "stage": "06-ia-spec", "path": "aies/02-design/IA_SPEC.md" },
     { "stage": "07-ui-generation-or-import", "path": "aies/02-design/UI_RULES.md" },
-    { "stage": "08-page-spec", "path": "aies/02-design/PAGE_SPEC.md" },
+    { "stage": "08-page-spec", "path": "aies/02-design/shell-discovery/PAGE_SPEC.md" },
     { "stage": "09-frontend-spec", "path": "aies/03-frontend/FRONTEND_SPEC.md" },
     { "stage": "10-mock-data-spec", "path": "aies/02-design/MOCK_DATA_SPEC.md" },
     { "stage": "12-frontend-validation", "path": "aies/03-frontend/FRONTEND_VALIDATION_REPORT.md" },

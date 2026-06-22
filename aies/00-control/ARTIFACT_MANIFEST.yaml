@@ -98,16 +98,34 @@ stages:
     invalidated_by: []
     notes: "已产出 aies/02-design/UI_RULES.md：混合模式（7 张已有图导入 + Stitch 生成 7 个缺失界面）。立唯一规范设计系统——设计令牌 UI-001（主色深青绿 #017A6E，全分辨率采样）、规范图标族 UI-002=Material Symbols Outlined（据生成 HTML 由 Lucide 修订，DEC-012 用户确认）、规范组件 UI-003；生成/还原一致性规则 UI-004（含 image2 漂移防控与生成后检查）。彩色图标徽归一为 IconChip 组件。缺失 7 屏（IA-006/009/010/011/012/013/014）已用 Stitch 全部生成、下载、逐屏核验并归一化，归档于 docs/design/generated/（每屏 .html 真实页面 + .png；Stitch 项目 7946899781188074425 / 设计系统 assets/4528660503651777687）。生成后一致性检查通过：主色命中、仅 Material Symbols Outlined、零 Lucide/FontAwesome/emoji、跨 14 屏同系统；IA-012 外壳英文化漂移已整屏重生成修复。新增 ASM-015（色值采样待核对）、ASM-016（桌面优先）。质量门 05-ui-gate 内容+一致性均 pass。用户已于 2026-06-22 对最终 UI 产物与 7 屏生成结果签字确认（"没问题"），stage 转 passed，进入 08-page-spec。"
   "08-page-spec":
-    status: "not-started"
+    status: "needs-user-confirmation"
     artifacts:
-      - path: "aies/02-design/PAGE_SPEC.md"
+      - path: "aies/02-design/shell-discovery/PAGE_SPEC.md"
+        role: "page-contracts"
+      - path: "aies/02-design/module-detail/PAGE_SPEC.md"
+        role: "page-contracts"
+      - path: "aies/02-design/submission/PAGE_SPEC.md"
+        role: "page-contracts"
+      - path: "aies/02-design/exchange/PAGE_SPEC.md"
+        role: "page-contracts"
+      - path: "aies/02-design/trust-feedback/PAGE_SPEC.md"
+        role: "page-contracts"
+      - path: "aies/02-design/agent-skills/PAGE_SPEC.md"
+        role: "page-contracts"
+      - path: "aies/02-design/account/PAGE_SPEC.md"
+        role: "page-contracts"
+      - path: "aies/02-design/admin/PAGE_SPEC.md"
+        role: "page-contracts"
+      - path: "aies/02-design/open-api/PAGE_SPEC.md"
+        role: "page-contracts"
+      - path: "aies/02-design/about/PAGE_SPEC.md"
         role: "page-contracts"
     depends_on: ["03-product-spec", "06-ia-spec", "07-ui-generation-or-import"]
     gate: "06-page-spec-gate"
-    gate_status: "not-run"
+    gate_status: "pass"
     confirmation_required: true
     invalidated_by: []
-    notes: ""
+    notes: "按模块扇出为 10 个 PAGE_SPEC.md（shell-discovery/module-detail/submission/exchange/trust-feedback/agent-skills/account/admin/open-api/about），并行多 agent 产出。PAGE-001~105（用到约 32 页）+ 新假设 ASM-017~060 已登记；ID 段无碰撞。每页含模板 9 字段、追溯 IA-*/FR-*/FLOW-*/ENT-*/INV-*、锚定 UI_RULES。生成图 MOCK 文案漂移（about 的链上/E2EE/语义向量、open-api 的企业付费 CTA/加密网关、trust 的世界排名）已在对应 PAGE_SPEC 归正/移除（守 NFR-001/DEC-007）。质量门 06-page-spec-gate 内容自检 pass。待用户确认核心路径页面覆盖与 6 条 needs-confirmation 假设（ASM-021/028/032/033/050/055）后转 passed，进入 09-frontend-spec。"
   "09-frontend-spec":
     status: "not-started"
     artifacts:

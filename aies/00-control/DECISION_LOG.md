@@ -201,6 +201,21 @@ Revisit Trigger: 若服务契约或前端实现阶段发现某条假设不成立
 Status: active
 ```
 
+```text
+ID: DEC-014
+Date: 2026-06-23
+Stage: 09-frontend-spec
+Type: user-confirmation
+Decision: 前端技术栈采用 Next.js + TypeScript + Tailwind CSS + shadcn/ui。Tailwind 承载 UI_RULES 的设计令牌（UI-001，主色 #017A6E 等）；shadcn/ui 作为规范组件（UI-003）的实现底座。图标：规范族仍为 Material Symbols Outlined（DEC-012），shadcn/ui 默认的 lucide-react 作为 DEC-012 已登记的 1:1 等价替换路径（按图标名映射），最终图标库在前端实现阶段定稿。
+Rationale: 与已生成的高保真 HTML（Tailwind + 我们的令牌命中）无缝衔接；Next.js 适合公开发现/注册表的 SSR/SEO 与 agent 可读（NFR-002）；shadcn/ui 提供可拥有源码的无样式组件、便于落地规范组件与无障碍底线（NFR-007）。取代 PROJECT_CONTEXT 中"早期讨论但未批准"的状态。
+Source: 用户于 2026-06-23 对 09-frontend-spec A 级问题的选择「Next.js + TS + Tailwind + shadcn/ui（推荐）」。
+Affected Artifacts: PROJECT_CONTEXT.md（技术栈转已批准）, aies/03-frontend/FRONTEND_SPEC.md, 各 02-design/<模块>/COMPONENTS_SPEC.md, 未来 app/ 实现
+Invalidates: none（确认了此前未批准的早期讨论）
+Owner: user
+Revisit Trigger: 若团队改选别的框架/组件库，或决定以 Material Symbols 而非 Lucide 作为实现图标库。
+Status: active
+```
+
 ## 完成标准
 
 - 记录任何 A 级问题的回答。

@@ -22,9 +22,9 @@
 
 ## 技术栈与版本
 
-- 当前根目录下尚未搭建任何应用技术栈。
-- 现有文档倾向于一个刻意保持轻量的首个版本：静态注册表、与 JSON 兼容的清单 schema，以及 agent 侧的辅助工具。
-- 早期讨论曾考虑 `Next.js + TypeScript + Tailwind + shadcn/ui`，但这在当前根目录下尚不是一个已批准的工程产物。
+- **前端技术栈已批准（DEC-014，2026-06-23）**：`Next.js + TypeScript + Tailwind CSS + shadcn/ui`。Tailwind 承载 UI_RULES 设计令牌（UI-001）；shadcn/ui 为规范组件（UI-003）实现底座；图标规范族 Material Symbols Outlined（DEC-012），lucide-react 为已登记的 1:1 等价替换路径。脚手架仍由阶段 11 前的 Task Zero 建立（含绿色基线）。
+- 含轻度后端服务（DEC-011，FR-140）：动态行为 + 聚合使用统计（不含 PII）；后端栈在阶段 13 后端规格确定。
+- 现有文档的"静态注册表 + JSON 清单 schema + agent 侧工具"是首个实现可起步的形态，但不缩小目标产品（ASM-008）。
 
 ## 关键实现规则
 

@@ -136,6 +136,20 @@
 | `PAGE-090` | 页面 | open-api：API 文档页 | `02-design/open-api/PAGE_SPEC.md` | `IA-012`, `FR-110`, `NFR-002` | draft | 单页；公开读不含 contact（ASM-055）。 |
 | `PAGE-100~105` | 页面 | about：关于/仓库/统计/隐私/FAQ/审计链接 | `02-design/about/PAGE_SPEC.md` | `IA-013`, `NFR-004`, `FR-140` | draft | 统计仅聚合无 PII；文案漂移已归正。 |
 | `ASM-017~061` | 假设 | 阶段08各模块页面级假设（45 项） | `DEFAULT_ASSUMPTIONS.md` + 各 `02-design/<模块>/PAGE_SPEC.md` | `08-page-spec` | active | 详见 DEFAULT_ASSUMPTIONS.md；ASM-021/028/032/033/050/055/061 已由 DEC-013 用户确认转 active。 |
+| `COMP-001~040` | 前端组件 | 全站共享组件库（AppShell/Card/StatusPill/StatBlock/DataTable/ConsentGate/CodeBlock 等） | `02-design/_shared/COMPONENTS_SPEC.md` | `UI-003`, `DEC-014`, `PAGE-*` | draft | 模块只引用不重定义；落地 shadcn/ui+Tailwind。 |
+| `COMP-041~049` | 前端组件 | shell-discovery 特有（筛选/排序/统计条/搜索结果分组） | `02-design/shell-discovery/COMPONENTS_SPEC.md` | `PAGE-001~003`, `IA-001/002` | draft | — |
+| `COMP-050~069` | 前端组件 | module-detail 特有（摘要头/来源统计/隐私边界/Manifest预览/请求交换） | `02-design/module-detail/COMPONENTS_SPEC.md` | `PAGE-010~015`, `IA-003` | draft | Manifest 屏蔽 contact（INV-03）。 |
+| `COMP-070~089` | 前端组件 | submission 特有（向导外壳/类型选择/Manifest构建/隐私门/预览/确认/导航） | `02-design/submission/COMPONENTS_SPEC.md` | `PAGE-020~024`, `IA-004` | draft | 隐私门 block 不可绕过（INV-02）。 |
+| `COMP-090~109` | 前端组件 | exchange 特有（台账表/时间线/双方卡/披露面/交付提示/反馈/验证摘要） | `02-design/exchange/COMPONENTS_SPEC.md` | `PAGE-030/031`, `IA-005/006` | draft | 状态机对齐 FLOW-003；披露守 INV-03。 |
+| `COMP-110~129` | 前端组件 | trust-feedback 特有（信任环/拆解/趋势/徽章墙/反馈质量/网络索引/反馈表单） | `02-design/trust-feedback/COMPONENTS_SPEC.md` | `PAGE-040~043`, `IA-007` | draft | 信任可解释 HARD-03；无经济 DEC-007。 |
+| `COMP-130~149` | 前端组件 | agent-skills 特有（技能卡/网格/安装片段/详情抽屉/MCP配置/本地隐私流程） | `02-design/agent-skills/COMPONENTS_SPEC.md` | `PAGE-050/051`, `IA-008` | draft | 不自动越过同意。 |
+| `COMP-150~169` | 前端组件 | account 特有（概览/子导航/分区列表/通知流/联系方式表单/同意记录） | `02-design/account/COMPONENTS_SPEC.md` | `PAGE-060~064`, `IA-009/010/014` | draft | 联系方式默认私密 INV-03。 |
+| `COMP-170~189` | 前端组件 | admin 特有（外壳门/风险摘要/队列表/风险标签/处置条/详情面/审计/二次确认） | `02-design/admin/COMPONENTS_SPEC.md` | `PAGE-080~085`, `IA-011` | draft | 仅管理员；不越人工同意 INV-02。 |
+| `COMP-190~209` | 前端组件 | open-api 特有（零泄露横幅/分类导航/端点卡/认证徽/字段表/统计预览） | `02-design/open-api/COMPONENTS_SPEC.md` | `PAGE-090`, `IA-012` | draft | 公开读不含 contact（ASM-055）。 |
+| `COMP-210~229` | 前端组件 | about 特有（Hero/平台统计区/隐私信任卡/FAQ手风琴/审计链接） | `02-design/about/COMPONENTS_SPEC.md` | `PAGE-100~105`, `IA-013` | draft | 统计聚合无 PII；MOCK 不实文案已禁复活。 |
+| `ASM-062~067` | 假设 | 阶段09前端架构级假设（栈/状态/图表/共享库归属/图标库/MOCK） | `DEFAULT_ASSUMPTIONS.md` + `03-frontend/FRONTEND_SPEC.md` | `09-frontend-spec`, `DEC-014` | active | — |
+| `ASM-068~107` | 假设 | 阶段09组件级实现假设（40 项，含取数注入/状态文字化/图标映射/子surface等） | 各 `02-design/<模块>/COMPONENTS_SPEC.md` + `_shared` | `09-frontend-spec` | active | 就地登记；ASM-071 注明前端非安全边界、后端须二次校验。 |
+| `RISK-001` | 风险 | 技能/来源数量扩展致网格膨胀 | `02-design/agent-skills/COMPONENTS_SPEC.md` | `FR-080` | mitigated | 已用数据驱动网格化解。 |
 
 ## 完成标准
 

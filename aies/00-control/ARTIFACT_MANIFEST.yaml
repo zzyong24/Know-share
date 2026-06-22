@@ -127,18 +127,38 @@ stages:
     invalidated_by: []
     notes: "按模块扇出为 10 个 PAGE_SPEC.md（shell-discovery/module-detail/submission/exchange/trust-feedback/agent-skills/account/admin/open-api/about），并行多 agent 产出。PAGE-001~105（用到约 32 页）+ 新假设 ASM-017~060 已登记；ID 段无碰撞。每页含模板 9 字段、追溯 IA-*/FR-*/FLOW-*/ENT-*/INV-*、锚定 UI_RULES。生成图 MOCK 文案漂移（about 的链上/E2EE/语义向量、open-api 的企业付费 CTA/加密网关、trust 的世界排名）已在对应 PAGE_SPEC 归正/移除（守 NFR-001/DEC-007）。质量门 06-page-spec-gate 内容自检 pass。已由审核子 agent 做交叉审核：修正 10 处（/dashboard→/me 路由不一致 + 9 处 gate 自检 ASM 区间笔误），确认交换状态机/联系方式披露/信任分量纲/遥测/图标族跨模块一致；补齐审核发现的「信任网络」导航着陆缺口（新增 PAGE-043 /trust，登记 ASM-061）。待用户确认核心路径页面覆盖与 7 条 needs-confirmation 假设（ASM-021/028/032/033/050/055/061）后转 passed，进入 09-frontend-spec。"
   "09-frontend-spec":
-    status: "not-started"
+    status: "needs-user-confirmation"
     artifacts:
       - path: "aies/03-frontend/FRONTEND_SPEC.md"
         role: "frontend-plan"
-      - path: "aies/02-design/COMPONENTS_SPEC.md"
+      - path: "aies/02-design/_shared/COMPONENTS_SPEC.md"
+        role: "shared-component-contracts"
+      - path: "aies/02-design/shell-discovery/COMPONENTS_SPEC.md"
+        role: "component-contracts"
+      - path: "aies/02-design/module-detail/COMPONENTS_SPEC.md"
+        role: "component-contracts"
+      - path: "aies/02-design/submission/COMPONENTS_SPEC.md"
+        role: "component-contracts"
+      - path: "aies/02-design/exchange/COMPONENTS_SPEC.md"
+        role: "component-contracts"
+      - path: "aies/02-design/trust-feedback/COMPONENTS_SPEC.md"
+        role: "component-contracts"
+      - path: "aies/02-design/agent-skills/COMPONENTS_SPEC.md"
+        role: "component-contracts"
+      - path: "aies/02-design/account/COMPONENTS_SPEC.md"
+        role: "component-contracts"
+      - path: "aies/02-design/admin/COMPONENTS_SPEC.md"
+        role: "component-contracts"
+      - path: "aies/02-design/open-api/COMPONENTS_SPEC.md"
+        role: "component-contracts"
+      - path: "aies/02-design/about/COMPONENTS_SPEC.md"
         role: "component-contracts"
     depends_on: ["08-page-spec"]
     gate: "07-frontend-spec-gate"
-    gate_status: "not-run"
+    gate_status: "pass"
     confirmation_required: true
     invalidated_by: []
-    notes: ""
+    notes: "栈决策 DEC-014（Next.js+TS+Tailwind+shadcn/ui，用户已确认）。FRONTEND_SPEC.md 立总纲（架构/路由/状态/数据获取/令牌→Tailwind/图标策略/测试/无障碍/响应式）+ 共享组件库 COMP-001~040（_shared/COMPONENTS_SPEC.md）。10 模块 COMPONENTS_SPEC 并行产出，模块特有组件 COMP-041~229（各模块只引用共享、不重定义）。新增架构假设 ASM-062~067、组件级假设 ASM-068~107（就地登记）、RISK-001。已跑强制 spec 交叉审核（prompts/spec-cross-audit.md）：修正 COMP-036 共享 Timeline props 不足、消除 exchange/trust 反馈表单重复（COMP-097 改为嵌入 COMP-116 单一真源）、修 9 处 ASM 区间笔误；跨模块 COMP 唯一性/共享零重定义/props 充分/图标族/令牌/状态机引用逐项一致，无待决矛盾、无控制层 ID 变更。质量门 07-frontend-spec-gate 内容+交叉审核 pass。待用户确认组件边界后转 passed，进入 10-mock-data-spec。"
   "10-mock-data-spec":
     status: "not-started"
     artifacts:

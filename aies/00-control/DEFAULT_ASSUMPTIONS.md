@@ -63,3 +63,10 @@
 | `ASM-059` | `08-page-spec` | 统计区"时间窗切换"仍走聚合接口、不返回个体明细。 | 守聚合无 PII。 | 若返回明细将违 INV-09。 | agent | 服务契约。 | active |
 | `ASM-060` | `08-page-spec` | 关于页 Hero 装饰"活跃节点 512"须改引 ENT-019 真实口径或降为纯装饰。 | 避免硬编码数字冒充统计。 | 若保留须接真实聚合源。 | agent | 页面确认 / 前端实现。 | active |
 | `ASM-061` | `08-page-spec` | 「信任网络」主导航着陆页（PAGE-043 `/trust`）=可信贡献者发现/索引+信任机制说明，非竞争性、非付费榜。 | 闭合审核发现的"导航项无着陆页"缺口；守 DEC-007/INV-10。 | 若不单设着陆页（改指向发现页按信任筛选），PAGE-043 改为重定向/移除。 | user | 页面确认（审核缺口修补）。 | active |
+| `ASM-062` | `09-frontend-spec` | 公开段用 Next.js SSR/SSG、私域段客户端渲染 + 受保护路由。 | 公开页 SEO/agent 可读 + 私域受控。 | 若全站要 SSR 或全 SPA，结构需调。 | user | 前端实现确认。 | active |
+| `ASM-063` | `09-frontend-spec` | 服务端状态用 TanStack Query；表单用 react-hook-form + zod。 | 缓存/失效/校验成熟方案。 | 团队偏好别的库需替换。 | agent | 前端实现确认。 | active |
+| `ASM-064` | `09-frontend-spec` | 图表库用 Recharts（主题对齐 accent）。 | 轻量、易主题化。 | 若需更强图表能力可换。 | agent | 前端实现确认。 | active |
+| `ASM-065` | `09-frontend-spec` | 共享组件库 COMP-001~040 由 `_shared/COMPONENTS_SPEC.md` 拥有，模块只引用不重定义。 | 单一真源、避免重复。 | 若偏好组件就近各模块需调归属。 | agent | 组件规格确认。 | active |
+| `ASM-066` | `09-frontend-spec` | 实现图标库用 lucide-react（Material Symbols 的 1:1 替换），维护 docs/icon-map.md。 | shadcn 生态默认；DEC-012 已留替换路径。 | 若坚持 Material Symbols 字体则改用 symbol 组件。 | user | 前端实现确认。 | active |
+| `ASM-067` | `09-frontend-spec` | 数据先对接 MOCK，接口形状最终以阶段 15 SERVICE_CONTRACT 为准。 | 解耦前端进度与后端契约。 | 契约与 MOCK 不一致需回填 query hooks。 | agent | 服务契约阶段。 | active |
+| `ASM-068~107` | `09-frontend-spec` | 组件级实现假设共 40 条（含 1 条 RISK-001），分布于 `_shared` 与 10 模块 `COMPONENTS_SPEC.md`，逐条就地登记。 | 多为组件实现取向（取数注入/状态文字化/图标映射/子 surface 形态等），非阻塞。 | 个别项影响隐私边界落点（如 ASM-071 ConsentGate block 前端非安全边界、后端须二次校验），实现/服务契约阶段核。 | agent | 见各 `02-design/<模块>/COMPONENTS_SPEC.md` 与 `_shared/COMPONENTS_SPEC.md`。 | active |

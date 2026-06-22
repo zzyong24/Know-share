@@ -9,10 +9,10 @@
 ### 产物元数据
 
 - Stage: `08-page-spec`
-- Status: `needs-user-confirmation`
+- Status: `passed（2026-06-23 用户签字）`
 - Upstream IDs: `IA-013`、`NFR-004`、`NFR-007`、`FR-140`、`NFR-001`、`FLOW-008`、`ENT-019`、`FR-001`（AppShell）、`UI-001`/`UI-002`/`UI-003`/`UI-004`
 - Decision IDs: `DEC-011`（轻后端 + 聚合统计、不含 PII）、`DEC-012`（规范设计系统 / Material Symbols Outlined）
-- Manifest status: 本阶段 `08-page-spec` = `needs-user-confirmation`（待用户确认后转 `passed`）
+- Manifest status: 本阶段 `08-page-spec` = `passed（2026-06-23 用户签字）`
 - Source inputs: `aies/01-product/PRODUCT_SPEC.md`、`aies/02-design/IA_SPEC.md`、`aies/02-design/UI_RULES.md`、`aies/01-product/LIGHT_DOMAIN_MODEL.md`、`aies/01-product/BUSINESS_FLOW.md`、`aies/00-control/ID_REGISTRY.md`、`docs/design/generated/IA-013-about-repo.html`
 - 模块 PAGE-* 段：`PAGE-100` ~ `PAGE-109`（本模块用 `PAGE-100`~`PAGE-105`）
 

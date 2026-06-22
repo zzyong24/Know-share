@@ -3,7 +3,7 @@
 ## 产物元数据
 
 - Stage: `08-page-spec`
-- Status: `needs-user-confirmation`
+- Status: `passed（2026-06-23 用户签字）`
 - 模块: `module-detail`（覆盖界面 `IA-003` 知识模块详情）
 - 设计真源: `docs/design/know-share-module-detail.png`（最高风格基线 `docs/design/know-share-website-style-v1.png`）
 - Upstream IDs（产物级汇总）:

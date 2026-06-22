@@ -7,12 +7,12 @@
 ### 产物元数据
 
 - Stage: `08-page-spec`
-- Status: `needs-user-confirmation`
+- Status: `passed（2026-06-23 用户签字）`
 - Source inputs: `aies/01-product/PRODUCT_SPEC.md`、`aies/02-design/IA_SPEC.md`、`aies/02-design/UI_RULES.md`、`aies/01-product/LIGHT_DOMAIN_MODEL.md`、`aies/01-product/BUSINESS_FLOW.md`、`aies/00-control/ID_REGISTRY.md`、`docs/design/know-share-exchange-records.png`、`docs/design/generated/IA-006-exchange-detail.{html,png}`
 - Upstream IDs: `IA-005`、`IA-006`、`FR-040`、`FR-130`、`FR-050`、`FR-120`、`FLOW-003`、`FLOW-004`、`FLOW-006`、`FLOW-008`、`ENT-007`、`ENT-008`、`ENT-009`、`ENT-010`、`ENT-001`、`ENT-011`、`INV-01`、`INV-03`、`INV-04`、`INV-05`、`INV-06`、`UI-001`、`UI-002`、`UI-003`
 - Decision IDs: `DEC-009`（互惠可选/单向）、`DEC-010`（联系方式默认私密、接受后披露）、`DEC-011`（轻后端聚合统计）、`DEC-012`（规范设计系统/图标族）
 - 新增假设: `ASM-031`、`ASM-032`、`ASM-033`、`ASM-034`、`ASM-035`（见文末「拟新增假设」；本阶段不改 `DEFAULT_ASSUMPTIONS.md`）
-- Manifest status: stage `08-page-spec`（exchange 模块）= `needs-user-confirmation`
+- Manifest status: stage `08-page-spec`（exchange 模块）= `passed（2026-06-23 用户签字）`
 - PAGE 段位：`PAGE-030` ~ `PAGE-039`（本模块用 `PAGE-030`、`PAGE-031`）
 
 ---

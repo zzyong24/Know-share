@@ -7,14 +7,14 @@
 ### 产物元数据
 
 - Stage: `08-page-spec`
-- Status: `needs-user-confirmation`
+- Status: `passed（2026-06-23 用户签字）`
 - Source inputs: `aies/02-design/IA_SPEC.md`、`aies/02-design/UI_RULES.md`、`aies/01-product/PRODUCT_SPEC.md`、`aies/01-product/LIGHT_DOMAIN_MODEL.md`、`aies/01-product/BUSINESS_FLOW.md`、`aies/00-control/ID_REGISTRY.md`、`docs/design/generated/IA-009-dashboard.html`、`docs/design/generated/IA-010-notifications.html`、`docs/design/generated/IA-014-settings-contact.html`
 - 覆盖界面: `IA-009`（个人中心 Dashboard）、`IA-010`（通知中心）、`IA-014`（设置·联系方式）
 - PAGE ID 段: `PAGE-060` ~ `PAGE-079`（已用 `PAGE-060`~`PAGE-064`）
 - Upstream IDs: `FR-060`、`FR-070`、`FR-120`、`FR-130`、`FR-140`、`NFR-005`、`NFR-006`、`NFR-007`、`FLOW-006`、`FLOW-007`、`FLOW-008`、`ENT-001/003/006/007/008/009/013/017/021`、`INV-03`、`INV-07`、`INV-08`、`INV-11`
 - Decision IDs: `DEC-010`（联系方式默认私密、交换接受后披露）、`DEC-011`（轻后端聚合统计）、`DEC-012`（规范设计系统 + Material Symbols Outlined）
 - 新增假设: `ASM-043`、`ASM-044`、`ASM-045`、`ASM-046`、`ASM-047`、`ASM-048`（见末尾「新增假设」；**未改 `DEFAULT_ASSUMPTIONS.md`**）
-- Manifest status: stage `08-page-spec`（account 模块）= `needs-user-confirmation`
+- Manifest status: stage `08-page-spec`（account 模块）= `passed（2026-06-23 用户签字）`
 
 ### PAGE 清单与路由
 
@@ -35,10 +35,10 @@
 ### Artifact metadata
 
 - Stage: `08-page-spec`
-- Status: `needs-user-confirmation`
+- Status: `passed（2026-06-23 用户签字）`
 - Upstream IDs: `IA-009`、`FR-060`、`FR-070`、`ASM-014`、`ENT-001/003/007/011/013/017`、`FLOW-007`、`NFR-007`
 - Decision IDs: `DEC-012`
-- Manifest status: account 模块 `needs-user-confirmation`
+- Manifest status: account 模块 `passed（2026-06-23 用户签字）`
 
 ### Page purpose
 
@@ -112,10 +112,10 @@
 ### Artifact metadata
 
 - Stage: `08-page-spec`
-- Status: `needs-user-confirmation`
+- Status: `passed（2026-06-23 用户签字）`
 - Upstream IDs: `IA-009`、`FR-060`、`FR-070`、`ENT-003/006/007/013`、`INV-07`、`FLOW-007`、`NFR-007`
 - Decision IDs: `DEC-012`
-- Manifest status: account 模块 `needs-user-confirmation`
+- Manifest status: account 模块 `passed（2026-06-23 用户签字）`
 
 ### Page purpose
 
@@ -195,10 +195,10 @@
 ### Artifact metadata
 
 - Stage: `08-page-spec`
-- Status: `needs-user-confirmation`
+- Status: `passed（2026-06-23 用户签字）`
 - Upstream IDs: `IA-010`、`FR-120`、`FLOW-006`、`ENT-017`、`NFR-006`、`NFR-007`
 - Decision IDs: `DEC-012`
-- Manifest status: account 模块 `needs-user-confirmation`
+- Manifest status: account 模块 `passed（2026-06-23 用户签字）`
 
 ### Page purpose
 
@@ -270,10 +270,10 @@
 ### Artifact metadata
 
 - Stage: `08-page-spec`
-- Status: `needs-user-confirmation`
+- Status: `passed（2026-06-23 用户签字）`
 - Upstream IDs: `IA-014`、`FR-130`、`DEC-010`、`NFR-005`、`NFR-006`、`NFR-007`、`ENT-008/009/021`、`INV-03`、`INV-08`、`INV-11`、`ASM-013`、`FLOW-007`
 - Decision IDs: `DEC-010`、`DEC-012`
-- Manifest status: account 模块 `needs-user-confirmation`
+- Manifest status: account 模块 `passed（2026-06-23 用户签字）`
 
 ### Page purpose
 
@@ -359,10 +359,10 @@
 ### Artifact metadata
 
 - Stage: `08-page-spec`
-- Status: `needs-user-confirmation`
+- Status: `passed（2026-06-23 用户签字）`
 - Upstream IDs: `IA-014`、`FR-130`、`FR-120`、`NFR-005`、`NFR-006`、`NFR-007`、`ENT-021`、`FLOW-007`、`INV-11`
 - Decision IDs: `DEC-010`、`DEC-012`
-- Manifest status: account 模块 `needs-user-confirmation`
+- Manifest status: account 模块 `passed（2026-06-23 用户签字）`
 
 ### Page purpose
 

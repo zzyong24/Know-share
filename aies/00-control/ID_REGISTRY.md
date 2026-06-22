@@ -135,7 +135,7 @@
 | `PAGE-080~085` | 页面 | admin：审核台/队列/详情/审计/举报/确认 | `02-design/admin/PAGE_SPEC.md` | `IA-011`, `FR-100`, `FLOW-005` | draft | 仅管理员；破坏性操作二次确认。 |
 | `PAGE-090` | 页面 | open-api：API 文档页 | `02-design/open-api/PAGE_SPEC.md` | `IA-012`, `FR-110`, `NFR-002` | draft | 单页；公开读不含 contact（ASM-055）。 |
 | `PAGE-100~105` | 页面 | about：关于/仓库/统计/隐私/FAQ/审计链接 | `02-design/about/PAGE_SPEC.md` | `IA-013`, `NFR-004`, `FR-140` | draft | 统计仅聚合无 PII；文案漂移已归正。 |
-| `ASM-017~061` | 假设 | 阶段08各模块页面级假设（45 项） | `DEFAULT_ASSUMPTIONS.md` + 各 `02-design/<模块>/PAGE_SPEC.md` | `08-page-spec` | active | 详见 DEFAULT_ASSUMPTIONS.md；其中 ASM-021/028/032/033/050/055/061 标 needs-confirmation。 |
+| `ASM-017~061` | 假设 | 阶段08各模块页面级假设（45 项） | `DEFAULT_ASSUMPTIONS.md` + 各 `02-design/<模块>/PAGE_SPEC.md` | `08-page-spec` | active | 详见 DEFAULT_ASSUMPTIONS.md；ASM-021/028/032/033/050/055/061 已由 DEC-013 用户确认转 active。 |
 
 ## 完成标准
 

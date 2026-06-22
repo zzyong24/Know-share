@@ -7,13 +7,13 @@
 ### 产物元数据
 
 - Stage: `08-page-spec`
-- Status: `needs-user-confirmation`
+- Status: `passed（2026-06-23 用户签字）`
 - 模块: `open-api`（覆盖 `IA-012`；PAGE-* 段 `PAGE-090`~`PAGE-099`）
 - Upstream IDs: `IA-012`、`FR-110`、`NFR-002`、`NFR-006`、`NFR-005`、`NFR-007`、`ENT-019`、`ENT-003`、`ENT-004`、`ENT-007`、`ENT-010`、`INV-01`、`INV-04`、`INV-09`、`FLOW-008`、`FLOW-003`、`UI-001`、`UI-002`、`UI-003`
 - Decision IDs: `DEC-006`（GitHub 规范身份）、`DEC-007`（无经济模型）、`DEC-011`（轻后端 + 聚合统计）、`DEC-012`（规范图标族）
 - Source inputs: `docs/design/generated/IA-012-open-api.html`、`docs/data-contract.md`、`aies/02-design/IA_SPEC.md`、`aies/02-design/UI_RULES.md`、`aies/01-product/PRODUCT_SPEC.md`、`aies/01-product/BUSINESS_FLOW.md`、`aies/01-product/LIGHT_DOMAIN_MODEL.md`
 - 新增假设: `ASM-054`、`ASM-055`、`ASM-056`、`ASM-057`（见文末「新增假设」；本产物**不修改** `DEFAULT_ASSUMPTIONS.md`，仅在此登记并在返回中列出）
-- Manifest status: 模块产物，阶段 `08-page-spec` = `needs-user-confirmation`
+- Manifest status: 模块产物，阶段 `08-page-spec` = `passed（2026-06-23 用户签字）`
 - 与真源 HTML 的归一化说明: 见文末「真源 HTML 漂移与归一化」——HTML 中存在 3 处无法追溯上游的内容（"加密网关认证"文案、`POST` 用 tertiary 橙色、"申请企业级访问"企业 CTA），本规格将其归一/移除，以符合 `INV-01`/`DEC-007`/`UI-003`。
 
 ---

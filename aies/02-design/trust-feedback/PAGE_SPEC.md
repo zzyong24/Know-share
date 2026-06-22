@@ -7,13 +7,13 @@
 ### 产物元数据
 
 - Stage: `08-page-spec`
-- Status: `needs-user-confirmation`
+- Status: `passed（2026-06-23 用户签字）`
 - Upstream IDs: `IA-007`；`FR-050`、`FR-060`；`NFR-001`、`NFR-003`、`NFR-006`、`NFR-007`；`FLOW-004`、`FLOW-007`、`FLOW-008`；`ENT-001`、`ENT-010`、`ENT-011`、`ENT-012`、`ENT-007`、`ENT-013`；`INV-04`、`INV-10`、`INV-11`、`INV-09`；`UI-001`、`UI-002`、`UI-003`；`HARD-03`
 - Decision IDs: `DEC-006`（GitHub 规范身份）、`DEC-007`（无经济模型）、`DEC-012`（规范设计系统 / Material Symbols Outlined）
 - Source inputs: `docs/design/know-share-trust-profile.png`、`aies/02-design/IA_SPEC.md`、`aies/02-design/UI_RULES.md`、`aies/01-product/PRODUCT_SPEC.md`、`aies/01-product/LIGHT_DOMAIN_MODEL.md`、`aies/01-product/BUSINESS_FLOW.md`
 - 本模块新增假设: `ASM-036`、`ASM-037`、`ASM-038`、`ASM-039`、`ASM-061`（见文末「本模块新增假设」；**未写入 `DEFAULT_ASSUMPTIONS.md`**，待编排者裁定）
 - PAGE-* ID 段: `PAGE-040` ~ `PAGE-049`（本模块占用 `PAGE-040`/`PAGE-041`/`PAGE-042`/`PAGE-043`）
-- Manifest status: stage `08-page-spec`（trust-feedback）= `needs-user-confirmation`（待用户确认后转 `passed`）
+- Manifest status: stage `08-page-spec`（trust-feedback）= `passed（2026-06-23 用户签字）`
 
 ---
 

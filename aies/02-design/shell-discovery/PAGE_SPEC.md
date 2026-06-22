@@ -3,7 +3,7 @@
 ## Artifact metadata
 
 - Stage: `08-page-spec`
-- Status: `needs-user-confirmation`
+- Status: `passed（2026-06-23 用户签字）`
 - 模块: shell-discovery（覆盖 `IA-001` 全局站点外壳、`IA-002` 发现/注册表）
 - Upstream IDs:
   - IA: `IA-001`、`IA-002`（二级链接出口 `IA-003`/`IA-005`/`IA-007`/`IA-008`/`IA-009`/`IA-010`/`IA-013`/`IA-014`/`IA-004`）

@@ -7,7 +7,7 @@
 ### Artifact metadata
 
 - Stage: `08-page-spec`
-- Status: `needs-user-confirmation`
+- Status: `passed（2026-06-23 用户签字）`
 - 模块: `admin`（管理 / 审核控制台，仅管理员）
 - Source inputs:
   - `aies/01-product/PRODUCT_SPEC.md`（`FR-100`、`NFR-006`、产品边界第 3 条"不自动越过人类同意"）
@@ -20,7 +20,7 @@
 - Upstream IDs: `IA-011`、`FR-100`、`NFR-006`、`FLOW-005`、`ENT-005`、`ENT-006`、`ENT-014`、`ENT-015`、`ENT-018`、`INV-02`、`INV-11`、`UI-001`、`UI-002`、`UI-003`、`UI-004`
 - Decision IDs: `DEC-008`（完整目标产品、不弱化）、`DEC-011`（轻后端 + 聚合统计）、`DEC-012`（规范设计系统 + Material Symbols Outlined）
 - 新增假设: `ASM-049`、`ASM-050`、`ASM-051`、`ASM-052`、`ASM-053`（见文末"拟新增假设"，**未写入 `DEFAULT_ASSUMPTIONS.md`**，在返回中列出待确认）
-- Manifest status: stage `08-page-spec` = `needs-user-confirmation`
+- Manifest status: stage `08-page-spec` = `passed（2026-06-23 用户签字）`
 - PAGE-* 段: `PAGE-080` ~ `PAGE-089`
 
 ### 模块级权限与边界（贯穿本模块所有 PAGE）
@@ -387,7 +387,7 @@
 
 ```text
 Gate: 06-page-spec-gate
-Status: pass（内容自检）— needs-user-confirmation
+Status: pass（内容自检）— passed（2026-06-23 用户签字）
 Evidence:
   - 本文件 aies/02-design/admin/PAGE_SPEC.md
   - 上游对照：aies/02-design/IA_SPEC.md(IA-011)、aies/01-product/PRODUCT_SPEC.md(FR-100/NFR-006/产品边界)、
@@ -404,5 +404,5 @@ Findings:
   - 仅管理员权限贯穿；零私有内容（INV-01/04）。✅
   - 拟新增假设 ASM-049~053 已标注，未写入 DEFAULT_ASSUMPTIONS.md。✅
 Hard-Limit Policy: 本模块拆 6 个 PAGE（PAGE-080~085），系按 IA-011 真源结构（容器/队列/详情/审计/举报流/破坏性确认）与 FR-100 治理能力划分，非按设计图碎片化；广度服务于 HARD-08 治理闭环核心路径，已说明理由。
-Decision: needs-user-confirmation — 待用户确认 5 条新增假设（尤以 ASM-050 批量通过、ASM-053 已处理口径）后转 passed。
+Decision: passed（2026-06-23 用户签字） — 待用户确认 5 条新增假设（尤以 ASM-050 批量通过、ASM-053 已处理口径）后转 passed。
 ```

@@ -7,10 +7,10 @@
 ### 产物元数据
 
 - Stage: `08-page-spec`
-- Status: `needs-user-confirmation`
+- Status: `passed（2026-06-23 用户签字）`
 - Upstream IDs: `IA-008`、`FR-080`、`CAP-009`、`ENT-016`、`FR-030`、`FR-090`、`FR-110`、`NFR-001`、`NFR-002`、`NFR-005`、`NFR-007`、`FLOW-001`、`FLOW-004`、`FLOW-007`、`FR-140`、`FLOW-008`、`INV-01`、`INV-02`、`INV-08`、`UI-001`、`UI-002`、`UI-003`、`UI-004`
 - Decision IDs: `DEC-006`、`DEC-008`、`DEC-012`
-- Manifest status: stage `08-page-spec` = `needs-user-confirmation`（本模块切片；待用户确认后转 `passed`）
+- Manifest status: stage `08-page-spec` = `passed（2026-06-23 用户签字）`（本模块切片）
 
 ### 本模块 PAGE 清单
 

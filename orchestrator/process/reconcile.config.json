@@ -1,0 +1,23 @@
+{
+  "work_branch": "main",
+  "probes": [
+    { "stage": "00-intake", "path": "PROJECT_CONTEXT.md" },
+    { "stage": "00-intake", "path": "DEFAULT_ASSUMPTIONS.md" },
+    { "stage": "01-project-kickoff", "path": "AGENTS.md" },
+    { "stage": "02-product-brainstorming", "path": "FUNCTION_OUTLINE.md" },
+    { "stage": "03-product-spec", "path": "PRODUCT_SPEC.md" },
+    { "stage": "04-business-flow", "path": "BUSINESS_FLOW.md" },
+    { "stage": "05-light-domain-model", "path": "LIGHT_DOMAIN_MODEL.md" },
+    { "stage": "06-ia-spec", "path": "IA_SPEC.md" },
+    { "stage": "07-ui-generation-or-import", "path": "UI_RULES.md" },
+    { "stage": "08-page-spec", "path": "PAGE_SPEC.md" },
+    { "stage": "09-frontend-spec", "path": "FRONTEND_SPEC.md" },
+    { "stage": "10-mock-data-spec", "path": "MOCK_DATA_SPEC.md" },
+    { "stage": "12-frontend-validation", "path": "FRONTEND_VALIDATION_REPORT.md" },
+    { "stage": "13-backend-spec", "path": "BACKEND_SPEC.md" },
+    { "stage": "14-module-workflow-spec", "path": "MODULE_WORKFLOW_SPEC.md" },
+    { "stage": "15-service-contract", "path": "SERVICE_CONTRACT.md" },
+    { "stage": "17-integration-release", "path": "INTEGRATION_REPORT.md" },
+    { "stage": "17-integration-release", "path": "RELEASE_REVIEW.md" }
+  ]
+}

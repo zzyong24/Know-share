@@ -8,19 +8,19 @@ Show how product intent becomes flows, model concepts, pages, components, contra
 
 | Product ID | Flow IDs | Entity IDs | IA/Page IDs | Component IDs | Mock IDs | API IDs | Test IDs | Evidence | Status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| `FR-001` | `PENDING-FLOW` | `PENDING-ENT` | `PENDING-PAGE` | `PENDING-COMP` | `PENDING-MOCK` | `PENDING-API` | `PENDING-TEST` | `FUNCTION_OUTLINE.md`, `docs/design/*.png` | draft |
-| `FR-010` | `PENDING-FLOW` | `PENDING-ENT` | `PENDING-PAGE` | `PENDING-COMP` | `PENDING-MOCK` | `PENDING-API` | `PENDING-TEST` | `FUNCTION_OUTLINE.md`, discovery UI | draft |
-| `FR-020` | `PENDING-FLOW` | `PENDING-ENT` | `PENDING-PAGE` | `PENDING-COMP` | `PENDING-MOCK` | `PENDING-API` | `PENDING-TEST` | `FUNCTION_OUTLINE.md`, module detail UI | draft |
-| `FR-030` | `PENDING-FLOW` | `PENDING-ENT` | `PENDING-PAGE` | `PENDING-COMP` | `PENDING-MOCK` | `PENDING-API` | `PENDING-TEST` | `FUNCTION_OUTLINE.md`, submit module UI | draft |
-| `FR-040` | `PENDING-FLOW` | `PENDING-ENT` | `PENDING-PAGE` | `PENDING-COMP` | `PENDING-MOCK` | `PENDING-API` | `PENDING-TEST` | `FUNCTION_OUTLINE.md`, exchange records UI | draft |
-| `FR-050` | `PENDING-FLOW` | `PENDING-ENT` | `PENDING-PAGE` | `PENDING-COMP` | `PENDING-MOCK` | `PENDING-API` | `PENDING-TEST` | `FUNCTION_OUTLINE.md`, trust profile UI | draft |
-| `FR-060` | `PENDING-FLOW` | `PENDING-ENT` | `PENDING-PAGE` | `PENDING-COMP` | `PENDING-MOCK` | `PENDING-API` | `PENDING-TEST` | `FUNCTION_OUTLINE.md`, trust profile UI | draft |
-| `FR-070` | `PENDING-FLOW` | `PENDING-ENT` | `PENDING-PAGE` | `PENDING-COMP` | `PENDING-MOCK` | `PENDING-API` | `PENDING-TEST` | `FUNCTION_OUTLINE.md`, discovery/detail UI | draft |
-| `FR-080` | `PENDING-FLOW` | `PENDING-ENT` | `PENDING-PAGE` | `PENDING-COMP` | `PENDING-MOCK` | `PENDING-API` | `PENDING-TEST` | `FUNCTION_OUTLINE.md`, agent skills UI | draft |
-| `FR-090` | `PENDING-FLOW` | `PENDING-ENT` | `PENDING-PAGE` | `PENDING-COMP` | `PENDING-MOCK` | `PENDING-API` | `PENDING-TEST` | `FUNCTION_OUTLINE.md`, `docs/privacy-model.md` | draft |
-| `FR-100` | `PENDING-FLOW` | `PENDING-ENT` | `PENDING-PAGE` | `PENDING-COMP` | `PENDING-MOCK` | `PENDING-API` | `PENDING-TEST` | `FUNCTION_OUTLINE.md`, UI overview admin panel | draft |
-| `FR-110` | `PENDING-FLOW` | `PENDING-ENT` | `PENDING-PAGE` | `PENDING-COMP` | `PENDING-MOCK` | `PENDING-API` | `PENDING-TEST` | `FUNCTION_OUTLINE.md`, `docs/data-contract.md` | draft |
-| `FR-120` | `PENDING-FLOW` | `PENDING-ENT` | `PENDING-PAGE` | `PENDING-COMP` | `PENDING-MOCK` | `PENDING-API` | `PENDING-TEST` | `FUNCTION_OUTLINE.md` | draft |
+| `FR-001` | `PENDING-FLOW` | `PENDING-ENT` | `PENDING-PAGE` | `PENDING-COMP` | `PENDING-MOCK` | `PENDING-API` | `PENDING-TEST` | `PRODUCT_SPEC.md`, `FUNCTION_OUTLINE.md`, `docs/design/*.png` | needs-confirmation |
+| `FR-010` | `PENDING-FLOW` | `PENDING-ENT` | `PENDING-PAGE` | `PENDING-COMP` | `PENDING-MOCK` | `PENDING-API` | `PENDING-TEST` | `PRODUCT_SPEC.md`, `FUNCTION_OUTLINE.md`, discovery UI | needs-confirmation |
+| `FR-020` | `PENDING-FLOW` | `PENDING-ENT` | `PENDING-PAGE` | `PENDING-COMP` | `PENDING-MOCK` | `PENDING-API` | `PENDING-TEST` | `PRODUCT_SPEC.md`, `FUNCTION_OUTLINE.md`, module detail UI | needs-confirmation |
+| `FR-030` | `PENDING-FLOW` | `PENDING-ENT` | `PENDING-PAGE` | `PENDING-COMP` | `PENDING-MOCK` | `PENDING-API` | `PENDING-TEST` | `PRODUCT_SPEC.md`, `FUNCTION_OUTLINE.md`, submit module UI | needs-confirmation |
+| `FR-040` | `PENDING-FLOW` | `PENDING-ENT` | `PENDING-PAGE` | `PENDING-COMP` | `PENDING-MOCK` | `PENDING-API` | `PENDING-TEST` | `PRODUCT_SPEC.md`, `FUNCTION_OUTLINE.md`, exchange records UI | needs-confirmation |
+| `FR-050` | `PENDING-FLOW` | `PENDING-ENT` | `PENDING-PAGE` | `PENDING-COMP` | `PENDING-MOCK` | `PENDING-API` | `PENDING-TEST` | `PRODUCT_SPEC.md`, `FUNCTION_OUTLINE.md`, trust profile UI | needs-confirmation |
+| `FR-060` | `PENDING-FLOW` | `PENDING-ENT` | `PENDING-PAGE` | `PENDING-COMP` | `PENDING-MOCK` | `PENDING-API` | `PENDING-TEST` | `PRODUCT_SPEC.md`, `FUNCTION_OUTLINE.md`, trust profile UI | needs-confirmation |
+| `FR-070` | `PENDING-FLOW` | `PENDING-ENT` | `PENDING-PAGE` | `PENDING-COMP` | `PENDING-MOCK` | `PENDING-API` | `PENDING-TEST` | `PRODUCT_SPEC.md`, `FUNCTION_OUTLINE.md`, discovery/detail UI | needs-confirmation |
+| `FR-080` | `PENDING-FLOW` | `PENDING-ENT` | `PENDING-PAGE` | `PENDING-COMP` | `PENDING-MOCK` | `PENDING-API` | `PENDING-TEST` | `PRODUCT_SPEC.md`, `FUNCTION_OUTLINE.md`, agent skills UI | needs-confirmation |
+| `FR-090` | `PENDING-FLOW` | `PENDING-ENT` | `PENDING-PAGE` | `PENDING-COMP` | `PENDING-MOCK` | `PENDING-API` | `PENDING-TEST` | `PRODUCT_SPEC.md`, `FUNCTION_OUTLINE.md`, `docs/privacy-model.md` | needs-confirmation |
+| `FR-100` | `PENDING-FLOW` | `PENDING-ENT` | `PENDING-PAGE` | `PENDING-COMP` | `PENDING-MOCK` | `PENDING-API` | `PENDING-TEST` | `PRODUCT_SPEC.md`, `FUNCTION_OUTLINE.md`, UI overview admin panel | needs-confirmation |
+| `FR-110` | `PENDING-FLOW` | `PENDING-ENT` | `PENDING-PAGE` | `PENDING-COMP` | `PENDING-MOCK` | `PENDING-API` | `PENDING-TEST` | `PRODUCT_SPEC.md`, `FUNCTION_OUTLINE.md`, `docs/data-contract.md` | needs-confirmation |
+| `FR-120` | `PENDING-FLOW` | `PENDING-ENT` | `PENDING-PAGE` | `PENDING-COMP` | `PENDING-MOCK` | `PENDING-API` | `PENDING-TEST` | `PRODUCT_SPEC.md`, `FUNCTION_OUTLINE.md` | needs-confirmation |
 
 ## Gap Review
 

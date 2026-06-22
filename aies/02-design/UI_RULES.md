@@ -7,7 +7,7 @@
 ### 产物元数据
 
 - Stage: `07-ui-generation-or-import`
-- Status: `needs-user-confirmation`
+- Status: `passed`（用户 2026-06-22 签字确认）
 - 模式：**混合（hybrid）**——已有图导入 + Stitch 生成缺失界面
 - Source inputs: `docs/design/*.png`（7 张）、`aies/02-design/IA_SPEC.md`、`aies/01-product/PRODUCT_SPEC.md`、`aies/01-product/LIGHT_DOMAIN_MODEL.md`
 - 新增 ID: `UI-001`（设计令牌）、`UI-002`（规范图标族）、`UI-003`（规范组件）、`UI-004`（生成/还原一致性规则）
@@ -390,7 +390,7 @@ Constraint: 见上共享片段约束句。
 
 ```text
 Gate: 05-ui-gate
-Status: pass（内容+生成后一致性检查通过）— 待用户对最终 UI 产物签字
+Status: pass（内容+生成后一致性检查通过；用户 2026-06-22 已签字确认）
 Evidence:
   - aies/02-design/UI_RULES.md 对照 docs/design/*.png（7 张全分辨率采样）、IA_SPEC.md、PRODUCT_SPEC.md
   - docs/design/generated/ 7 屏 .html/.png（Stitch 项目 7946899781188074425 / 设计系统 assets/4528660503651777687）
@@ -405,5 +405,5 @@ Findings:
   - 漂移已处置：IA-012 外壳英文化 → 整屏重生成修复；记录于归一化段。✅
   - 无障碍与响应式期望已显式（NFR-007 / ASM-016）。✅
 Known risks: ASM-015（色值采样近似，待像素级核对）；设计系统 v2 圆角 ROUND_EIGHT 与规范 12px 的微差（视觉可忽略）。
-Decision: 内容与生成后一致性均通过 → 待用户对最终 UI 产物与 7 屏生成结果签字确认 → 转 passed → 进入 08-page-spec
+Decision: 内容与生成后一致性均通过；用户 2026-06-22 签字确认 → 转 passed → 进入 08-page-spec
 ```

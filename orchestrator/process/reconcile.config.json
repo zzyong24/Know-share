@@ -1,5 +1,5 @@
 {
-  "work_branch": "main",
+  "work_branch": "claude/gifted-hamilton-c7255e",
   "control_root": "aies/00-control",
   "probes": [
     { "stage": "00-intake", "path": "PROJECT_CONTEXT.md" },

@@ -1,8 +1,8 @@
 project:
   name: "Know-share"
   artifact_root: "."
-  current_stage: "02-product-brainstorming"
-  frontier: "02-product-brainstorming"
+  current_stage: "03-product-spec"
+  frontier: "03-product-spec"
   updated_at: "2026-06-22"
   work_branch: "main"
 
@@ -32,7 +32,7 @@ stages:
     invalidated_by: []
     notes: "Gate evidence: `test -f AGENTS.md && test -f PROJECT_CONTEXT.md && test -f DEFAULT_ASSUMPTIONS.md` returned success. Confirmation recorded in DEC-003."
   "02-product-brainstorming":
-    status: "needs-user-confirmation"
+    status: "passed"
     artifacts:
       - path: "FUNCTION_OUTLINE.md"
         role: "capability-outline"
@@ -41,7 +41,7 @@ stages:
     gate_status: "pass"
     confirmation_required: true
     invalidated_by: []
-    notes: "FUNCTION_OUTLINE.md produced with capability map, initial FR/NFR IDs, MVP slicing, and multi-agent work package candidates. Requires user confirmation of Q-001 to Q-003 before stage 03."
+    notes: "FUNCTION_OUTLINE.md produced with full target product capability map, initial FR/NFR IDs, and multi-agent work package candidates. User confirmed no V0.1/V0.2 product slicing in DEC-005."
   "03-product-spec":
     status: "not-started"
     artifacts:
@@ -243,7 +243,7 @@ open_items:
   - id: "OPEN-002"
     stage: "02-product-brainstorming"
     type: "question"
-    description: "User should confirm MVP slicing after the full function outline is produced."
+    description: "User should confirm product scope treatment after the full function outline is produced."
     owner: "user"
     revisit_trigger: "Before stage 03 product spec is marked passed."
-    status: "open"
+    status: "closed"

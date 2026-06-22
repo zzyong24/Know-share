@@ -66,6 +66,21 @@ Revisit Trigger: If the user chooses a different MVP slicing or implementation s
 Status: active
 ```
 
+```text
+ID: DEC-005
+Date: 2026-06-22
+Stage: 02-product-brainstorming
+Type: user-confirmation
+Decision: Design the complete Know-share target product in the current product/spec stages instead of dividing product scope into V0.1, V0.2, and V0.3.
+Rationale: The user wants the design phase to fully imagine the product first. Implementation sequencing can still happen later for engineering coordination, but it should not constrain or redefine the product concept.
+Source: User message on 2026-06-22: "我其实是不想分这个v0.1 0.2的，我们在这个设计阶段就是要把这个全部都构想好。"
+Affected Artifacts: FUNCTION_OUTLINE.md, DEFAULT_ASSUMPTIONS.md, ARTIFACT_MANIFEST.yaml, future PRODUCT_SPEC.md
+Invalidates: none
+Owner: user
+Revisit Trigger: If the user later asks for a release-specific MVP spec.
+Status: active
+```
+
 ## Completion Standard
 
 - Any A-level question answer is recorded.

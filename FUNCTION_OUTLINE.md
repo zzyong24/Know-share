@@ -49,9 +49,9 @@ Recommended path: use `APPROACH-C`. First define shared entities, permission bou
 - Dependencies: `CAP-002`, `CAP-003`, future auth decision.
 - Acceptance notes:
   - `FR-001` Global nav exposes discovery, exchange records, trust network, Agent skills, and repo/help surfaces.
-  - `FR-002` GitHub login state is visible without requiring login to browse public pages.
-  - `FR-003` Global search can route to module, topic, user, or exchange search once those specs exist.
-  - `FR-004` Submit module entry is visible but can require GitHub identity before actual submission.
+  - Includes GitHub login state without requiring login to browse public pages.
+  - Includes global search routing to module, topic, user, or exchange search once those specs exist.
+  - Includes a submit-module entry that can require GitHub identity before actual submission.
 - Deferrals: Full account settings, notifications center, and email preferences.
 
 ### CAP-002 Discovery / Registry
@@ -62,11 +62,11 @@ Recommended path: use `APPROACH-C`. First define shared entities, permission bou
 - Dependencies: `CAP-003`, `CAP-006`, `CAP-010`.
 - Acceptance notes:
   - `FR-010` Show module cards with type, title, sanitized summary, tags, owner handle, trust level, exchange count, favorite count, and request action.
-  - `FR-011` Search by title, summary, topic, author, and keyword.
-  - `FR-012` Filter by module type, topic, trust level, language, and freshness; sort by latest, exchange count, feedback quality, or favorites.
-  - `FR-013` Show popular topics and platform stats without exposing private content.
-  - `FR-014` Support favorites or saved modules for signed-in users.
-  - `FR-015` Request exchange from a module card.
+  - Includes search by title, summary, topic, author, and keyword.
+  - Includes filters by module type, topic, trust level, language, and freshness; supports sorting by latest, exchange count, feedback quality, or favorites.
+  - Includes popular topics and platform stats without exposing private content.
+  - Includes favorites or saved modules for signed-in users.
+  - Includes request-exchange entry from a module card.
 - Deferrals: Personalized recommendations, collections, ranking algorithms, and agent-side scoring UI.
 
 ### CAP-003 Knowledge Module Detail
@@ -77,12 +77,12 @@ Recommended path: use `APPROACH-C`. First define shared entities, permission bou
 - Dependencies: `CAP-002`, `CAP-006`, `CAP-008`, `CAP-010`.
 - Acceptance notes:
   - `FR-020` Show module identity: type, title, tags, owner, trust level, completed exchanges, verified feedback, favorite count, and update date.
-  - `FR-021` Show sanitized summary and covered questions.
-  - `FR-022` Show source statistics such as file count, diagrams, code snippets, estimated words, and content type distribution.
-  - `FR-023` Show manifest preview and a full manifest view.
-  - `FR-024` Show privacy boundary and content commitment.
-  - `FR-025` Show selected post-exchange feedback.
-  - `FR-026` Provide request exchange and report module actions.
+  - Includes sanitized summary and covered questions.
+  - Includes source statistics such as file count, diagrams, code snippets, estimated words, and content type distribution.
+  - Includes manifest preview and a full manifest view.
+  - Includes privacy boundary and content commitment.
+  - Includes selected post-exchange feedback.
+  - Includes request exchange and report module actions.
 - Deferrals: Version history, manifest diff, public comment threads, and agent-generated value analysis.
 
 ### CAP-004 Manifest Submission And Privacy Gate
@@ -93,11 +93,11 @@ Recommended path: use `APPROACH-C`. First define shared entities, permission bou
 - Dependencies: `CAP-009`, `CAP-010`, future review workflow.
 - Acceptance notes:
   - `FR-030` Provide a multi-step submission flow: choose module type, generate/import manifest, run privacy gate, preview public card, submit platform, prepare private exchange package.
-  - `FR-031` Show pass, warning, and blocking privacy findings.
-  - `FR-032` Suggest generalization for people, companies, project names, paths, and code snippets.
-  - `FR-033` Allow downloading or saving the manifest before upload.
-  - `FR-034` Show public card preview before submission.
-  - `FR-035` Support draft save and submit for review.
+  - Includes pass, warning, and blocking privacy findings.
+  - Includes generalization suggestions for people, companies, project names, paths, and code snippets.
+  - Includes downloading or saving the manifest before upload.
+  - Includes public card preview before submission.
+  - Includes draft save and submit for review.
 - Deferrals: Rich online manifest editor, bulk import, multilingual variants, and automated GitHub PR submission.
 
 ### CAP-005 Exchange Request And Public Exchange Records
@@ -108,11 +108,11 @@ Recommended path: use `APPROACH-C`. First define shared entities, permission bou
 - Dependencies: `CAP-002`, `CAP-003`, `CAP-006`, `CAP-010`, future service contract.
 - Acceptance notes:
   - `FR-040` Initiate exchange by selecting a module to request and an owned module to offer.
-  - `FR-041` Track lifecycle: requested, accepted, private repo preparing, completed, waiting for feedback, closed, rejected.
-  - `FR-042` Public record shows participants, GitHub verification state, exchanged modules, completion time, verification result, and feedback summary.
-  - `FR-043` Private handoff tracking records status without revealing repo contents or private URL publicly.
-  - `FR-044` Exchange detail exposes agent verification summary and participant feedback.
-  - `FR-045` Allow reminder or pending-feedback state.
+  - Includes lifecycle tracking: requested, accepted, private repo preparing, completed, waiting for feedback, closed, rejected.
+  - Includes public records with participants, GitHub verification state, exchanged modules, completion time, verification result, and feedback summary.
+  - Includes private handoff tracking without revealing repo contents or private URL publicly.
+  - Includes exchange detail with agent verification summary and participant feedback.
+  - Includes reminder or pending-feedback state.
 - Deferrals: Platform-managed GitHub App automation, dispute resolution, multi-party exchange, and paid/consulting exchange formats.
 
 ### CAP-006 Feedback And Trust System
@@ -123,10 +123,10 @@ Recommended path: use `APPROACH-C`. First define shared entities, permission bou
 - Dependencies: `CAP-005`, `CAP-007`, `CAP-008`, `CAP-010`.
 - Acceptance notes:
   - `FR-050` Collect structured feedback after exchange: manifest consistency, privacy boundary, structure clarity, usefulness, willingness to exchange again, public text.
-  - `FR-051` Compute visible trust level from exchange history, feedback quality, verification, and reports.
-  - `FR-052` Show badges such as high-quality contributor, trusted exchange partner, quality feedback giver, active exchanger, and privacy guardian.
-  - `FR-053` Weight feedback from actual exchange participants higher than public social signals.
-  - `FR-054` Explain trust score formation at page level.
+  - Includes visible trust level from exchange history, feedback quality, verification, and reports.
+  - Includes badges such as high-quality contributor, trusted exchange partner, quality feedback giver, active exchanger, and privacy guardian.
+  - Weights feedback from actual exchange participants higher than public social signals.
+  - Explains trust score formation at page level.
 - Deferrals: Anti-fraud scoring, weighted graph trust, anomaly detection, and public trust network visualization.
 
 ### CAP-007 User Trust Profile
@@ -137,10 +137,10 @@ Recommended path: use `APPROACH-C`. First define shared entities, permission bou
 - Dependencies: `CAP-002`, `CAP-005`, `CAP-006`.
 - Acceptance notes:
   - `FR-060` Show GitHub identity, GitHub Verified marker, profile summary, domain tags, join date, and recent activity.
-  - `FR-061` Show trust level, credit score, score trend, completed exchange count, verified feedback count, average feedback quality, and willingness-to-exchange-again rate.
-  - `FR-062` Show published modules with exchange/favorite/feedback counts.
-  - `FR-063` Show public exchange history and received recognition.
-  - `FR-064` Show feedback quality dimensions.
+  - Includes trust level, credit score, score trend, completed exchange count, verified feedback count, average feedback quality, and willingness-to-exchange-again rate.
+  - Includes published modules with exchange/favorite/feedback counts.
+  - Includes public exchange history and received recognition.
+  - Includes feedback quality dimensions.
 - Deferrals: Follow users, custom profile themes, blocklists, and recommendation graph.
 
 ### CAP-008 Social Signals And Community Actions
@@ -151,9 +151,9 @@ Recommended path: use `APPROACH-C`. First define shared entities, permission bou
 - Dependencies: `CAP-002`, `CAP-003`, `CAP-006`, future auth.
 - Acceptance notes:
   - `FR-070` Allow one effective favorite per signed-in user per module.
-  - `FR-071` Allow recognition/like actions with lower trust weight than post-exchange feedback.
-  - `FR-072` Support basic comments or feedback snippets where page specs include them.
-  - `FR-073` Keep social operations auditable and rate-limited.
+  - Includes recognition/like actions with lower trust weight than post-exchange feedback.
+  - Supports basic comments or feedback snippets where page specs include them.
+  - Keeps social operations auditable and rate-limited.
 - Deferrals: Nested replies, comment moderation UI beyond admin basics, public/private favorite folders.
 
 ### CAP-009 Agent Skill / MCP Tooling
@@ -164,10 +164,10 @@ Recommended path: use `APPROACH-C`. First define shared entities, permission bou
 - Dependencies: `CAP-004`, `CAP-005`, `CAP-010`, `CAP-012`.
 - Acceptance notes:
   - `FR-080` Show Agent Skills catalog with Create Manifest, Redact Knowledge, Validate Manifest, Package Private Repo, Submit Feedback.
-  - `FR-081` Provide install/docs affordances for each skill.
-  - `FR-082` Show MCP configuration example and local command examples.
-  - `FR-083` Support source categories: Obsidian, Logseq, Notion, Markdown, Yuque, Lark Docs, local folder, custom format.
-  - `FR-084` Mark privacy level and local execution status for each skill.
+  - Includes install/docs affordances for each skill.
+  - Includes MCP configuration example and local command examples.
+  - Supports source categories: Obsidian, Logseq, Notion, Markdown, Yuque, Lark Docs, local folder, custom format.
+  - Marks privacy level and local execution status for each skill.
 - Deferrals: Real MCP server implementation, local model redaction, automatic GitHub repo creation, and signed agent identity.
 
 ### CAP-010 Privacy, Safety, And Consent
@@ -178,11 +178,11 @@ Recommended path: use `APPROACH-C`. First define shared entities, permission bou
 - Dependencies: All data-producing capabilities.
 - Acceptance notes:
   - `FR-090` Public platform stores manifests and public relationships, not raw notes or private repository content.
-  - `FR-091` Require consent before manifest generation touches a scope, before public submission, before contact, and before private exchange.
-  - `FR-092` Scan for secrets, emails, phone numbers, IDs, private paths, private URLs, long excerpts, and sensitive third-party data.
-  - `FR-093` Require sensitivity declaration and redaction notes.
-  - `FR-094` Show content commitment for manifest/package consistency without exposing content.
-  - `FR-095` Support reporting and takedown path.
+  - Requires consent before manifest generation touches a scope, before public submission, before contact, and before private exchange.
+  - Scans for secrets, emails, phone numbers, IDs, private paths, private URLs, long excerpts, and sensitive third-party data.
+  - Requires sensitivity declaration and redaction notes.
+  - Shows content commitment for manifest/package consistency without exposing content.
+  - Supports reporting and takedown path.
 - Deferrals: Strong PII detection, Merkle proof implementation, local LLM redaction, and policy-specific compliance modules.
 
 ### CAP-011 Admin And Moderation
@@ -193,10 +193,10 @@ Recommended path: use `APPROACH-C`. First define shared entities, permission bou
 - Dependencies: `CAP-004`, `CAP-006`, `CAP-008`, `CAP-010`.
 - Acceptance notes:
   - `FR-100` Show moderation queue by pending, flagged, reports, rate limits, and audit log.
-  - `FR-101` Show manifest risk level, privacy risk summary, issue list, and submitter signals.
-  - `FR-102` Allow approve/publish, reject, and request changes.
-  - `FR-103` Track admin action history.
-  - `FR-104` Support report handling and basic user/module sanctions.
+  - Includes manifest risk level, privacy risk summary, issue list, and submitter signals.
+  - Allows approve/publish, reject, and request changes.
+  - Tracks admin action history.
+  - Supports report handling and basic user/module sanctions.
 - Deferrals: Automated policy engine, batch moderation, appeal workflow, and advanced abuse detection.
 
 ### CAP-012 Open API And Agent-Readable Registry
@@ -207,9 +207,9 @@ Recommended path: use `APPROACH-C`. First define shared entities, permission bou
 - Dependencies: `CAP-002`, `CAP-003`, `CAP-005`, `CAP-006`, `CAP-009`, `CAP-010`.
 - Acceptance notes:
   - `FR-110` Provide read APIs for public modules, users, exchange records, and search.
-  - `FR-111` Provide authenticated submission and feedback operations once contracts are approved.
-  - `FR-112` Ensure API output never includes private content.
-  - `FR-113` Apply rate limits and abuse controls.
+  - Provides authenticated submission and feedback operations once contracts are approved.
+  - Ensures API output never includes private content.
+  - Applies rate limits and abuse controls.
 - Deferrals: GraphQL, webhooks, public registry mirror, and signed agent requests.
 
 ### CAP-013 Notifications
@@ -220,7 +220,7 @@ Recommended path: use `APPROACH-C`. First define shared entities, permission bou
 - Dependencies: `CAP-004`, `CAP-005`, `CAP-006`, future auth/session.
 - Acceptance notes:
   - `FR-120` Notify on exchange request, accept/reject, feedback due, module review result, and received feedback/comment.
-  - `FR-121` Keep MVP notification channel in-app unless a later decision adds email.
+  - Keeps the default notification channel in-app unless a later decision adds email.
 - Deferrals: Email, GitHub issue/comment notification, webhook, agent inbox.
 
 ## Non-Functional Requirements
@@ -235,39 +235,25 @@ Recommended path: use `APPROACH-C`. First define shared entities, permission bou
 | `NFR-006` | Abuse resistance | Social signals, feedback, submissions, and reports need identity checks, uniqueness constraints, rate limits, and audit trails before public launch. |
 | `NFR-007` | Accessible public website | Public pages must be keyboard-navigable and readable across desktop/mobile once frontend implementation begins. |
 
-## MVP Slicing
+## Full Target Product Scope
 
-### V0.1 Public Registry MVP
+Design scope is the complete target system expressed by the product notes and UI images. The design stage should not split the product into V0.1/V0.2/V0.3 releases. Implementation may still be sequenced later by dependency, risk, and parallel-agent ownership, but that sequencing must not shrink or redefine the target product.
 
-Goal: prove that agents can discover useful sanitized manifests without raw content exposure.
+The full target system includes:
 
-- Include `CAP-001`, `CAP-002`, minimal `CAP-003`, minimal `CAP-004`, `CAP-009` docs-only, and `CAP-010`.
-- Store or serve public manifests.
-- Support module list, module detail, manifest validation, privacy checklist, public card preview, and GitHub identity surface.
-- Exchange can be a request/contact intent, not a fully automated handoff.
+- Public discovery registry and global site shell.
+- Knowledge module detail pages with manifest preview, privacy boundary, source statistics, trust signals, and exchange entry.
+- Manifest submission workflow with local generation/import, privacy gate, public card preview, review, and private exchange package preparation.
+- Exchange request lifecycle and public exchange records that disclose relationships and outcomes without exposing private repository contents.
+- Structured feedback, trust scoring, contributor profiles, badges, and trust explanation surfaces.
+- Social signals such as favorites, recognitions, comments/feedback snippets, reports, and auditability.
+- Agent Skill / MCP tooling surface for local manifest creation, redaction, validation, private repo packaging, and feedback submission.
+- Privacy, safety, consent, content commitment, takedown, and moderation controls.
+- Admin/moderation workflow for reviewing manifests, reports, risk findings, rate-limit issues, and audit trails.
+- Agent-readable public APIs and authenticated write operations after contracts are approved.
+- In-app notification surfaces for exchange, review, feedback, and community events.
 
-### V0.2 Exchange And Trust MVP
-
-Goal: close the exchange feedback loop.
-
-- Add `CAP-005`, `CAP-006`, `CAP-007`, minimal `CAP-008`, and in-app `CAP-013`.
-- Track exchange lifecycle and public exchange records.
-- Collect structured feedback and compute first trust level.
-
-### V0.3 Operations And Agent Kit
-
-Goal: make the system governable and agent-friendly.
-
-- Add `CAP-011` moderation.
-- Add real `CAP-012` contracts.
-- Turn `CAP-009` from docs/mock UI into a CLI/MCP-capable agent kit.
-
-### V1.0 Automation And Network Effects
-
-Goal: scale matching and trust.
-
-- Add GitHub App private repo automation only after security review.
-- Add advanced recommendations, trust graph, signed agent identity, webhooks, and stronger privacy proof mechanisms.
+Implementation order will be decided later in product spec, business flow, domain model, IA, page spec, service contract, and module workflow stages. The likely dependency shape is: shared manifest/privacy/trust contracts first, then page/domain verticals, then integration and automation.
 
 ## Parallelization Candidates
 
@@ -282,20 +268,16 @@ Goal: scale matching and trust.
 | `PKG-007` Admin moderation vertical | `BACKEND_SPEC.md`, `MODULE_WORKFLOW_SPEC.md` | `CAP-011` review queue/actions | Submission model, risk scan model | Can follow after public submission pipeline. |
 | `PKG-008` Public API vertical | `SERVICE_CONTRACT.md` | `CAP-012` read/write operations | Domain model and auth | Should be contract-first. |
 
-## Open Questions For User Confirmation
+## User Confirmation
 
-| Question ID | Question | Default For Now | Why It Matters |
-| --- | --- | --- | --- |
-| `Q-001` | Should V0.1 prioritize a static registry + generated website, or an authenticated app with database from day one? | Static registry plus generated/public website first. | Controls stack, data model, hosting cost, and how quickly agents can consume manifests. |
-| `Q-002` | Should real exchange requests be in V0.1 or V0.2? | V0.2, with V0.1 limited to contact/request intent. | Avoids early auth/state complexity while privacy model is still settling. |
-| `Q-003` | Should admin/moderation ship in the first public release? | Minimal review workflow before public submission is opened; full admin UI later. | Public user submissions without review increase privacy and abuse risk. |
+The user confirmed that design should cover the complete product concept rather than dividing scope into V0.1/V0.2/V0.3. Later implementation sequencing is allowed, but the product specification should describe the whole intended system.
 
 ## Gate Result
 
 ```text
 Gate: 01-product-gate
-Status: needs-user-confirmation
+Status: pass
 Evidence: FUNCTION_OUTLINE.md compared against README.md, docs/mvp.md, docs/privacy-model.md, docs/data-contract.md, examples/knowledge-module.manifest.json, and docs/design/*.png. File existence checked with `test -f FUNCTION_OUTLINE.md`.
-Findings: The capability map is intentionally broad because the UI set covers discovery, detail, exchange, trust, Agent skills, submission, and moderation. MVP slicing is included to control scope.
-Decision: Continue only after user confirms or revises Q-001 through Q-003 and the MVP slicing.
+Findings: The capability map is intentionally broad because the UI set covers discovery, detail, exchange, trust, Agent skills, submission, moderation, APIs, and notifications. Scope is full target product design; implementation sequencing is deferred to downstream artifacts.
+Decision: Continue to product spec.
 ```

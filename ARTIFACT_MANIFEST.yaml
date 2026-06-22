@@ -1,8 +1,8 @@
 project:
   name: "Know-share"
   artifact_root: "."
-  current_stage: "01-project-kickoff"
-  frontier: "01-project-kickoff"
+  current_stage: "02-product-brainstorming"
+  frontier: "02-product-brainstorming"
   updated_at: "2026-06-22"
   work_branch: "main"
 
@@ -21,16 +21,16 @@ stages:
     invalidated_by: []
     notes: "Gate evidence: `test -f ARTIFACT_MANIFEST.yaml && test -f ID_REGISTRY.md && test -f DECISION_LOG.md && test -f TRACEABILITY_MATRIX.md && test -f PROJECT_CONTEXT.md && test -f DEFAULT_ASSUMPTIONS.md` returned `intake-files-present`; source files present: README.md, docs/mvp.md, docs/privacy-model.md, docs/data-contract.md, examples/knowledge-module.manifest.json, and 7 design PNGs."
   "01-project-kickoff":
-    status: "not-started"
+    status: "passed"
     artifacts:
       - path: "AGENTS.md"
         role: "agent-rules"
     depends_on: ["00-intake"]
     gate: "00-intake-gate"
-    gate_status: "not-run"
+    gate_status: "pass"
     confirmation_required: true
     invalidated_by: []
-    notes: ""
+    notes: "Gate evidence: `test -f AGENTS.md && test -f PROJECT_CONTEXT.md && test -f DEFAULT_ASSUMPTIONS.md` returned success. Confirmation recorded in DEC-003."
   "02-product-brainstorming":
     status: "not-started"
     artifacts:
@@ -239,7 +239,7 @@ open_items:
     description: "Create project-level AGENTS.md before assigning implementation work to parallel agents."
     owner: "agent"
     revisit_trigger: "Before stage 02 product brainstorming is marked passed."
-    status: "open"
+    status: "closed"
   - id: "OPEN-002"
     stage: "02-product-brainstorming"
     type: "question"

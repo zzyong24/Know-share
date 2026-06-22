@@ -36,6 +36,21 @@ Revisit Trigger: If the user asks to abandon staged artifacts and implement dire
 Status: active
 ```
 
+```text
+ID: DEC-003
+Date: 2026-06-22
+Stage: 01-project-kickoff
+Type: user-confirmation
+Decision: Use `Know-share` as the project name, `/Users/zyongzhu/Workbase/Know-share` as the active artifact root, and personal agents plus their human owners as the target audience.
+Rationale: The repository README names the product Know-share and defines the agent/user audience; the user asked to continue this product in the current project using the product-to-code workflow.
+Source: README.md; PROJECT_CONTEXT.md; user message on 2026-06-22.
+Affected Artifacts: AGENTS.md, ARTIFACT_MANIFEST.yaml, PROJECT_CONTEXT.md
+Invalidates: none
+Owner: user
+Revisit Trigger: If the project is renamed, moved, or retargeted to a different primary audience.
+Status: active
+```
+
 ## Completion Standard
 
 - Any A-level question answer is recorded.

@@ -1,53 +1,53 @@
-# Privacy Model
+# 隐私模型
 
-Know-share should be designed around one rule: the public registry contains only discovery metadata, never the user's private knowledge base.
+Know-share 的设计应围绕一条规则：公共注册表只包含用于发现的元数据，绝不包含用户的私有知识库。
 
-## Privacy boundaries
+## 隐私边界
 
-### Local-only
+### 仅限本地
 
-These stay on the user's machine unless the user explicitly shares them in a private exchange:
+除非用户在一次私有交换中明确分享，否则以下内容只保留在用户的机器上：
 
-- Raw notes and documents
-- Full excerpts
-- Embeddings derived from private content
-- Private repository URLs
-- Internal tags that reveal sensitive context
-- Names, identities, or relationship details about third parties
+- 原始笔记和文档
+- 完整摘录
+- 由私有内容衍生出的 embedding
+- 私有仓库 URL
+- 会泄露敏感上下文的内部标签
+- 关于第三方的姓名、身份或关系细节
 
-### Public manifest
+### 公共清单
 
-These can be published after user review:
+以下内容可以在用户审阅后发布：
 
-- High-level topic labels
-- Short module summary
-- Covered question list
-- Time range and freshness
-- Source categories
-- Exchange expectations
-- Contact method chosen by the user
-- Sensitivity level and redaction notes
+- 高层级的主题标签
+- 简短的知识模块摘要
+- 所涵盖问题的列表
+- 时间范围与时效性
+- 来源类别
+- 交换预期
+- 用户选择的联系方式
+- 敏感性级别与脱敏处理说明
 
-### Private exchange
+### 私有交换
 
-Actual knowledge exchange should happen after both owners approve it. A practical first path is a GitHub private repository, where one owner can invite the other as a collaborator for a selected sanitized package or curated subset.
+真正的知识交换应在双方所有者批准之后进行。一条切实可行的首选路径是 GitHub 私有仓库，由一方所有者邀请另一方作为协作者，针对选定的脱敏包或经过精选的子集进行交换。
 
-## Required consent points
+## 必需的同意环节
 
-1. Before manifest generation touches a folder or vault section.
-2. Before the generated manifest is submitted publicly.
-3. Before a contact request is sent.
-4. Before any private repository, file, or note subset is shared.
+1. 在清单生成过程触及某个文件夹或 vault 区段之前。
+2. 在生成的清单被公开提交之前。
+3. 在发送联系请求之前。
+4. 在分享任何私有仓库、文件或笔记子集之前。
 
-## Redaction checklist
+## 脱敏处理清单
 
-- Remove names, emails, phone numbers, addresses, and account IDs.
-- Remove secrets, tokens, credentials, and private links.
-- Replace specific people or companies with generalized roles when needed.
-- Avoid long verbatim excerpts.
-- Keep examples synthetic unless the user explicitly approves otherwise.
-- Mark sensitive domains such as health, finance, legal, workplace, or relationships.
+- 移除姓名、邮箱、电话号码、地址和账户 ID。
+- 移除机密、令牌、凭据和私有链接。
+- 在需要时，用泛化的角色替换具体的人员或公司。
+- 避免长段的逐字摘录。
+- 除非用户明确批准，否则保持示例为合成内容。
+- 标注敏感领域，例如健康、金融、法律、职场或人际关系。
 
-## Matching without leakage
+## 无泄露的撮合
 
-Matching should happen primarily on the consuming agent's side. The registry exposes enough metadata for discovery, while each user's private interests and ranking logic can remain local.
+撮合应主要在消费方 agent 侧进行。注册表暴露足够的元数据以供发现，而每位用户的私有兴趣和排序逻辑可以保留在本地。

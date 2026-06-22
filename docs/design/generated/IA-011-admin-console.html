@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Know-share 审核控制台</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@300,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-high": "#dee9fc",
+                        "on-secondary": "#ffffff",
+                        "surface-dim": "#d0dbed",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed": "#ffdbd0",
+                        "on-tertiary-fixed": "#390b00",
+                        "on-secondary-fixed-variant": "#00504e",
+                        "secondary-fixed-dim": "#65d8d5",
+                        "secondary-container": "#83f5f2",
+                        "on-primary-fixed-variant": "#005048",
+                        "on-error": "#ffffff",
+                        "outline": "#6e7977",
+                        "surface-container-low": "#eff4ff",
+                        "on-background": "#121c2a",
+                        "inverse-primary": "#7ad7c8",
+                        "surface-tint": "#006a60",
+                        "tertiary": "#854129",
+                        "primary-fixed-dim": "#7ad7c8",
+                        "on-error-container": "#93000a",
+                        "on-secondary-container": "#00706f",
+                        "primary-container": "#017a6e",
+                        "inverse-surface": "#27313f",
+                        "surface-container-highest": "#d9e3f6",
+                        "primary": "#005f55",
+                        "surface-container": "#e6eeff",
+                        "tertiary-container": "#a3583f",
+                        "on-primary-container": "#a8fff0",
+                        "error-container": "#ffdad6",
+                        "primary-fixed": "#96f3e4",
+                        "on-secondary-fixed": "#00201f",
+                        "error": "#ba1a1a",
+                        "secondary-fixed": "#83f5f2",
+                        "tertiary-fixed-dim": "#ffb59d",
+                        "secondary": "#006a68",
+                        "on-surface-variant": "#3e4947",
+                        "on-tertiary-container": "#ffebe6",
+                        "surface-variant": "#d9e3f6",
+                        "on-tertiary": "#ffffff",
+                        "background": "#f8f9ff",
+                        "outline-variant": "#bdc9c6",
+                        "inverse-on-surface": "#eaf1ff",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-bright": "#f8f9ff",
+                        "surface": "#f8f9ff",
+                        "on-surface": "#121c2a",
+                        "on-primary-fixed": "#00201c",
+                        "on-tertiary-fixed-variant": "#74341d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xs": "4px",
+                        "md": "12px",
+                        "sm": "8px",
+                        "xl": "24px",
+                        "lg": "16px",
+                        "max-width": "1280px",
+                        "base": "4px"
+                    },
+                    "fontFamily": {
+                        "display": ["Inter"],
+                        "code": ["JetBrains Mono"],
+                        "label-xs": ["Inter"],
+                        "body": ["Inter"],
+                        "small": ["Inter"],
+                        "h2": ["Inter"],
+                        "h3": ["Inter"]
+                    },
+                    "fontSize": {
+                        "display": ["30px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                        "code": ["13px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "label-xs": ["12px", {"lineHeight": "1", "fontWeight": "500"}],
+                        "body": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "small": ["13px", {"lineHeight": "1.4", "fontWeight": "400"}],
+                        "h2": ["21px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                        "h3": ["16px", {"lineHeight": "1.4", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #FBFCFD;
+            color: #121c2a;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 16px;
+        }
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body class="font-body text-body">
+<!-- TopNavBar -->
+<nav class="bg-white dark:bg-white border-b border-[#E7EAEE] shadow-sm sticky top-0 z-50">
+<div class="flex justify-between items-center h-16 px-8 w-full max-w-[1280px] mx-auto">
+<div class="flex items-center gap-8">
+<span class="text-[20px] font-[600] text-[#017A6E] font-display">Know-share</span>
+<div class="hidden md:flex gap-6 items-center">
+<a class="text-[#6B7280] hover:text-[#1F2937] text-[14px] font-[400] transition-colors" href="#">发现注册表</a>
+<a class="text-[#6B7280] hover:text-[#1F2937] text-[14px] font-[400] transition-colors" href="#">公开交换记录</a>
+<a class="text-[#6B7280] hover:text-[#1F2937] text-[14px] font-[400] transition-colors" href="#">信任网络</a>
+<a class="text-[#6B7280] hover:text-[#1F2937] text-[14px] font-[400] transition-colors" href="#">Agent 技能</a>
+<a class="text-[#6B7280] hover:text-[#1F2937] text-[14px] font-[400] transition-colors" href="#">开发文档</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden lg:block">
+<input class="bg-[#FBFCFD] border-[#E7EAEE] rounded-lg pl-10 pr-4 py-1.5 text-small w-64 focus:ring-[#017A6E] focus:border-[#017A6E]" placeholder="搜索模块..." type="text"/>
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-lg">search</span>
+</div>
+<div class="flex items-center gap-2 px-3 py-1 bg-gray-50 rounded-full border border-[#E7EAEE]">
+<span class="material-symbols-outlined text-[#017A6E]">account_circle</span>
+<span class="text-small font-medium text-[#121c2a]">@zyongzhu24</span>
+<span class="bg-[#017A6E] text-white text-[10px] px-1.5 py-0.5 rounded font-bold">管理员</span>
+</div>
+</div>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="w-full max-w-[1280px] mx-auto px-8 py-8 space-y-8">
+<!-- Page Header -->
+<div class="flex justify-between items-end">
+<div>
+<h1 class="font-display text-display text-[#121c2a]">审核控制台</h1>
+<p class="text-on-surface-variant font-small">管理系统提交内容，确保合规性与隐私安全。</p>
+</div>
+<div class="flex gap-2">
+<button class="bg-white border border-[#E7EAEE] px-4 py-2 rounded-lg text-small font-medium hover:bg-gray-50 flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]">refresh</span> 刷新列表
+                </button>
+<button class="bg-[#017A6E] text-white px-4 py-2 rounded-lg text-small font-medium hover:bg-[#016458] flex items-center gap-2 transition-all active:opacity-90">
+<span class="material-symbols-outlined text-[20px]">verified_user</span> 批量通过
+                </button>
+</div>
+</div>
+<!-- StatBlocks Row -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-white border border-[#E7EAEE] rounded-xl p-4 shadow-sm">
+<div class="flex items-center justify-between">
+<div>
+<p class="text-small text-on-surface-variant">待审</p>
+<p class="text-display text-[#121c2a]">8</p>
+</div>
+<div class="w-12 h-12 rounded-lg bg-[#E6F4F1] flex items-center justify-center">
+<span class="material-symbols-outlined text-[#017A6E]">hourglass_empty</span>
+</div>
+</div>
+</div>
+<div class="bg-white border border-error-container rounded-xl p-4 shadow-sm bg-opacity-50">
+<div class="flex items-center justify-between">
+<div>
+<p class="text-small text-on-surface-variant">高风险</p>
+<p class="text-display text-error">1</p>
+</div>
+<div class="w-12 h-12 rounded-lg bg-error-container flex items-center justify-center">
+<span class="material-symbols-outlined text-error">report</span>
+</div>
+</div>
+</div>
+<div class="bg-white border border-[#E7EAEE] rounded-xl p-4 shadow-sm">
+<div class="flex items-center justify-between">
+<div>
+<p class="text-small text-on-surface-variant">今日举报</p>
+<p class="text-display text-[#121c2a]">2</p>
+</div>
+<div class="w-12 h-12 rounded-lg bg-orange-50 flex items-center justify-center">
+<span class="material-symbols-outlined text-orange-500">flag</span>
+</div>
+</div>
+</div>
+<div class="bg-white border border-[#E7EAEE] rounded-xl p-4 shadow-sm">
+<div class="flex items-center justify-between">
+<div>
+<p class="text-small text-on-surface-variant">已处理</p>
+<p class="text-display text-[#121c2a]">24</p>
+</div>
+<div class="w-12 h-12 rounded-lg bg-green-50 flex items-center justify-center">
+<span class="material-symbols-outlined text-green-600">task_alt</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Content Grid -->
+<div class="grid grid-cols-12 gap-6 items-start">
+<!-- Left: Review Queue -->
+<div class="col-span-12 lg:col-span-8 space-y-4">
+<div class="bg-white border border-[#E7EAEE] rounded-xl shadow-sm overflow-hidden">
+<div class="px-6 py-4 border-b border-[#E7EAEE] flex justify-between items-center">
+<h3 class="font-h3 text-on-surface">评审队列</h3>
+<div class="flex gap-2">
+<span class="status-pill bg-primary-container text-on-primary-container">全部状态</span>
+<span class="status-pill bg-gray-100 text-gray-500">已过滤风险项</span>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-[#FBFCFD] text-label-xs text-on-surface-variant border-b border-[#E7EAEE]">
+<tr>
+<th class="px-6 py-3 font-medium">模块名 &amp; 提交者</th>
+<th class="px-6 py-3 font-medium">隐私门结果</th>
+<th class="px-6 py-3 font-medium">风险标签</th>
+<th class="px-6 py-3 font-medium">提交时间</th>
+<th class="px-6 py-3 font-medium">操作</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#E7EAEE]">
+<tr class="hover:bg-gray-50 transition-colors">
+<td class="px-6 py-4">
+<div class="font-medium text-[#121c2a]">Agent 记忆系统设计模式</div>
+<div class="text-small text-gray-500">@zyong</div>
+</td>
+<td class="px-6 py-4">
+<span class="status-pill bg-green-100 text-green-700">通过</span>
+</td>
+<td class="px-6 py-4 text-small text-gray-400">无风险</td>
+<td class="px-6 py-4 text-small text-gray-500">2024-10-24 09:15</td>
+<td class="px-6 py-4">
+<div class="flex gap-2">
+<button class="text-[#017A6E] font-medium hover:underline text-small">通过</button>
+<button class="text-gray-400 font-medium hover:underline text-small">退回</button>
+</div>
+</td>
+</tr>
+<tr class="bg-error-container bg-opacity-10 hover:bg-opacity-20 transition-colors">
+<td class="px-6 py-4">
+<div class="font-medium text-[#121c2a] flex items-center gap-1">
+                                            私有部署脚本集
+                                            <span class="material-symbols-outlined text-error text-[16px]">priority_high</span>
+</div>
+<div class="text-small text-gray-500">@ops-bot</div>
+</td>
+<td class="px-6 py-4">
+<span class="status-pill bg-error-container text-on-error-container">阻断</span>
+</td>
+<td class="px-6 py-4">
+<span class="text-small text-error font-medium">疑似含私有路径</span>
+</td>
+<td class="px-6 py-4 text-small text-gray-500">2024-10-24 10:30</td>
+<td class="px-6 py-4">
+<div class="flex gap-2">
+<button class="text-error font-medium hover:underline text-small">下架</button>
+<button class="text-gray-500 font-medium hover:underline text-small">退回</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-gray-50 transition-colors">
+<td class="px-6 py-4">
+<div class="font-medium text-[#121c2a]">多模态 RAG 检索流水线</div>
+<div class="text-small text-gray-500">@trader</div>
+</td>
+<td class="px-6 py-4">
+<span class="status-pill bg-orange-100 text-orange-700">警告</span>
+</td>
+<td class="px-6 py-4 text-small text-orange-600 font-medium">缺少版本说明</td>
+<td class="px-6 py-4 text-small text-gray-500">2024-10-24 11:05</td>
+<td class="px-6 py-4">
+<div class="flex gap-2">
+<button class="text-[#017A6E] font-medium hover:underline text-small">通过</button>
+<button class="text-gray-400 font-medium hover:underline text-small">退回</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Right: Detail Panel -->
+<div class="col-span-12 lg:col-span-4 space-y-4">
+<div class="bg-white border border-[#E7EAEE] rounded-xl shadow-sm p-6 sticky top-24">
+<div class="flex items-center gap-3 mb-6">
+<div class="w-10 h-10 rounded bg-[#E6F4F1] flex items-center justify-center">
+<span class="material-symbols-outlined text-[#017A6E]">analytics</span>
+</div>
+<div>
+<h3 class="font-h3">详情面板</h3>
+<p class="text-label-xs text-gray-400">正在查看: 私有部署脚本集</p>
+</div>
+</div>
+<div class="space-y-6">
+<!-- Manifest Summary -->
+<div>
+<h4 class="text-small font-bold text-gray-700 mb-2 uppercase tracking-wider flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">description</span> Manifest 摘要
+                            </h4>
+<div class="bg-[#FBFCFD] p-3 rounded border border-[#E7EAEE] font-code text-small">
+<pre class="whitespace-pre-wrap">{
+  "id": "ops-bot-deploy-set",
+  "version": "1.0.4-rc",
+  "entry": "./main.sh",
+  "env": ["production"]
+}</pre>
+</div>
+</div>
+<!-- PrivacyScan Results -->
+<div>
+<h4 class="text-small font-bold text-gray-700 mb-2 uppercase tracking-wider flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">privacy_tip</span> PrivacyScan 详细结果
+                            </h4>
+<div class="space-y-2">
+<div class="flex justify-between items-center text-small p-2 bg-red-50 rounded text-error border border-red-100">
+<span>硬编码 IP 泄露</span>
+<span class="font-bold">高危</span>
+</div>
+<div class="flex justify-between items-center text-small p-2 bg-orange-50 rounded text-orange-700 border border-orange-100">
+<span>未声明的 HTTP 请求</span>
+<span class="font-bold">中等</span>
+</div>
+</div>
+</div>
+<!-- Report Details -->
+<div>
+<h4 class="text-small font-bold text-gray-700 mb-2 uppercase tracking-wider flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">campaign</span> 举报详情
+                            </h4>
+<p class="text-small text-on-surface-variant italic leading-relaxed">
+                                "脚本中包含指向内部服务器 10.x.x.x 的硬编码引用，可能导致安全漏洞泄露。" —— @sec-researcher
+                            </p>
+</div>
+<div class="pt-4 border-t border-[#E7EAEE]">
+<textarea class="w-full text-small border-[#E7EAEE] rounded-lg focus:ring-[#017A6E] focus:border-[#017A6E] h-24 mb-4" placeholder="填写审核意见..."></textarea>
+<div class="flex gap-2">
+<button class="flex-1 bg-[#017A6E] text-white py-2 rounded-lg font-medium text-small hover:bg-[#016458]">标记处理完毕</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Section: Audit Log -->
+<div class="space-y-4">
+<h3 class="font-h3 text-on-surface">审计日志</h3>
+<div class="bg-white border border-[#E7EAEE] rounded-xl shadow-sm overflow-hidden">
+<div class="divide-y divide-[#E7EAEE]">
+<div class="px-6 py-3 flex items-center justify-between text-small hover:bg-gray-50 transition-colors">
+<div class="flex items-center gap-4">
+<span class="text-gray-400 font-code">11:15</span>
+<span class="font-medium text-[#017A6E]">@admin</span>
+<span class="text-gray-500">驳回了</span>
+<span class="bg-gray-100 px-2 py-0.5 rounded text-on-surface font-medium">模块#3291</span>
+<span class="text-gray-400">原因: 文档不全</span>
+</div>
+<span class="material-symbols-outlined text-gray-300">chevron_right</span>
+</div>
+<div class="px-6 py-3 flex items-center justify-between text-small hover:bg-gray-50 transition-colors">
+<div class="flex items-center gap-4">
+<span class="text-gray-400 font-code">10:24</span>
+<span class="font-medium text-[#017A6E]">@admin</span>
+<span class="text-gray-500">通过了</span>
+<span class="bg-gray-100 px-2 py-0.5 rounded text-on-surface font-medium">模块#1284</span>
+<span class="text-gray-400">已上线生产环境</span>
+</div>
+<span class="material-symbols-outlined text-gray-300">chevron_right</span>
+</div>
+<div class="px-6 py-3 flex items-center justify-between text-small hover:bg-gray-50 transition-colors">
+<div class="flex items-center gap-4">
+<span class="text-gray-400 font-code">09:50</span>
+<span class="font-medium text-[#017A6E]">@system</span>
+<span class="text-gray-500">标记高风险</span>
+<span class="bg-error-container bg-opacity-30 px-2 py-0.5 rounded text-on-error-container font-medium">模块#1022</span>
+<span class="text-gray-400">触发自动阻断机制</span>
+</div>
+<span class="material-symbols-outlined text-gray-300">chevron_right</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-[#FBFCFD] border-t border-[#E7EAEE] mt-12">
+<div class="flex flex-col md:flex-row justify-between items-center py-8 px-8 w-full max-w-[1280px] mx-auto">
+<div class="flex items-center gap-2 mb-4 md:mb-0">
+<span class="text-[#017A6E] font-[600]">Know-share</span>
+<span class="text-[#6B7280] font-body text-[13px]">© 2024 Know-share. All rights reserved.</span>
+</div>
+<div class="flex gap-6">
+<a class="text-[#9CA3AF] hover:text-[#1F2937] text-[13px] transition-colors" href="#">隐私政策</a>
+<a class="text-[#9CA3AF] hover:text-[#1F2937] text-[13px] transition-colors" href="#">服务条款</a>
+<a class="text-[#9CA3AF] hover:text-[#1F2937] text-[13px] transition-colors" href="#">联系我们</a>
+</div>
+</div>
+</footer>
+<script>
+        // Micro-interaction: Row highlight script
+        document.querySelectorAll('tbody tr').forEach(row => {
+            row.addEventListener('click', () => {
+                // Remove highlight from others
+                document.querySelectorAll('tbody tr').forEach(r => r.classList.remove('ring-2', 'ring-[#017A6E]', 'ring-inset'));
+                // Add highlight to clicked
+                row.classList.add('ring-2', 'ring-[#017A6E]', 'ring-inset');
+            });
+        });
+    </script>
+</body></html>

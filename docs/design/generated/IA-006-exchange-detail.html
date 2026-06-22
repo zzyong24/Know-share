@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            DEFAULT: '#017A6E',
+                            hover: '#016458',
+                            tint: '#E6F4F1'
+                        },
+                        accent: '#019997',
+                        background: '#FBFCFD',
+                        card: '#FFFFFF',
+                        border: '#E7EAEE',
+                        text: {
+                            primary: '#1F2937',
+                            muted: '#6B7280',
+                            subtle: '#9CA3AF'
+                        },
+                        status: {
+                            success: '#16A34A',
+                            warning: '#D97706',
+                            danger: '#DC2626',
+                            info: '#2563EB'
+                        }
+                    },
+                    borderRadius: {
+                        'DEFAULT': '0.5rem',
+                        'lg': '0.75rem', // 12px
+                        'xl': '1rem',
+                        'full': '9999px'
+                    },
+                    fontFamily: {
+                        headline: ['Inter', 'sans-serif'],
+                        display: ['Inter', 'sans-serif'],
+                        body: ['Inter', 'sans-serif'],
+                        label: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            font-size: 20px;
+        }
+        body {
+            font-family: 'Inter', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background-color: #FBFCFD;
+            color: #1F2937;
+        }
+        .lucide-icon {
+            stroke: currentColor;
+            stroke-width: 1.5px;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+<!-- TopNavBar -->
+<nav class="sticky top-0 z-50 bg-white border-b border-[#E7EAEE] shadow-sm w-full">
+<div class="flex justify-between items-center h-16 px-8 w-full max-w-[1280px] mx-auto">
+<div class="flex items-center gap-8">
+<div class="text-[20px] font-[600] text-[#017A6E] flex items-center gap-2">
+<span class="w-8 h-8 bg-[#017A6E] rounded-lg flex items-center justify-center text-white text-lg">K</span>
+<span>Know-share</span>
+</div>
+<div class="hidden md:flex items-center gap-6">
+<a class="text-[#6B7280] hover:text-[#1F2937] font-headline text-[14px] font-[400] transition-colors" href="#">发现注册表</a>
+<a class="text-[#017A6E] font-[600] border-b-2 border-[#017A6E] pb-1 font-headline text-[14px]" href="#">公开交换记录</a>
+<a class="text-[#6B7280] hover:text-[#1F2937] font-headline text-[14px] font-[400] transition-colors" href="#">信任网络</a>
+<a class="text-[#6B7280] hover:text-[#1F2937] font-headline text-[14px] font-[400] transition-colors" href="#">Agent 技能</a>
+<a class="text-[#6B7280] hover:text-[#1F2937] font-headline text-[14px] font-[400] transition-colors" href="#">开发文档</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden lg:block w-64">
+<input class="w-full pl-10 pr-4 py-1.5 bg-gray-50 border border-[#E7EAEE] rounded-lg text-sm focus:ring-1 focus:ring-primary focus:border-primary outline-none" placeholder="搜索模块或用户..." type="text"/>
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-text-subtle">search</span>
+</div>
+<button class="bg-[#017A6E] text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-[#016458] transition-all active:opacity-90">
+                    提交模块
+                </button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-[#E7EAEE]">
+<img class="w-full h-full object-cover" data-alt="A clean, professional headshot of a software engineer for a GitHub profile avatar, set against a soft, neutral studio background with high-key lighting to match a modern light-mode UI. The individual is looking directly at the camera with a friendly, competent expression. The overall aesthetic is minimalist, tech-focused, and high-quality." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAA29ZD4mAULHJTaGGTIUn04uXtACniSQbCx0hvhrSvEQnOkB9OQnAhba0mC94einA46s8YhBqLysYVS3t8G12pXkP9pd76CTnUFIsLJImlVhzOyjBpwW04w1evzTrQGLG50_MOtR8A2HQS3DwYkD-gwIBaeOq-GvWsxMRqjMgPBFR6Qz5iwKeK66XZ2ZLvIq7bd89HGlf446Joyh_d_xIkpoiC7ICK-dgumC-XiW5rrmFdJX3pSTqqwR82vc5XZRkHrgKxJziAqtc"/>
+</div>
+</div>
+</div>
+</nav>
+<!-- Page Header / Breadcrumb -->
+<header class="w-full max-w-[1280px] mx-auto px-8 pt-8 pb-4">
+<nav class="flex items-center gap-2 text-sm text-text-muted mb-4">
+<a class="hover:text-primary transition-colors" href="#">公开交换记录</a>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="text-text-primary font-medium">交换详情</span>
+</nav>
+<div class="flex justify-between items-end">
+<div>
+<h1 class="text-2xl font-semibold text-text-primary tracking-tight">交换详情</h1>
+<p class="text-text-muted mt-1">交换编号: #EX-2024-8842 · 发起时间: 2024年10月12日</p>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="w-full max-w-[1280px] mx-auto px-8 pb-20 grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Left Column (2/3) -->
+<div class="lg:col-span-2 space-y-6">
+<!-- Vertical Exchange Timeline -->
+<section class="bg-card border border-border rounded-lg p-6">
+<h3 class="text-base font-semibold mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">analytics</span>
+                    交换进度
+                </h3>
+<div class="relative">
+<!-- Line -->
+<div class="absolute left-[19px] top-4 bottom-4 w-[2px] bg-border"></div>
+<div class="space-y-8">
+<!-- Step 1 -->
+<div class="relative flex items-start gap-6 pl-10">
+<div class="absolute left-0 w-10 h-10 rounded-full border-2 border-primary bg-primary-tint flex items-center justify-center z-10 text-primary">
+<svg class="lucide-icon w-5 h-5" viewbox="0 0 24 24"><path d="M12 20h9"></path><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"></path></svg>
+</div>
+<div>
+<p class="text-sm font-semibold text-text-primary">已发起交换</p>
+<p class="text-xs text-text-muted">2024-10-12 14:30 · 由 @knowledge-trader 发起</p>
+</div>
+</div>
+<!-- Step 2 (Active) -->
+<div class="relative flex items-start gap-6 pl-10">
+<div class="absolute left-0 w-10 h-10 rounded-full border-2 border-primary bg-primary flex items-center justify-center z-10 text-white">
+<svg class="lucide-icon w-5 h-5" viewbox="0 0 24 24"><path d="m9 11 3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+</div>
+<div>
+<p class="text-sm font-semibold text-primary">已接受交换请求</p>
+<p class="text-xs text-text-muted">2024-10-13 09:15 · 等待双方交付模块</p>
+</div>
+</div>
+<!-- Step 3 -->
+<div class="relative flex items-start gap-6 pl-10">
+<div class="absolute left-0 w-10 h-10 rounded-full border-2 border-border bg-white flex items-center justify-center z-10 text-text-subtle">
+<svg class="lucide-icon w-5 h-5" viewbox="0 0 24 24"><rect height="18" rx="2" width="18" x="3" y="3"></rect><path d="M7 7h10"></path><path d="M7 12h10"></path><path d="M7 17h10"></path></svg>
+</div>
+<div>
+<p class="text-sm font-semibold text-text-muted">待交付模块</p>
+<p class="text-xs text-text-subtle">预计交付: 2024-10-15</p>
+</div>
+</div>
+<!-- Step 4 -->
+<div class="relative flex items-start gap-6 pl-10">
+<div class="absolute left-0 w-10 h-10 rounded-full border-2 border-border bg-white flex items-center justify-center z-10 text-text-subtle">
+<svg class="lucide-icon w-5 h-5" viewbox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><path d="m9 11 3 3L22 4"></path></svg>
+</div>
+<div>
+<p class="text-sm font-semibold text-text-muted">完成交换</p>
+<p class="text-xs text-text-subtle">流程结束</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Module Summary Card -->
+<section class="bg-card border border-border rounded-lg overflow-hidden">
+<div class="p-6 border-b border-border bg-gray-50/50">
+<h3 class="text-base font-semibold">交换内容摘要</h3>
+</div>
+<div class="p-6">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 relative">
+<!-- Connector -->
+<div class="hidden md:flex absolute inset-0 items-center justify-center pointer-events-none">
+<div class="w-10 h-10 rounded-full bg-white border border-border shadow-sm flex items-center justify-center z-10">
+<span class="material-symbols-outlined text-primary">sync</span>
+</div>
+</div>
+<!-- Left Side: Target Module -->
+<div class="space-y-4">
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 bg-primary-tint text-primary text-[11px] font-bold rounded uppercase">请求交换</span>
+</div>
+<div class="p-4 border border-border rounded-lg hover:border-primary transition-all group">
+<div class="flex items-start gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary/5 flex items-center justify-center shrink-0">
+<svg class="lucide-icon w-6 h-6 text-primary" viewbox="0 0 24 24"><path d="M12 2v20"></path><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+</div>
+<div>
+<h4 class="font-semibold text-text-primary group-hover:text-primary transition-colors">Agent 记忆系统设计模式</h4>
+<p class="text-xs text-text-muted mt-1 line-clamp-2">包含长短期记忆管理、向量数据库接入层以及上下文修剪算法。适用于生产级 LLM 应用。</p>
+<div class="flex items-center gap-3 mt-3">
+<span class="text-[11px] text-text-subtle flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">star</span> 4.8</span>
+<span class="text-[11px] text-text-subtle flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">terminal</span> Python / Node.js</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Side: Offered Module -->
+<div class="space-y-4">
+<div class="flex items-center gap-2 justify-end">
+<span class="px-2 py-0.5 bg-gray-100 text-text-muted text-[11px] font-bold rounded uppercase">对等提供</span>
+</div>
+<div class="p-4 border border-border rounded-lg hover:border-accent transition-all group">
+<div class="flex items-start gap-3">
+<div class="w-10 h-10 rounded-lg bg-accent/5 flex items-center justify-center shrink-0">
+<svg class="lucide-icon w-6 h-6 text-accent" viewbox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" x2="12" y1="22.08" y2="12"></line></svg>
+</div>
+<div>
+<h4 class="font-semibold text-text-primary group-hover:text-accent transition-colors">多模态 RAG 检索流水线</h4>
+<p class="text-xs text-text-muted mt-1 line-clamp-2">支持 PDF、表格、图表联合索引与多路召回重排序。含端到端评测套件。</p>
+<div class="flex items-center gap-3 mt-3">
+<span class="text-[11px] text-text-subtle flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">verified</span> 高信任度</span>
+<span class="text-[11px] text-text-subtle flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">description</span> 12份文档</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Verification Summary -->
+<section class="bg-card border border-border rounded-lg p-6">
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-base font-semibold flex items-center gap-2">
+<span class="material-symbols-outlined text-status-success">verified_user</span>
+                        自动验证状态
+                    </h3>
+<span class="text-xs text-text-muted">由 Know-share 协议自动执行</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div class="p-3 bg-gray-50 rounded-lg border border-border">
+<div class="flex items-center gap-2 text-status-success mb-1">
+<span class="material-symbols-outlined text-[18px]">check_circle</span>
+<span class="text-xs font-semibold">身份已核实</span>
+</div>
+<p class="text-[11px] text-text-muted">双方 GitHub 认证已通过，关联仓库权限制备中。</p>
+</div>
+<div class="p-3 bg-gray-50 rounded-lg border border-border">
+<div class="flex items-center gap-2 text-status-success mb-1">
+<span class="material-symbols-outlined text-[18px]">check_circle</span>
+<span class="text-xs font-semibold">模块所有权</span>
+</div>
+<p class="text-[11px] text-text-muted">系统检测到双方账号拥有对应模块的发布或贡献权限。</p>
+</div>
+<div class="p-3 bg-gray-50 rounded-lg border border-dashed border-text-subtle">
+<div class="flex items-center gap-2 text-text-subtle mb-1">
+<span class="material-symbols-outlined text-[18px]">hourglass_empty</span>
+<span class="text-xs font-semibold">交付物完整性</span>
+</div>
+<p class="text-[11px] text-text-subtle">等待双方将模块代码或文档链接提交至交换通道。</p>
+</div>
+</div>
+</section>
+<!-- Feedback Section (Empty/Locked State) -->
+<section class="bg-card border border-border rounded-lg p-6">
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-base font-semibold flex items-center gap-2">
+<span class="material-symbols-outlined text-text-muted">rate_review</span>
+                        评价与反馈
+                    </h3>
+<span class="px-2 py-0.5 bg-gray-100 text-text-subtle text-[11px] font-medium rounded">待交换完成后开启</span>
+</div>
+<div class="flex flex-col md:flex-row gap-8 opacity-40 select-none grayscale">
+<div class="flex-1">
+<label class="text-xs font-medium text-text-muted mb-2 block">内容质量</label>
+<div class="flex gap-1">
+<span class="material-symbols-outlined text-gray-300">star</span>
+<span class="material-symbols-outlined text-gray-300">star</span>
+<span class="material-symbols-outlined text-gray-300">star</span>
+<span class="material-symbols-outlined text-gray-300">star</span>
+<span class="material-symbols-outlined text-gray-300">star</span>
+</div>
+</div>
+<div class="flex-1">
+<label class="text-xs font-medium text-text-muted mb-2 block">沟通协作</label>
+<div class="flex gap-1">
+<span class="material-symbols-outlined text-gray-300">star</span>
+<span class="material-symbols-outlined text-gray-300">star</span>
+<span class="material-symbols-outlined text-gray-300">star</span>
+<span class="material-symbols-outlined text-gray-300">star</span>
+<span class="material-symbols-outlined text-gray-300">star</span>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Column (1/3) -->
+<aside class="space-y-6">
+<!-- Identity Cards -->
+<div class="space-y-4">
+<h3 class="text-xs font-bold text-text-subtle tracking-widest uppercase">交换参与方</h3>
+<!-- Participant 1 -->
+<div class="bg-card border border-border rounded-lg p-4 flex items-center gap-3 relative overflow-hidden">
+<div class="absolute right-0 top-0 p-2 opacity-5">
+<span class="material-symbols-outlined text-[48px]">person</span>
+</div>
+<div class="w-12 h-12 rounded-full border border-border p-0.5">
+<img class="w-full h-full rounded-full object-cover" data-alt="Close-up GitHub style profile photo of a tech professional, @zyongzhu24, clean background, slight smile, high detail, warm studio lighting, modern minimalist aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqLw9hVvAwZ2TiJXX-33RG7wv1-wb3wfYG_rATLgPOXuOUuuCT9JF1t3gXKgx5NQzQx377ZL3uoZSG5jx5U4xzUFZf6wvGJmvOs7cOl3iFVdITBnaTUPtyNWbc6hM0Lnkb8kSnVjjQSQhEikacmsh8sOBn9gGqTOGE-V9TuH3jFtVUVTkTMLbYRchmByrIGegGKlxn7rSH6EvRXfJOx-txSRc8K2FO8x9MGzXa319mTHXPXIqfvsa-xqES6qjGLXJ8k4GSDajQMBk"/>
+</div>
+<div>
+<div class="flex items-center gap-1.5">
+<span class="font-semibold text-text-primary">@zyongzhu24</span>
+<span class="material-symbols-outlined text-[14px] text-primary" title="核心贡献者">verified</span>
+</div>
+<p class="text-xs text-text-muted">模块拥有者 · 14次成功交换</p>
+</div>
+</div>
+<!-- Participant 2 -->
+<div class="bg-card border border-border rounded-lg p-4 flex items-center gap-3 relative overflow-hidden">
+<div class="absolute right-0 top-0 p-2 opacity-5 text-accent">
+<span class="material-symbols-outlined text-[48px]">handshake</span>
+</div>
+<div class="w-12 h-12 rounded-full border border-border p-0.5">
+<img class="w-full h-full rounded-full object-cover" data-alt="Professional tech profile picture for @knowledge-trader, creative developer style, neutral grey background, high resolution, soft cinematic lighting, professional gear visible in background slightly out of focus." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAu_4QWBobcIL3-5bjrASbxEE_CSw2pxqUCInzVyOIb5MXhufoIm2UU0oxecQ2U6jyQ_Ys5bL_vkdqlSTGZftp_xso2a_Q2zXpUGEoYK5wdhF62v4ZwTpv9CqOCXGpbH1_eITRl9isOoCITj1qTFlrnOSl16qlc26xDXR-LnCtZdJ8EotymQ4Z0JtRNlO1HEPfVAaPKKYB_1N2Z2sM1zgjEZlrVdvoE-es3gljrQ253Q3crP-ESFGemRgWaXNnj1HBqmHNbvTwr1tE"/>
+</div>
+<div>
+<div class="flex items-center gap-1.5">
+<span class="font-semibold text-text-primary">@knowledge-trader</span>
+<span class="material-symbols-outlined text-[14px] text-accent" title="活跃交换者">star</span>
+</div>
+<p class="text-xs text-text-muted">请求发起方 · 8次成功交换</p>
+</div>
+</div>
+</div>
+<!-- Status & Actions -->
+<div class="bg-card border border-border rounded-lg p-6 space-y-6">
+<div>
+<h4 class="text-xs font-bold text-text-subtle mb-3 uppercase tracking-widest">当前状态</h4>
+<div class="inline-flex items-center px-3 py-1 rounded-full bg-[#FFFBEB] text-[#92400E] text-xs font-semibold border border-[#FDE68A] gap-1.5">
+<span class="w-2 h-2 rounded-full bg-status-warning animate-pulse"></span>
+                        已接受 · 待交付
+                    </div>
+</div>
+<div class="space-y-3">
+<button class="w-full py-2.5 bg-primary text-white rounded-lg font-semibold text-sm hover:bg-primary-hover transition-all flex items-center justify-center gap-2 shadow-sm">
+<span class="material-symbols-outlined text-[18px]">contact_mail</span>
+                        披露联系方式
+                    </button>
+<button class="w-full py-2.5 bg-white border border-border text-text-primary rounded-lg font-semibold text-sm hover:bg-gray-50 transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">chat</span>
+                        在线沟通 (IM)
+                    </button>
+</div>
+<p class="text-[11px] text-text-subtle leading-relaxed italic border-t border-border pt-4">
+                    * 披露联系方式将允许对方查看您的 GitHub 邮箱或预留的联系 IM 账号。
+                </p>
+</div>
+<!-- Private Delivery Note -->
+<div class="bg-primary-tint/30 border border-primary/20 rounded-lg p-5">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary">info</span>
+<div>
+<h4 class="text-sm font-semibold text-primary">私下交付协议</h4>
+<p class="text-xs text-[#016458] mt-1 leading-relaxed">
+                            该交换已约定通过 <span class="font-mono bg-white px-1 py-0.5 rounded border border-primary/10">GitHub 私有仓库邀请</span> 方式进行。
+                        </p>
+<p class="text-xs text-[#016458] mt-2">
+                            请在交付后于本页面点击“标记为已交付”以锁定评价权利。
+                        </p>
+</div>
+</div>
+</div>
+<!-- Support / Report -->
+<div class="flex justify-center">
+<button class="text-[11px] text-text-subtle hover:text-status-danger transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">report</span>
+                    举报或申诉此交换
+                </button>
+</div>
+</aside>
+</main>
+<!-- Footer -->
+<footer class="bg-[#FBFCFD] border-t border-[#E7EAEE]">
+<div class="flex flex-col md:flex-row justify-between items-center py-8 px-8 w-full max-w-[1280px] mx-auto">
+<div class="flex items-center gap-6 mb-4 md:mb-0">
+<div class="text-[#017A6E] font-[600] text-sm">Know-share</div>
+<div class="flex gap-4">
+<a class="font-body text-[13px] text-[#6B7280] hover:text-[#1F2937] transition-colors" href="#">隐私政策</a>
+<a class="font-body text-[13px] text-[#6B7280] hover:text-[#1F2937] transition-colors" href="#">服务条款</a>
+<a class="font-body text-[13px] text-[#6B7280] hover:text-[#1F2937] transition-colors" href="#">联系我们</a>
+</div>
+</div>
+<div class="font-body text-[13px] text-[#6B7280]">
+                © 2024 Know-share. All rights reserved.
+            </div>
+</div>
+</footer>
+<script>
+        // Optional micro-interactions
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('mousedown', () => {
+                button.style.transform = 'scale(0.98)';
+            });
+            button.addEventListener('mouseup', () => {
+                button.style.transform = 'scale(1)';
+            });
+            button.addEventListener('mouseleave', () => {
+                button.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body></html>

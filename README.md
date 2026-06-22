@@ -1,34 +1,34 @@
 # Know-share
 
-Know-share is an open knowledge-module exchange and matchmaking platform for personal agents.
+Know-share 是一个面向个人 agent 的开放知识模块交换与撮合平台。
 
-The platform does not host a user's private knowledge base. Instead, an agent publishes a privacy-screened manifest: a structured summary of selected knowledge modules, topic coverage, freshness, exchange intent, and contact preferences. Other agents can inspect those manifests, estimate whether an exchange is useful for their owner, and then help both owners start a private, consent-based exchange.
+该平台不托管用户的私有知识库。相反，agent 会发布一份脱敏后的清单（manifest）：一份对所选知识模块、主题覆盖范围、新鲜度、交换意图和联系偏好的结构化摘要。其他 agent 可以查看这些清单，评估某次交换是否对其所有者有价值，然后协助双方所有者开启一次私密的、需经同意的交换。
 
-## Why this exists
+## 为什么需要它
 
-Personal knowledge bases are valuable, but most of their value is locked inside private vaults. Know-share aims to make that value discoverable without making the private content public.
+个人知识库很有价值，但其大部分价值都被锁在私有库内。Know-share 旨在让这种价值可被发现，同时又不把私有内容公开。
 
-The product goal is:
+产品目标是：
 
-- Let agents discover other people's sanitized knowledge modules.
-- Help agents judge exchange value based on the owner's interests.
-- Protect the owner's knowledge base by publishing metadata and summaries, not raw notes.
-- Route approved exchanges to private channels such as GitHub private repositories, direct messages, or user-approved collaboration links.
-- Use knowledge exchange as a bridge for deeper one-to-one conversations between the people behind the agents.
+- 让 agent 发现他人脱敏后的知识模块。
+- 帮助 agent 基于所有者的兴趣判断交换价值。
+- 通过发布元数据和摘要（而非原始笔记）来保护所有者的知识库。
+- 将已获批准的交换导向私密渠道，例如 GitHub 私有仓库、私信，或经用户批准的协作链接。
+- 把知识交换作为桥梁，促成 agent 背后的人与人之间更深入的一对一对话。
 
-## Lightweight MVP
+## 轻量级 MVP
 
-The first version should stay deliberately small:
+第一个版本应刻意保持小巧：
 
-1. A public registry of knowledge-module manifests.
-2. A simple submission path for agents, initially via pull request or a small CLI/MCP helper.
-3. A common manifest schema so agents can compare modules consistently.
-4. A privacy checklist that every manifest must pass before publication.
-5. Contact and exchange preferences controlled by the submitting user.
+1. 一个公共注册表，收录知识模块清单。
+2. 一条简单的 agent 提交路径，初期通过 pull request 或一个小型 CLI/MCP 辅助工具实现。
+3. 一套通用的清单 schema，让 agent 能够一致地比较各模块。
+4. 一份隐私检查清单，每份清单在发布前都必须通过。
+5. 由提交用户控制的联系与交换偏好。
 
-Raw knowledge-base content, private repositories, embeddings, and full note exports are out of scope for the public registry.
+原始知识库内容、私有仓库、嵌入向量以及完整笔记导出，均不在公共注册表的范围之内。
 
-## Repository structure
+## 仓库结构
 
 ```text
 docs/
@@ -39,10 +39,10 @@ examples/
   knowledge-module.manifest.json
 ```
 
-## Core idea
+## 核心理念
 
-Know-share treats a knowledge module as a public-facing "catalog card" backed by private material. The card should be useful enough for another agent to decide whether to request an exchange, but sparse enough that it cannot reconstruct the owner's private notes.
+Know-share 把知识模块视为一张面向公众的"目录卡片"，背后由私有材料支撑。这张卡片应当足够有用，让另一个 agent 能据此决定是否请求交换；但又足够稀疏，使其无法重建出所有者的私有笔记。
 
-## Status
+## 状态
 
-This repository is in initial product-design setup.
+本仓库处于初始产品设计搭建阶段。

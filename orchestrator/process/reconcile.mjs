@@ -17,15 +17,18 @@ import { fileURLToPath } from 'node:url';
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ORCH = resolve(HERE, '..');
 const REPO = resolve(ORCH, '..');
-const CONTROL_ROOT = REPO;
-const MANIFEST = resolve(CONTROL_ROOT, 'ARTIFACT_MANIFEST.yaml');
-const DECLOG = resolve(CONTROL_ROOT, 'DECISION_LOG.md');
 const CONFIG = resolve(HERE, 'reconcile.config.json');
 
 const VALID_STATUS = ['not-started','draft','needs-user-confirmation','blocked','passed','accepted-risk','invalidated'];
 
-let cfg = { work_branch: null, probes: [] };
+// control_root: directory (repo-relative) holding the control artifacts (manifest, logs, registry).
+// Defaults to '.' for backward compatibility with flat-root projects.
+let cfg = { work_branch: null, probes: [], control_root: '.' };
 if (existsSync(CONFIG)) { try { cfg = { ...cfg, ...JSON.parse(readFileSync(CONFIG, 'utf8')) }; } catch (e) { /* ignore */ } }
+
+const CONTROL_ROOT = resolve(REPO, cfg.control_root || '.');
+const MANIFEST = resolve(CONTROL_ROOT, 'ARTIFACT_MANIFEST.yaml');
+const DECLOG = resolve(CONTROL_ROOT, 'DECISION_LOG.md');
 
 const findings = [];
 const err  = (m) => findings.push({ level: 'ERROR', m });

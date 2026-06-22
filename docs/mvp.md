@@ -1,60 +1,60 @@
-# MVP: Lightweight Knowledge Exchange Registry
+# MVP：轻量级知识交换注册表
 
-## Recommendation
+## 建议
 
-Start with a static public registry plus a manifest schema. This is the smallest useful version of Know-share because it avoids accounts, databases, hosting operations, and private content storage.
+从一个静态的公共注册表加上一份清单（manifest）schema 起步。这是 Know-share 最小可用的版本，因为它避开了账户、数据库、托管运维以及私有内容存储。
 
-## MVP workflow
+## MVP 工作流
 
-1. A user runs an agent-side helper against a selected part of their knowledge base.
-2. The helper produces a sanitized manifest.
-3. The user reviews the manifest locally before anything leaves their machine.
-4. The manifest is submitted to the public registry, initially through a GitHub pull request.
-5. Other agents read the registry and score candidate modules against their owner's interests.
-6. If there is a possible match, the agent asks its owner whether to contact the other side.
-7. Any real exchange happens privately, for example through a GitHub private repository invitation or another user-approved channel.
+1. 用户针对自己知识库中选定的部分运行一个 agent 侧的辅助工具。
+2. 该辅助工具生成一份脱敏的清单。
+3. 在任何内容离开本机之前，用户先在本地审阅这份清单。
+4. 清单被提交到公共注册表，初期通过 GitHub pull request 完成。
+5. 其他 agent 读取注册表，并根据各自所有者的兴趣为候选知识模块打分。
+6. 如果存在可能的匹配，agent 会询问其所有者是否要联系对方。
+7. 任何真正的交换都在私下进行，例如通过 GitHub 私有仓库邀请，或其他经用户批准的渠道。
 
-## What the public platform stores
+## 公共平台存储什么
 
-- Module title and short description
-- Topics and tags
-- Summary of covered questions
-- Freshness and source type
-- Exchange intent
-- Contact preference
-- Privacy and sensitivity declarations
+- 知识模块标题和简短描述
+- 主题和标签
+- 所涵盖问题的摘要
+- 时效性与来源类型
+- 交换意图
+- 联系偏好
+- 隐私与敏感性声明
 
-## What the public platform must not store
+## 公共平台绝不能存储什么
 
-- Raw notes
-- Full document text
-- Private file paths
-- Secrets, credentials, tokens, API keys
-- Personal data about third parties
-- Private embeddings that could be used to reconstruct content
-- Full relationship graphs unless explicitly sanitized
+- 原始笔记
+- 完整文档正文
+- 私有文件路径
+- 机密、凭据、令牌、API 密钥
+- 关于第三方的个人数据
+- 可能被用来重建内容的私有 embedding
+- 除非经过明确脱敏，否则不存储完整的关系图谱
 
-## Components
+## 组件
 
-### Public registry
+### 公共注册表
 
-A directory of reviewed manifest files. For the MVP, this can be a folder in GitHub and later become a generated website.
+一个经过审阅的清单文件目录。对于 MVP 而言，这可以是 GitHub 中的一个文件夹，之后再演变为一个自动生成的网站。
 
-### Agent-side helper
+### agent 侧辅助工具
 
-A CLI, MCP server, or Skill that helps a user's agent generate and validate a manifest locally.
+一个 CLI、MCP server 或 Skill，帮助用户的 agent 在本地生成并校验清单。
 
-### Matching logic
+### 匹配逻辑
 
-Initially agent-side only. Agents can read manifests and decide whether a module is worth proposing to their owner.
+初期仅在 agent 侧进行。agent 可以读取清单，并决定某个知识模块是否值得向其所有者提议。
 
-### Private exchange path
+### 私有交换路径
 
-Out of band for MVP. The registry should record contact preferences, but it should not broker access to private knowledge bases yet.
+在 MVP 阶段为带外（out of band）方式。注册表应记录联系偏好，但目前还不应充当访问私有知识库的中介。
 
-## Success criteria
+## 成功标准
 
-- A user can publish a useful manifest without exposing raw notes.
-- Another agent can evaluate whether a module is relevant.
-- Both users stay in control before any private exchange begins.
-- The system remains understandable and auditable as an open-source project.
+- 用户能够在不暴露原始笔记的情况下发布一份有用的清单。
+- 另一个 agent 能够评估某个知识模块是否相关。
+- 在任何私有交换开始之前，双方用户都保持掌控权。
+- 作为一个开源项目，该系统保持可理解、可审计。

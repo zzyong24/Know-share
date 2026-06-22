@@ -1,0 +1,26 @@
+{
+  "id": "agent-memory-design-patterns",
+  "title": "Agent Memory Design Patterns",
+  "summary": "A sanitized module about designing personal-agent memory systems, including retrieval habits, note structure, and consent boundaries.",
+  "topics": ["personal agents", "knowledge management", "memory systems", "privacy"],
+  "tags": ["agent", "pkm", "mcp", "privacy", "workflow"],
+  "language": "zh-CN",
+  "owner_handle": "example-user",
+  "contact": {
+    "type": "github",
+    "value": "example-user"
+  },
+  "exchange_intent": "Looking for modules about agent evaluation, long-term planning, or personal knowledge workflows.",
+  "sensitivity": "medium",
+  "covered_questions": [
+    "How should an agent decide what to remember?",
+    "How can private notes be summarized without leaking raw content?",
+    "What consent points should exist before knowledge exchange?"
+  ],
+  "source_types": ["personal notes", "project notes", "public articles"],
+  "freshness": "actively maintained",
+  "redaction_notes": "Removed names, private repositories, internal project details, and verbatim note excerpts.",
+  "private_exchange_options": ["github_private_repo", "direct_message"],
+  "license": "CC-BY-4.0 for this manifest only",
+  "updated_at": "2026-06-22"
+}

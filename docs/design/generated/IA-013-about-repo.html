@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>关于我们 | Know-share 知识交换平台</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@300..400,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "tertiary-container": "#a3583f",
+                        "on-surface-variant": "#3e4947",
+                        "on-surface": "#121c2a",
+                        "on-secondary": "#ffffff",
+                        "surface-dim": "#d0dbed",
+                        "primary": "#005f55",
+                        "secondary-fixed": "#83f5f2",
+                        "surface-container-high": "#dee9fc",
+                        "primary-container": "#017a6e",
+                        "on-tertiary-fixed": "#390b00",
+                        "surface-bright": "#f8f9ff",
+                        "secondary-container": "#83f5f2",
+                        "on-secondary-fixed": "#00201f",
+                        "inverse-on-surface": "#eaf1ff",
+                        "background": "#f8f9ff",
+                        "error": "#ba1a1a",
+                        "on-secondary-fixed-variant": "#00504e",
+                        "tertiary-fixed-dim": "#ffb59d",
+                        "outline": "#6e7977",
+                        "inverse-primary": "#7ad7c8",
+                        "tertiary-fixed": "#ffdbd0",
+                        "on-primary-fixed-variant": "#005048",
+                        "error-container": "#ffdad6",
+                        "outline-variant": "#bdc9c6",
+                        "on-primary-fixed": "#00201c",
+                        "surface": "#f8f9ff",
+                        "on-primary": "#ffffff",
+                        "surface-container": "#e6eeff",
+                        "on-tertiary-fixed-variant": "#74341d",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-fixed-dim": "#65d8d5",
+                        "on-primary-container": "#a8fff0",
+                        "on-background": "#121c2a",
+                        "surface-variant": "#d9e3f6",
+                        "tertiary": "#854129",
+                        "primary-fixed-dim": "#7ad7c8",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-container": "#ffebe6",
+                        "surface-tint": "#006a60",
+                        "surface-container-low": "#eff4ff",
+                        "on-secondary-container": "#00706f",
+                        "surface-container-highest": "#d9e3f6",
+                        "secondary": "#006a68",
+                        "primary-fixed": "#96f3e4",
+                        "inverse-surface": "#27313f"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "md": "12px",
+                        "max-width": "1280px",
+                        "lg": "16px",
+                        "xl": "24px",
+                        "xs": "4px",
+                        "sm": "8px",
+                        "base": "4px"
+                    },
+                    "fontFamily": {
+                        "small": ["Inter"],
+                        "label-xs": ["Inter"],
+                        "code": ["JetBrains Mono"],
+                        "body": ["Inter"],
+                        "h2": ["Inter"],
+                        "h3": ["Inter"],
+                        "display": ["Inter"]
+                    },
+                    "fontSize": {
+                        "small": ["13px", {"lineHeight": "1.4", "fontWeight": "400"}],
+                        "label-xs": ["12px", {"lineHeight": "1", "fontWeight": "500"}],
+                        "code": ["13px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "body": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "h2": ["21px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                        "h3": ["16px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                        "display": ["30px", {"lineHeight": "1.2", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #FBFCFD;
+            color: #121C2A;
+            -webkit-font-smoothing: antialiased;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .accordion-item.active .accordion-content {
+            max-height: 200px;
+        }
+        .accordion-item.active .rotate-icon {
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+<body class="font-body text-body">
+<!-- TopNavBar -->
+<nav class="bg-white sticky top-0 z-50 border-b border-[#E7EAEE] shadow-sm">
+<div class="flex justify-between items-center h-16 px-8 w-full max-w-[1280px] mx-auto">
+<div class="flex items-center gap-8">
+<span class="text-[20px] font-[600] text-[#017A6E]">Know-share</span>
+<div class="hidden md:flex gap-6 items-center">
+<a class="text-[#6B7280] hover:text-[#1F2937] font-headline text-[14px] font-[400] transition-colors" href="#">发现注册表</a>
+<a class="text-[#6B7280] hover:text-[#1F2937] font-headline text-[14px] font-[400] transition-colors" href="#">公开交换记录</a>
+<a class="text-[#6B7280] hover:text-[#1F2937] font-headline text-[14px] font-[400] transition-colors" href="#">信任网络</a>
+<a class="text-[#6B7280] hover:text-[#1F2937] font-headline text-[14px] font-[400] transition-colors" href="#">Agent 技能</a>
+<a class="text-[#6B7280] hover:text-[#1F2937] font-headline text-[14px] font-[400] transition-colors" href="#">开发文档</a>
+<a class="text-[#017A6E] font-[600] border-b-2 border-[#017A6E] pb-1 font-headline text-[14px]" href="#">关于我们</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="bg-primary-container text-white px-4 py-2 rounded-lg text-small font-medium hover:bg-[#016458] transition-all">提交模块</button>
+<span class="material-symbols-outlined text-[#6B7280] cursor-pointer hover:text-[#017A6E] transition-colors" data-icon="account_circle">account_circle</span>
+</div>
+</div>
+</nav>
+<main class="w-full max-w-[1280px] mx-auto px-8 py-12">
+<!-- Hero Section -->
+<section class="flex flex-col md:flex-row items-center gap-12 mb-20 relative overflow-hidden p-12 rounded-3xl bg-white border border-[#E7EAEE]">
+<div class="flex-1 space-y-6 z-10">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#E6F4F1] text-[#017A6E] text-label-xs font-semibold">
+<span class="material-symbols-outlined text-[16px]" data-icon="code">code</span>
+                    开源 (Open Source)
+                </div>
+<h1 class="font-display text-display text-on-surface leading-tight">
+                    让 Agent 帮你发现<br/>值得互换的知识库模块
+                </h1>
+<p class="text-on-surface-variant text-lg max-w-xl">
+                    隐私优先、开源可审计，构建去中心化的知识交换网络。我们致力于在不泄露私有数据的前提下，实现知识价值的流动与连接。
+                </p>
+<div class="flex gap-4">
+<a class="flex items-center gap-2 px-6 py-3 border border-[#017A6E] text-[#017A6E] rounded-lg font-medium hover:bg-[#E6F4F1] transition-all" href="#">
+<svg class="w-5 h-5 fill-current" viewbox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.43.372.823 1.102.823 2.222 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"></path></svg>
+                        在 GitHub 查看仓库
+                    </a>
+</div>
+</div>
+<div class="flex-1 w-full max-w-md h-64 md:h-96 relative">
+<div class="absolute inset-0 bg-[#E6F4F1] rounded-2xl overflow-hidden shadow-inner">
+
+</div>
+<div class="absolute -bottom-6 -right-6 p-6 glass-card rounded-2xl border border-[#E7EAEE] shadow-lg animate-bounce duration-3000">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-[#017A6E] rounded-xl flex items-center justify-center text-white">
+<span class="material-symbols-outlined" data-icon="hub">hub</span>
+</div>
+<div>
+<p class="text-xs text-on-surface-variant font-medium">当前活跃节点</p>
+<p class="text-xl font-bold text-[#017A6E]">512 Nodes</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Platform Stats -->
+<section class="mb-20">
+<div class="flex justify-between items-end mb-8">
+<div>
+<h2 class="font-h2 text-h2 text-on-surface mb-2">平台统计</h2>
+<p class="text-on-surface-variant text-small">透明的生态数据，记录知识交换的每一次脉动。</p>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+<!-- Stat Block 1 -->
+<div class="bg-white p-6 rounded-xl border border-[#E7EAEE] shadow-sm flex flex-col gap-2">
+<div class="w-10 h-10 rounded-lg bg-[#E6F4F1] flex items-center justify-center text-[#017A6E]">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+</div>
+<span class="text-on-surface-variant text-small font-medium">模块总数</span>
+<span class="text-2xl font-bold text-on-surface">1,842</span>
+</div>
+<!-- Stat Block 2 -->
+<div class="bg-white p-6 rounded-xl border border-[#E7EAEE] shadow-sm flex flex-col gap-2">
+<div class="w-10 h-10 rounded-lg bg-[#E6F4F1] flex items-center justify-center text-[#017A6E]">
+<span class="material-symbols-outlined" data-icon="swap_horiz">swap_horiz</span>
+</div>
+<span class="text-on-surface-variant text-small font-medium">交换总数</span>
+<span class="text-2xl font-bold text-on-surface">12,857</span>
+</div>
+<!-- Stat Block 3 -->
+<div class="bg-white p-6 rounded-xl border border-[#E7EAEE] shadow-sm flex flex-col gap-2">
+<div class="w-10 h-10 rounded-lg bg-[#E6F4F1] flex items-center justify-center text-[#017A6E]">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+</div>
+<span class="text-on-surface-variant text-small font-medium">活跃用户</span>
+<span class="text-2xl font-bold text-on-surface">2,196</span>
+</div>
+<!-- Stat Block 4 -->
+<div class="bg-white p-6 rounded-xl border border-[#E7EAEE] shadow-sm flex flex-col gap-2">
+<div class="w-10 h-10 rounded-lg bg-[#E6F4F1] flex items-center justify-center text-[#017A6E]">
+<span class="material-symbols-outlined" data-icon="verified_user">verified_user</span>
+</div>
+<span class="text-on-surface-variant text-small font-medium">隐私门通过率</span>
+<span class="text-2xl font-bold text-on-surface">98.6%</span>
+</div>
+</div>
+<div class="bg-white p-8 rounded-2xl border border-[#E7EAEE] shadow-sm">
+<div class="flex items-center justify-between mb-6">
+<h3 class="font-h3 text-h3 text-on-surface">平台月度活跃趋势</h3>
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-[#017A6E]"></span>
+<span class="text-xs text-on-surface-variant font-medium">活跃交换对</span>
+</div>
+</div>
+<div class="h-64 w-full relative">
+<!-- Fake Line Chart with SVG -->
+<svg class="w-full h-full overflow-visible" preserveaspectratio="none" viewbox="0 0 1000 200">
+<defs>
+<lineargradient id="chartGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#017A6E" stop-opacity="0.2"></stop>
+<stop offset="100%" stop-color="#017A6E" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+<path d="M0,180 C100,170 200,190 300,140 C400,90 500,110 600,60 C700,10 800,40 1000,10" fill="none" stroke="#017A6E" stroke-linecap="round" stroke-width="3"></path>
+<path d="M0,180 C100,170 200,190 300,140 C400,90 500,110 600,60 C700,10 800,40 1000,10 V200 H0 Z" fill="url(#chartGradient)"></path>
+</svg>
+<!-- Horizontal Grid Lines -->
+<div class="absolute inset-0 flex flex-col justify-between pointer-events-none opacity-10">
+<div class="border-t border-[#121C2A] w-full"></div>
+<div class="border-t border-[#121C2A] w-full"></div>
+<div class="border-t border-[#121C2A] w-full"></div>
+<div class="border-t border-[#121C2A] w-full"></div>
+</div>
+</div>
+<div class="flex justify-between mt-4 px-2">
+<span class="text-xs text-[#9CA3AF]">1月</span>
+<span class="text-xs text-[#9CA3AF]">3月</span>
+<span class="text-xs text-[#9CA3AF]">5月</span>
+<span class="text-xs text-[#9CA3AF]">7月</span>
+<span class="text-xs text-[#9CA3AF]">9月</span>
+<span class="text-xs text-[#9CA3AF]">11月</span>
+</div>
+</div>
+</section>
+<!-- Privacy & Trust -->
+<section class="mb-20">
+<div class="text-center mb-12">
+<h2 class="font-h2 text-h2 text-on-surface mb-3">隐私与信任</h2>
+<p class="text-on-surface-variant max-w-2xl mx-auto">交换不是馈赠，而是在对等契约下的协作。我们通过技术手段确保每一份知识的安全性。</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Card 1 -->
+<div class="p-8 rounded-[12px] bg-white border border-[#E7EAEE] hover:border-[#017A6E] transition-colors group">
+<div class="w-12 h-12 rounded-full bg-[#F3F4F6] text-[#6B7280] flex items-center justify-center mb-6 group-hover:bg-[#E6F4F1] group-hover:text-[#017A6E] transition-colors">
+<span class="material-symbols-outlined" data-icon="database_off">database_off</span>
+</div>
+<h3 class="text-lg font-bold text-on-surface mb-3">不托管原始内容</h3>
+<p class="text-on-surface-variant text-small leading-relaxed">
+                        知识模块在您的本地环境运行，Know-share 仅索引经过脱敏处理的元数据。您的原始笔记、灵感与秘密永远保留在您的掌控之中。
+                    </p>
+</div>
+<!-- Card 2 -->
+<div class="p-8 rounded-[12px] bg-white border border-[#E7EAEE] hover:border-[#017A6E] transition-colors group">
+<div class="w-12 h-12 rounded-full bg-[#F3F4F6] text-[#6B7280] flex items-center justify-center mb-6 group-hover:bg-[#E6F4F1] group-hover:text-[#017A6E] transition-colors">
+<span class="material-symbols-outlined" data-icon="lock_open">lock_open</span>
+</div>
+<h3 class="text-lg font-bold text-on-surface mb-3">同意优先</h3>
+<p class="text-on-surface-variant text-small leading-relaxed">
+                        任何交换请求都必须经过双方 Agent 的语义审查或人工确认。没有单方面的抓取，只有基于共识的对等开启。
+                    </p>
+</div>
+<!-- Card 3 -->
+<div class="p-8 rounded-[12px] bg-white border border-[#E7EAEE] hover:border-[#017A6E] transition-colors group">
+<div class="w-12 h-12 rounded-full bg-[#F3F4F6] text-[#6B7280] flex items-center justify-center mb-6 group-hover:bg-[#E6F4F1] group-hover:text-[#017A6E] transition-colors">
+<span class="material-symbols-outlined" data-icon="vitals">vitals</span>
+</div>
+<h3 class="text-lg font-bold text-on-surface mb-3">信任如何积累</h3>
+<p class="text-on-surface-variant text-small leading-relaxed">
+                        基于不可篡改的链上交换记录与社区志愿者的审计，每个模块都会生成信任评分。好内容会自动浮现，劣质内容会被网络隔离。
+                    </p>
+</div>
+</div>
+</section>
+<!-- FAQ Accordion -->
+<section class="mb-20 max-w-3xl mx-auto">
+<h2 class="font-h2 text-h2 text-on-surface text-center mb-12">常见问题</h2>
+<div class="space-y-3">
+<!-- FAQ Item 1 -->
+<div class="accordion-item border border-[#E7EAEE] rounded-xl bg-white overflow-hidden transition-all duration-300">
+<button class="w-full flex items-center justify-between p-5 text-left hover:bg-[#FBFCFD] transition-colors" onclick="this.parentElement.classList.toggle('active')">
+<span class="font-medium text-on-surface">Know-share 会存储我的原始笔记吗？</span>
+<span class="material-symbols-outlined rotate-icon transition-transform" data-icon="expand_more">expand_more</span>
+</button>
+<div class="accordion-content">
+<div class="px-5 pb-5 text-on-surface-variant text-small">
+                            不会。原始数据保留在您的本地或私有云中。我们的 Agent 插件仅提取必要的语义向量和描述标签，用于在中心化或联邦式的注册表中进行匹配发现。
+                        </div>
+</div>
+</div>
+<!-- FAQ Item 2 -->
+<div class="accordion-item border border-[#E7EAEE] rounded-xl bg-white overflow-hidden transition-all duration-300">
+<button class="w-full flex items-center justify-between p-5 text-left hover:bg-[#FBFCFD] transition-colors" onclick="this.parentElement.classList.toggle('active')">
+<span class="font-medium text-on-surface">交换是如何保护隐私的？</span>
+<span class="material-symbols-outlined rotate-icon transition-transform" data-icon="expand_more">expand_more</span>
+</button>
+<div class="accordion-content">
+<div class="px-5 pb-5 text-on-surface-variant text-small">
+                            通过去隐私化元数据过滤和端到端加密通道（E2EE）。在交换开始前，Agent 会扫描数据中的敏感词和个人识别信息（PII），确保共享的只有“知识”而非“隐私”。
+                        </div>
+</div>
+</div>
+<!-- FAQ Item 3 -->
+<div class="accordion-item border border-[#E7EAEE] rounded-xl bg-white overflow-hidden transition-all duration-300">
+<button class="w-full flex items-center justify-between p-5 text-left hover:bg-[#FBFCFD] transition-colors" onclick="this.parentElement.classList.toggle('active')">
+<span class="font-medium text-on-surface">如何参与开源贡献？</span>
+<span class="material-symbols-outlined rotate-icon transition-transform" data-icon="expand_more">expand_more</span>
+</button>
+<div class="accordion-content">
+<div class="px-5 pb-5 text-on-surface-variant text-small">
+                            访问我们的 GitHub 仓库提交 PR 或 Issue。我们欢迎各种形式的贡献，包括核心协议改进、新型 Agent 技能开发、或是文档翻译。
+                        </div>
+</div>
+</div>
+<!-- FAQ Item 4 -->
+<div class="accordion-item border border-[#E7EAEE] rounded-xl bg-white overflow-hidden transition-all duration-300">
+<button class="w-full flex items-center justify-between p-5 text-left hover:bg-[#FBFCFD] transition-colors" onclick="this.parentElement.classList.toggle('active')">
+<span class="font-medium text-on-surface">什么是 Agent 技能模块？</span>
+<span class="material-symbols-outlined rotate-icon transition-transform" data-icon="expand_more">expand_more</span>
+</button>
+<div class="accordion-content">
+<div class="px-5 pb-5 text-on-surface-variant text-small">
+                            技能模块是封装了特定领域知识处理能力的 AI 代理插件。例如，“论文研读”模块能够自动提取 PDF 摘要并与他人交换研究灵感，“代码审计”模块则能交换漏洞发现模式。
+                        </div>
+</div>
+</div>
+</div>
+</section>
+<!-- Bottom Links -->
+<section class="pt-12 border-t border-[#E7EAEE] flex flex-wrap justify-center gap-12 mb-20">
+<a class="flex items-center gap-2 text-on-surface-variant hover:text-[#017A6E] transition-colors group" href="#">
+<span class="material-symbols-outlined text-[18px]" data-icon="fact_check">fact_check</span>
+<span class="font-medium">可审计规则</span>
+</a>
+<a class="flex items-center gap-2 text-on-surface-variant hover:text-[#017A6E] transition-colors group" href="#">
+<span class="material-symbols-outlined text-[18px]" data-icon="shield">shield</span>
+<span class="font-medium">隐私模型</span>
+</a>
+<a class="flex items-center gap-2 text-on-surface-variant hover:text-[#017A6E] transition-colors group" href="#">
+<span class="material-symbols-outlined text-[18px]" data-icon="contract">contract</span>
+<span class="font-medium">数据契约</span>
+</a>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-[#FBFCFD] border-t border-[#E7EAEE]">
+<div class="flex flex-col md:flex-row justify-between items-center py-12 px-8 w-full max-w-[1280px] mx-auto gap-8">
+<div class="flex flex-col items-center md:items-start gap-4">
+<span class="text-[#017A6E] font-[600] text-lg">Know-share</span>
+<p class="font-body text-[13px] text-[#6B7280] text-center md:text-left max-w-sm">
+                    © 2024 Know-share. All rights reserved.<br/>
+                    致力于构建可信、高效、去中心化的全球知识交换网络。
+                </p>
+</div>
+<div class="flex flex-col items-center md:items-end gap-6">
+<div class="flex gap-8">
+<a class="text-[#9CA3AF] hover:text-[#1F2937] transition-colors text-small" href="#">隐私政策</a>
+<a class="text-[#9CA3AF] hover:text-[#1F2937] transition-colors text-small" href="#">服务条款</a>
+<a class="text-[#9CA3AF] hover:text-[#1F2937] transition-colors text-small" href="#">联系我们</a>
+</div>
+<div class="flex gap-4">
+<div class="w-8 h-8 rounded-full border border-[#E7EAEE] flex items-center justify-center text-[#6B7280] hover:bg-[#E6F4F1] hover:text-[#017A6E] cursor-pointer transition-all">
+<svg class="w-4 h-4 fill-current" viewbox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"></path></svg>
+</div>
+<div class="w-8 h-8 rounded-full border border-[#E7EAEE] flex items-center justify-center text-[#6B7280] hover:bg-[#E6F4F1] hover:text-[#017A6E] cursor-pointer transition-all">
+<svg class="w-4 h-4 fill-current" viewbox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.041-1.61-4.041-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.089-.744.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path></svg>
+</div>
+</div>
+</div>
+</div>
+</footer>
+<script>
+        // Micro-interactions for numbers counting up
+        function animateValue(obj, start, end, duration) {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                obj.innerHTML = Math.floor(progress * (end - start) + start).toLocaleString();
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+
+        // Run counting animation on load
+        window.addEventListener('DOMContentLoaded', () => {
+            const stats = document.querySelectorAll('.font-bold.text-on-surface');
+            const values = [1842, 12857, 2196, 98]; // Hardcoded corresponding values
+            stats.forEach((stat, index) => {
+                if(index < 3) animateValue(stat, 0, values[index], 1500);
+            });
+        });
+
+        // Simple scroll reveal for cards
+        const observerOptions = {
+            threshold: 0.1
+        };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100', 'translate-y-0');
+                    entry.target.classList.remove('opacity-0', 'translate-y-8');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section > div > div').forEach(el => {
+            el.classList.add('transition-all', 'duration-700', 'opacity-0', 'translate-y-8');
+            observer.observe(el);
+        });
+    </script>
+</body></html>

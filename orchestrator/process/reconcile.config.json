@@ -1,23 +1,25 @@
 {
   "work_branch": "main",
+  "control_root": "aies/00-control",
   "probes": [
     { "stage": "00-intake", "path": "PROJECT_CONTEXT.md" },
-    { "stage": "00-intake", "path": "DEFAULT_ASSUMPTIONS.md" },
+    { "stage": "00-intake", "path": "aies/00-control/DEFAULT_ASSUMPTIONS.md" },
     { "stage": "01-project-kickoff", "path": "AGENTS.md" },
-    { "stage": "02-product-brainstorming", "path": "FUNCTION_OUTLINE.md" },
-    { "stage": "03-product-spec", "path": "PRODUCT_SPEC.md" },
-    { "stage": "04-business-flow", "path": "BUSINESS_FLOW.md" },
-    { "stage": "05-light-domain-model", "path": "LIGHT_DOMAIN_MODEL.md" },
-    { "stage": "06-ia-spec", "path": "IA_SPEC.md" },
-    { "stage": "07-ui-generation-or-import", "path": "UI_RULES.md" },
-    { "stage": "08-page-spec", "path": "PAGE_SPEC.md" },
-    { "stage": "09-frontend-spec", "path": "FRONTEND_SPEC.md" },
-    { "stage": "10-mock-data-spec", "path": "MOCK_DATA_SPEC.md" },
-    { "stage": "12-frontend-validation", "path": "FRONTEND_VALIDATION_REPORT.md" },
-    { "stage": "13-backend-spec", "path": "BACKEND_SPEC.md" },
-    { "stage": "14-module-workflow-spec", "path": "MODULE_WORKFLOW_SPEC.md" },
-    { "stage": "15-service-contract", "path": "SERVICE_CONTRACT.md" },
-    { "stage": "17-integration-release", "path": "INTEGRATION_REPORT.md" },
-    { "stage": "17-integration-release", "path": "RELEASE_REVIEW.md" }
-  ]
+    { "stage": "02-product-brainstorming", "path": "aies/01-product/FUNCTION_OUTLINE.md" },
+    { "stage": "03-product-spec", "path": "aies/01-product/PRODUCT_SPEC.md" },
+    { "stage": "04-business-flow", "path": "aies/01-product/BUSINESS_FLOW.md" },
+    { "stage": "05-light-domain-model", "path": "aies/01-product/LIGHT_DOMAIN_MODEL.md" },
+    { "stage": "06-ia-spec", "path": "aies/02-design/IA_SPEC.md" },
+    { "stage": "07-ui-generation-or-import", "path": "aies/02-design/UI_RULES.md" },
+    { "stage": "08-page-spec", "path": "aies/02-design/PAGE_SPEC.md" },
+    { "stage": "09-frontend-spec", "path": "aies/03-frontend/FRONTEND_SPEC.md" },
+    { "stage": "10-mock-data-spec", "path": "aies/02-design/MOCK_DATA_SPEC.md" },
+    { "stage": "12-frontend-validation", "path": "aies/03-frontend/FRONTEND_VALIDATION_REPORT.md" },
+    { "stage": "13-backend-spec", "path": "aies/04-backend/BACKEND_SPEC.md" },
+    { "stage": "14-module-workflow-spec", "path": "aies/04-backend/MODULE_WORKFLOW_SPEC.md" },
+    { "stage": "15-service-contract", "path": "aies/04-backend/SERVICE_CONTRACT.md" },
+    { "stage": "17-integration-release", "path": "aies/05-release/INTEGRATION_REPORT.md" },
+    { "stage": "17-integration-release", "path": "aies/05-release/RELEASE_REVIEW.md" }
+  ],
+  "_note": "control_root 指向控制文件目录（仓库相对）。probe path 为仓库相对路径。模块扇出的阶段（08/09/12/13/14/15）若产物落到 <模块>/ 子目录，完成该阶段时同步把对应 probe path 改成真实模块路径。"
 }

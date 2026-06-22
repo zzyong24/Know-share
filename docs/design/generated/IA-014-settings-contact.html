@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+
+<html class="light" lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>设置 / 联系方式 - Know-share</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;family=JetBrains+Mono&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@300,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface": "#f8f9ff",
+                        "on-primary-fixed": "#00201c",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-fixed-dim": "#65d8d5",
+                        "on-error-container": "#93000a",
+                        "inverse-on-surface": "#eaf1ff",
+                        "primary": "#005f55",
+                        "surface-container-low": "#eff4ff",
+                        "on-tertiary-fixed-variant": "#74341d",
+                        "on-primary-container": "#a8fff0",
+                        "secondary-fixed": "#83f5f2",
+                        "secondary": "#006a68",
+                        "primary-fixed": "#96f3e4",
+                        "surface-tint": "#006a60",
+                        "on-tertiary-container": "#ffebe6",
+                        "outline": "#6e7977",
+                        "surface-container-highest": "#d9e3f6",
+                        "on-primary-fixed-variant": "#005048",
+                        "background": "#FBFCFD",
+                        "tertiary-fixed": "#ffdbd0",
+                        "on-surface": "#121c2a",
+                        "surface-variant": "#d9e3f6",
+                        "surface-dim": "#d0dbed",
+                        "secondary-container": "#83f5f2",
+                        "tertiary-container": "#a3583f",
+                        "on-tertiary-fixed": "#390b00",
+                        "on-secondary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "inverse-primary": "#7ad7c8",
+                        "error-container": "#ffdad6",
+                        "on-surface-variant": "#3e4947",
+                        "surface-container-high": "#dee9fc",
+                        "error": "#ba1a1a",
+                        "surface-container": "#e6eeff",
+                        "surface-bright": "#f8f9ff",
+                        "on-secondary-container": "#00706f",
+                        "tertiary": "#854129",
+                        "on-primary": "#ffffff",
+                        "outline-variant": "#E7EAEE",
+                        "tertiary-fixed-dim": "#ffb59d",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-fixed-variant": "#00504e",
+                        "on-secondary-fixed": "#00201f",
+                        "inverse-surface": "#27313f",
+                        "primary-container": "#017a6e",
+                        "on-background": "#121c2a",
+                        "primary-fixed-dim": "#7ad7c8"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "max-width": "1280px",
+                        "sm": "8px",
+                        "md": "12px",
+                        "lg": "16px",
+                        "xs": "4px",
+                        "xl": "24px",
+                        "base": "4px"
+                    },
+                    "fontFamily": {
+                        "h2": ["Inter", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "code": ["JetBrains Mono", "monospace"],
+                        "display": ["Inter", "sans-serif"],
+                        "small": ["Inter", "sans-serif"],
+                        "label-xs": ["Inter", "sans-serif"],
+                        "h3": ["Inter", "sans-serif"]
+                    },
+                    "fontSize": {
+                        "h2": ["21px", { "lineHeight": "1.3", "fontWeight": "600" }],
+                        "body": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "code": ["13px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "display": ["30px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "small": ["13px", { "lineHeight": "1.4", "fontWeight": "400" }],
+                        "label-xs": ["12px", { "lineHeight": "1", "fontWeight": "500" }],
+                        "h3": ["16px", { "lineHeight": "1.4", "fontWeight": "600" }]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', 'PingFang SC', 'Microsoft YaHei', sans-serif; background-color: #FBFCFD; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .custom-shadow { box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+    </style>
+</head>
+<body class="text-on-surface">
+<!-- TopNavBar -->
+<header class="sticky top-0 z-50 bg-surface border-b border-outline-variant w-full">
+<div class="flex justify-between items-center w-full px-lg max-w-max-width mx-auto h-16">
+<div class="flex items-center gap-xl">
+<span class="font-display text-display font-black text-primary">K</span>
+<nav class="hidden md:flex items-center gap-lg">
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body text-body cursor-pointer">发现注册表</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body text-body cursor-pointer">公开交换记录</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body text-body cursor-pointer">信任网络</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body text-body cursor-pointer">Agent 技能</a>
+</nav>
+</div>
+<div class="flex items-center gap-md">
+<div class="relative hidden lg:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="bg-surface-container-low border border-outline-variant rounded-full py-1.5 pl-10 pr-4 text-small focus:ring-1 focus:ring-primary focus:border-primary outline-none w-64 transition-all" placeholder="搜索知识模块..." type="text"/>
+</div>
+<button class="px-md py-1.5 text-on-surface-variant font-body text-body hover:bg-surface-container-high rounded-lg transition-colors">@zyongzhu24</button>
+<button class="px-md py-1.5 bg-primary-container text-on-primary-container font-body text-body font-bold rounded-lg hover:brightness-110 active:opacity-80 transition-all">提交模块</button>
+</div>
+</div>
+</header>
+<main class="max-w-max-width mx-auto px-lg py-xl flex flex-col md:flex-row gap-xl min-h-[calc(100vh-64px)]">
+<!-- Left Sub-nav (SideNavBar Logic) -->
+<aside class="w-full md:w-64 flex-shrink-0">
+<div class="mb-xl">
+<h1 class="font-display text-h2 text-on-surface mb-xs">设置</h1>
+<p class="text-on-surface-variant text-small">管理您的账户与偏好</p>
+</div>
+<nav class="flex flex-col gap-xs">
+<a class="flex items-center gap-md px-md py-3 bg-primary-container text-on-primary-container rounded-lg font-h3 text-h3 transition-all active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined">person</span>
+                    联系方式
+                </a>
+<a class="flex items-center gap-md px-md py-3 text-on-surface-variant hover:bg-surface-container-highest rounded-lg font-h3 text-h3 transition-all active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined">lock</span>
+                    隐私与同意
+                </a>
+<a class="flex items-center gap-md px-md py-3 text-on-surface-variant hover:bg-surface-container-highest rounded-lg font-h3 text-h3 transition-all active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined">security</span>
+                    账户
+                </a>
+<a class="flex items-center gap-md px-md py-3 text-on-surface-variant hover:bg-surface-container-highest rounded-lg font-h3 text-h3 transition-all active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined">notifications</span>
+                    通知偏好
+                </a>
+</nav>
+</aside>
+<!-- Right Main Panel -->
+<section class="flex-grow flex flex-col gap-lg max-w-[800px]">
+<!-- Disclosure Policy Callout -->
+<div class="bg-primary-container/10 border border-primary/20 rounded-xl p-lg flex gap-md items-start">
+<span class="material-symbols-outlined text-primary mt-0.5">info</span>
+<p class="text-primary text-body font-medium leading-relaxed">
+                    联系方式默认完全私密，仅在一次交换被接受后对该次对方披露，可选择披露哪些、可编辑或撤回。
+                </p>
+</div>
+<!-- Contact Methods Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl custom-shadow overflow-hidden">
+<div class="px-lg py-md border-b border-outline-variant bg-surface-container-low/30">
+<h2 class="font-h3 text-h3">主要联系渠道</h2>
+</div>
+<div class="divide-y divide-outline-variant">
+<!-- Row 1: GitHub -->
+<div class="flex items-center justify-between p-lg hover:bg-surface/50 transition-colors">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 flex items-center justify-center bg-surface-container-high rounded-lg text-on-surface">
+<span class="material-symbols-outlined">code</span>
+</div>
+<div>
+<div class="flex items-center gap-sm">
+<span class="font-h3 text-body">GitHub</span>
+<span class="px-1.5 py-0.5 bg-outline-variant/30 text-on-surface-variant rounded text-[10px] uppercase font-bold">Private</span>
+</div>
+<p class="text-on-surface-variant text-small">@zyongzhu24</p>
+</div>
+</div>
+<div class="flex items-center gap-xl">
+<span class="text-on-surface-variant text-small hidden sm:inline">（私密）</span>
+<div class="flex items-center gap-md">
+<span class="text-label-xs text-on-surface-variant font-medium">设为公开</span>
+<button class="w-10 h-5 bg-outline-variant rounded-full p-0.5 transition-colors relative duration-200 ease-in-out focus:outline-none ring-offset-2 focus:ring-2 focus:ring-primary" onclick="this.classList.toggle('bg-primary-container'); this.firstElementChild.classList.toggle('translate-x-5')">
+<div class="w-4 h-4 bg-white rounded-full shadow-sm transform transition-transform duration-200 ease-in-out"></div>
+</button>
+</div>
+</div>
+</div>
+<!-- Row 2: Email -->
+<div class="flex items-center justify-between p-lg hover:bg-surface/50 transition-colors">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 flex items-center justify-center bg-surface-container-high rounded-lg text-on-surface">
+<span class="material-symbols-outlined">mail</span>
+</div>
+<div>
+<div class="flex items-center gap-sm">
+<span class="font-h3 text-body">邮箱</span>
+<span class="px-1.5 py-0.5 bg-outline-variant/30 text-on-surface-variant rounded text-[10px] uppercase font-bold">Private</span>
+</div>
+<p class="text-on-surface-variant text-small">z****@example.com</p>
+</div>
+</div>
+<div class="flex items-center gap-xl">
+<span class="text-on-surface-variant text-small hidden sm:inline">（私密）</span>
+<div class="flex items-center gap-md">
+<span class="text-label-xs text-on-surface-variant font-medium">设为公开</span>
+<button class="w-10 h-5 bg-outline-variant rounded-full p-0.5 transition-colors relative duration-200 ease-in-out focus:outline-none ring-offset-2 focus:ring-2 focus:ring-primary" onclick="this.classList.toggle('bg-primary-container'); this.firstElementChild.classList.toggle('translate-x-5')">
+<div class="w-4 h-4 bg-white rounded-full shadow-sm transform transition-transform duration-200 ease-in-out"></div>
+</button>
+</div>
+</div>
+</div>
+<!-- Row 3: Add Custom -->
+<div class="flex items-center justify-between p-lg bg-surface/30">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 flex items-center justify-center border-2 border-dashed border-outline-variant rounded-lg text-outline">
+<span class="material-symbols-outlined">link</span>
+</div>
+<div>
+<div class="flex items-center gap-sm">
+<span class="font-h3 text-body">自定义渠道</span>
+<span class="px-1.5 py-0.5 bg-error-container/20 text-error rounded text-[10px] uppercase font-bold">Not Set</span>
+</div>
+<p class="text-outline text-small">Telegram (未设置)</p>
+</div>
+</div>
+<div>
+<button class="px-md py-1.5 border border-primary text-primary font-medium text-small rounded-lg hover:bg-primary/5 transition-colors flex items-center gap-sm">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                                立即关联
+                            </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Consent Records -->
+<div class="mt-lg">
+<div class="flex items-center justify-between mb-md">
+<h2 class="font-h3 text-h3">同意记录</h2>
+<span class="text-small text-on-surface-variant">共 2 条记录</span>
+</div>
+<div class="flex flex-col gap-sm">
+<!-- Record Row 1 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg px-lg py-md flex items-center justify-between group hover:border-primary/40 transition-all">
+<div class="flex flex-col gap-xs">
+<div class="flex items-center gap-sm">
+<span class="font-medium text-body">向 <span class="text-primary">@knowledge-trader</span> 披露 GitHub + 邮箱</span>
+<span class="text-xs bg-surface-container-high px-2 py-0.5 rounded text-on-surface-variant">2024-10-12</span>
+</div>
+<p class="text-small text-on-surface-variant">因交换 <span class="font-code text-on-surface">EX-2024-8842</span> 自动授权</p>
+</div>
+<button class="text-outline hover:text-error opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined">cancel</span>
+</button>
+</div>
+<!-- Record Row 2 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg px-lg py-md flex items-center justify-between group hover:border-primary/40 transition-all">
+<div class="flex flex-col gap-xs">
+<div class="flex items-center gap-sm">
+<span class="font-medium text-body">向 <span class="text-primary">@bot-dev</span> 披露 GitHub</span>
+<span class="text-xs bg-surface-container-high px-2 py-0.5 rounded text-on-surface-variant">2024-10-05</span>
+</div>
+<p class="text-small text-on-surface-variant">因交换 <span class="font-code text-on-surface">EX-2024-7719</span> 自动授权</p>
+</div>
+<button class="text-outline hover:text-error opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined">cancel</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Global Actions -->
+<div class="mt-xl pt-lg border-t border-outline-variant flex gap-md justify-end">
+<button class="px-xl py-2.5 text-on-surface-variant font-medium text-body hover:bg-surface-container-highest rounded-lg transition-colors">取消</button>
+<button class="px-xl py-2.5 bg-primary text-on-primary font-bold text-body rounded-lg hover:brightness-110 active:scale-95 transition-all shadow-lg shadow-primary/20" onclick="showToast()">保存设置</button>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface border-t border-outline-variant w-full py-xl mt-xl">
+<div class="flex flex-col md:flex-row justify-between items-center w-full px-lg max-w-max-width mx-auto gap-lg">
+<div class="flex items-center gap-lg">
+<span class="font-display text-h3 text-primary font-bold">Know-share</span>
+<span class="text-small text-on-surface-variant">© 2024 Know-share. 保留所有权利。</span>
+</div>
+<div class="flex gap-xl">
+<a class="text-on-surface-variant hover:text-primary transition-colors text-small">隐私政策</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors text-small">服务条款</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors text-small">联系我们</a>
+</div>
+</div>
+</footer>
+<!-- Toast Notification -->
+<div class="fixed bottom-8 left-1/2 -translate-x-1/2 z-[100] transform translate-y-20 opacity-0 transition-all duration-300 ease-out" id="success-toast">
+<div class="bg-on-primary-fixed text-on-primary-fixed-variant px-lg py-3 rounded-xl flex items-center gap-md shadow-xl border border-primary/20">
+<div class="w-6 h-6 rounded-full bg-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px] text-on-primary-container font-bold" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<span class="font-medium text-body text-primary-fixed">设置已保存</span>
+</div>
+</div>
+<script>
+        function showToast() {
+            const toast = document.getElementById('success-toast');
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+            
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+                toast.classList.remove('translate-y-0', 'opacity-100');
+            }, 3000);
+        }
+    </script>
+</body></html>

@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>个人中心 Dashboard (IA-009) - Know-share</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@300..400,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed": "#96f3e4",
+                        "on-primary-fixed-variant": "#005048",
+                        "inverse-surface": "#27313f",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-container": "#ffebe6",
+                        "on-primary-container": "#a8fff0",
+                        "on-surface": "#121c2a",
+                        "on-secondary-container": "#00706f",
+                        "secondary-container": "#83f5f2",
+                        "on-secondary": "#ffffff",
+                        "inverse-on-surface": "#eaf1ff",
+                        "tertiary": "#854129",
+                        "surface-container-low": "#eff4ff",
+                        "surface-bright": "#f8f9ff",
+                        "surface": "#f8f9ff",
+                        "secondary-fixed": "#83f5f2",
+                        "surface-container-high": "#dee9fc",
+                        "primary-fixed-dim": "#7ad7c8",
+                        "outline": "#6e7977",
+                        "tertiary-fixed-dim": "#ffb59d",
+                        "on-error": "#ffffff",
+                        "tertiary-fixed": "#ffdbd0",
+                        "on-surface-variant": "#3e4947",
+                        "on-secondary-fixed": "#00201f",
+                        "on-tertiary-fixed-variant": "#74341d",
+                        "primary-container": "#017a6e",
+                        "surface-tint": "#006a60",
+                        "outline-variant": "#bdc9c6",
+                        "error": "#ba1a1a",
+                        "on-primary-fixed": "#00201c",
+                        "error-container": "#ffdad6",
+                        "on-primary": "#ffffff",
+                        "surface-container": "#e6eeff",
+                        "on-tertiary": "#ffffff",
+                        "primary": "#005f55",
+                        "on-tertiary-fixed": "#390b00",
+                        "secondary-fixed-dim": "#65d8d5",
+                        "on-background": "#121c2a",
+                        "tertiary-container": "#a3583f",
+                        "background": "#f8f9ff",
+                        "secondary": "#006a68",
+                        "on-secondary-fixed-variant": "#00504e",
+                        "on-error-container": "#93000a",
+                        "inverse-primary": "#7ad7c8",
+                        "surface-variant": "#d9e3f6",
+                        "surface-dim": "#d0dbed",
+                        "surface-container-highest": "#d9e3f6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "12px",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "max-width": "1280px",
+                        "lg": "16px",
+                        "base": "4px",
+                        "md": "12px",
+                        "xs": "4px",
+                        "sm": "8px",
+                        "xl": "24px"
+                    },
+                    "fontFamily": {
+                        "small": ["Inter", "sans-serif"],
+                        "h3": ["Inter", "sans-serif"],
+                        "label-xs": ["Inter", "sans-serif"],
+                        "code": ["JetBrains Mono", "monospace"],
+                        "h2": ["Inter", "sans-serif"],
+                        "display": ["Inter", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "headline": ["Inter", "sans-serif"]
+                    },
+                    "fontSize": {
+                        "small": ["13px", {"lineHeight": "1.4", "fontWeight": "400"}],
+                        "h3": ["16px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                        "label-xs": ["12px", {"lineHeight": "1", "fontWeight": "500"}],
+                        "code": ["13px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "h2": ["21px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                        "display": ["30px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                        "body": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #FBFCFD;
+            color: #121c2a;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        .custom-card {
+            background-color: #FFFFFF;
+            border: 1px solid #E7EAEE;
+            border-radius: 12px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+            transition: all 0.2s ease;
+        }
+        .custom-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border-color: #bdc9c6;
+        }
+        .active-sidebar-item {
+            background-color: #E6F4F1;
+            color: #017A6E;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="font-body text-body">
+<!-- TopNavBar -->
+<header class="bg-white border-b border-[#E7EAEE] shadow-sm sticky top-0 z-50">
+<div class="flex justify-between items-center h-16 px-8 w-full max-w-[1280px] mx-auto">
+<div class="flex items-center gap-8">
+<a class="text-[20px] font-[600] text-[#017A6E] flex items-center gap-2" href="#">
+<span class="w-8 h-8 bg-primary-container text-white flex items-center justify-center rounded-lg text-lg">K</span>
+                    Know-share
+                </a>
+<nav class="hidden lg:flex items-center gap-6">
+<a class="text-[#6B7280] hover:text-[#1F2937] font-headline text-[14px] font-[400] transition-colors" href="#">发现注册表</a>
+<a class="text-[#6B7280] hover:text-[#1F2937] font-headline text-[14px] font-[400] transition-colors" href="#">公开交换记录</a>
+<a class="text-[#6B7280] hover:text-[#1F2937] font-headline text-[14px] font-[400] transition-colors" href="#">信任网络</a>
+<a class="text-[#6B7280] hover:text-[#1F2937] font-headline text-[14px] font-[400] transition-colors" href="#">Agent 技能</a>
+<a class="text-[#6B7280] hover:text-[#1F2937] font-headline text-[14px] font-[400] transition-colors" href="#">开发文档</a>
+<a class="text-[#6B7280] hover:text-[#1F2937] font-headline text-[14px] font-[400] transition-colors" href="#">关于我们</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative w-64 group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-sm">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant rounded-full text-small focus:ring-1 focus:ring-primary-container outline-none transition-all" placeholder="搜索知识模块..." type="text"/>
+</div>
+<button class="bg-[#017A6E] text-white px-4 py-2 rounded-lg text-small font-medium hover:bg-[#016458] transition-all Active:opacity-90">
+                    提交模块
+                </button>
+<div class="flex items-center gap-2 cursor-pointer group">
+<div class="w-8 h-8 rounded-full border border-outline-variant overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional high-fidelity avatar photo of a young tech developer in a brightly lit studio. The lighting is soft and neutral, highlighting clean skin tones. The aesthetic is modern and corporate, reflecting a professional user identity within a high-density knowledge platform. Minimalist background in soft gray." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCIZNuRBBJ0n0YR1FG4L6rzSb74ivv6HcUZ015fpjHGne73w6klPjpVcRBJjv8-vlEb-h10623w2RR8YjCSB16G0iWGiFXqZUk37H7HUShNivK--5Wx1FpiDuhtpZI3sEQel892twDRGgeBUsugbDu7U8R6A2aBjaZcbe8qH51EKvxRixLyQScWQ3nqlb7LF_fwEXzMRadaoObDglwu5DQhusfOUIH9tvDb1kchWkS7Ui9is-2HwvYfaq54V_8FI1Bte3b3OD4LUmY"/>
+</div>
+<span class="text-small font-medium text-on-surface-variant group-hover:text-primary-container">@zyongzhu24</span>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-[1280px] mx-auto px-8 py-8">
+<!-- Welcome Bar -->
+<div class="mb-10">
+<nav class="flex text-xs text-outline mb-2">
+<a class="hover:text-primary transition-colors" href="#">主页</a>
+<span class="mx-2">/</span>
+<span class="text-on-surface">个人中心</span>
+</nav>
+<h1 class="font-display text-display text-on-surface">你好，@zyongzhu24</h1>
+<p class="text-small text-on-surface-variant mt-1">欢迎回来，今天有 3 个待处理的交换请求。</p>
+</div>
+<!-- StatBlocks Row -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+<div class="custom-card p-5 flex items-center gap-4">
+<div class="w-12 h-12 rounded-lg bg-primary-fixed flex items-center justify-center text-on-primary-fixed-variant">
+<span class="material-symbols-outlined">inventory_2</span>
+</div>
+<div>
+<div class="text-display leading-tight">6</div>
+<div class="text-label-xs text-outline font-medium">我的模块</div>
+</div>
+</div>
+<div class="custom-card p-5 flex items-center gap-4">
+<div class="w-12 h-12 rounded-lg bg-secondary-container flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined">swap_horiz</span>
+</div>
+<div>
+<div class="text-display leading-tight">3</div>
+<div class="text-label-xs text-outline font-medium">进行中交换</div>
+</div>
+</div>
+<div class="custom-card p-5 flex items-center gap-4">
+<div class="w-12 h-12 rounded-lg bg-[#E6F4F1] flex items-center justify-center text-[#017A6E]">
+<span class="material-symbols-outlined">verified_user</span>
+</div>
+<div>
+<div class="text-display leading-tight">824</div>
+<div class="text-label-xs text-outline font-medium">信任分</div>
+</div>
+</div>
+<div class="custom-card p-5 flex items-center gap-4">
+<div class="w-12 h-12 rounded-lg bg-error-container flex items-center justify-center text-on-error-container relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
+</div>
+<div>
+<div class="text-display leading-tight">5</div>
+<div class="text-label-xs text-outline font-medium">未读通知</div>
+</div>
+</div>
+</div>
+<!-- Main Content Area -->
+<div class="flex flex-col lg:flex-row gap-8">
+<!-- Left Sidebar Sub-nav -->
+<aside class="w-full lg:w-64 flex-shrink-0">
+<nav class="custom-card overflow-hidden">
+<ul class="flex flex-col">
+<li>
+<a class="active-sidebar-item flex items-center gap-3 px-5 py-3.5 transition-all text-small" href="#">
+<span class="material-symbols-outlined text-[20px]">inventory_2</span>
+                                我的模块
+                            </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-5 py-3.5 text-on-surface-variant hover:bg-surface-container transition-all text-small" href="#">
+<span class="material-symbols-outlined text-[20px]">drafts</span>
+                                草稿
+                            </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-5 py-3.5 text-on-surface-variant hover:bg-surface-container transition-all text-small" href="#">
+<span class="material-symbols-outlined text-[20px]">call_received</span>
+                                收到的交换
+                                <span class="ml-auto bg-primary-container text-white text-[10px] px-1.5 py-0.5 rounded-full">2</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-5 py-3.5 text-on-surface-variant hover:bg-surface-container transition-all text-small" href="#">
+<span class="material-symbols-outlined text-[20px]">call_made</span>
+                                发起的交换
+                            </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-5 py-3.5 text-on-surface-variant hover:bg-surface-container transition-all text-small" href="#">
+<span class="material-symbols-outlined text-[20px]">bookmark</span>
+                                收藏
+                            </a>
+</li>
+<li class="mt-4 pt-4 border-t border-outline-variant/30">
+<a class="flex items-center gap-3 px-5 py-3.5 text-on-surface-variant hover:bg-surface-container transition-all text-small" href="#">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+                                设置
+                            </a>
+</li>
+</ul>
+</nav>
+<!-- Help/Support Mini Card -->
+<div class="mt-6 p-5 rounded-lg bg-surface-container-high border border-outline-variant/30">
+<h4 class="text-label-xs font-semibold text-on-surface mb-2">需要帮助？</h4>
+<p class="text-xs text-on-surface-variant mb-4">查阅开发文档或联系我们的技术支持团队。</p>
+<a class="text-primary-container text-xs font-semibold flex items-center gap-1 hover:underline" href="#">
+                        访问文档 <span class="material-symbols-outlined text-sm">open_in_new</span>
+</a>
+</div>
+</aside>
+<!-- Right Main Panel -->
+<section class="flex-grow">
+<div class="flex justify-between items-end mb-6">
+<div>
+<h2 class="font-h2 text-h2 text-on-surface">我的模块</h2>
+<p class="text-small text-outline">管理您在 Know-share 上发布的知识与 Agent 模块</p>
+</div>
+<button class="flex items-center gap-2 px-4 py-2 border border-outline-variant rounded-lg text-small text-on-surface hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-sm">filter_list</span>
+                        筛选
+                    </button>
+</div>
+<!-- ModuleCard Grid -->
+<div class="grid grid-cols-1 xl:grid-cols-3 gap-6 mb-12">
+<!-- Card 1 -->
+<div class="custom-card flex flex-col h-full">
+<div class="p-5 flex-grow">
+<div class="flex justify-between items-start mb-3">
+<span class="inline-flex items-center px-2 py-0.5 rounded bg-primary-fixed text-[10px] font-bold text-on-primary-fixed-variant uppercase tracking-wider">Public</span>
+<div class="flex gap-1">
+<span class="material-symbols-outlined text-outline text-lg cursor-pointer hover:text-primary">more_horiz</span>
+</div>
+</div>
+<h3 class="font-h3 text-h3 text-on-surface mb-2">Agent 记忆系统设计模式</h3>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="px-2 py-0.5 bg-surface-container text-on-surface-variant text-[11px] rounded">Python</span>
+<span class="px-2 py-0.5 bg-surface-container text-on-surface-variant text-[11px] rounded">LLM</span>
+<span class="px-2 py-0.5 bg-surface-container text-on-surface-variant text-[11px] rounded">Architecture</span>
+</div>
+<p class="text-small text-on-surface-variant line-clamp-2">一套完整的 Agent 长期记忆管理方案，包含语义索引、重要性加权与遗忘算法。</p>
+</div>
+<div class="px-5 py-4 border-t border-outline-variant/30 flex justify-between items-center bg-surface-bright rounded-b-lg">
+<div class="flex gap-4">
+<div class="flex items-center gap-1 text-xs text-outline">
+<span class="material-symbols-outlined text-sm">star</span> 124
+                                </div>
+<div class="flex items-center gap-1 text-xs text-outline">
+<span class="material-symbols-outlined text-sm">fork_right</span> 32
+                                </div>
+</div>
+<span class="text-xs text-[#017A6E] font-semibold">已公开</span>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="custom-card flex flex-col h-full">
+<div class="p-5 flex-grow">
+<div class="flex justify-between items-start mb-3">
+<span class="inline-flex items-center px-2 py-0.5 rounded bg-primary-fixed text-[10px] font-bold text-on-primary-fixed-variant uppercase tracking-wider">Public</span>
+<div class="flex gap-1">
+<span class="material-symbols-outlined text-outline text-lg cursor-pointer hover:text-primary">more_horiz</span>
+</div>
+</div>
+<h3 class="font-h3 text-h3 text-on-surface mb-2">多模态 RAG 检索流水线</h3>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="px-2 py-0.5 bg-surface-container text-on-surface-variant text-[11px] rounded">VectorDB</span>
+<span class="px-2 py-0.5 bg-surface-container text-on-surface-variant text-[11px] rounded">RAG</span>
+</div>
+<p class="text-small text-on-surface-variant line-clamp-2">支持图像与文本联合向量空间检索的 RAG 基础架构，适用于技术图表解析。</p>
+</div>
+<div class="px-5 py-4 border-t border-outline-variant/30 flex justify-between items-center bg-surface-bright rounded-b-lg">
+<div class="flex gap-4">
+<div class="flex items-center gap-1 text-xs text-outline">
+<span class="material-symbols-outlined text-sm">star</span> 89
+                                </div>
+<div class="flex items-center gap-1 text-xs text-outline">
+<span class="material-symbols-outlined text-sm">fork_right</span> 15
+                                </div>
+</div>
+<span class="text-xs text-[#017A6E] font-semibold">已公开</span>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="custom-card flex flex-col h-full">
+<div class="p-5 flex-grow">
+<div class="flex justify-between items-start mb-3">
+<span class="inline-flex items-center px-2 py-0.5 rounded bg-primary-fixed text-[10px] font-bold text-on-primary-fixed-variant uppercase tracking-wider">Public</span>
+<div class="flex gap-1">
+<span class="material-symbols-outlined text-outline text-lg cursor-pointer hover:text-primary">more_horiz</span>
+</div>
+</div>
+<h3 class="font-h3 text-h3 text-on-surface mb-2">AI 产品增长实验库</h3>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="px-2 py-0.5 bg-surface-container text-on-surface-variant text-[11px] rounded">Growth</span>
+<span class="px-2 py-0.5 bg-surface-container text-on-surface-variant text-[11px] rounded">LLM-UX</span>
+</div>
+<p class="text-small text-on-surface-variant line-clamp-2">记录了 50+ 个针对 AI 产品的 A/B 测试用例与用户留存优化模型。</p>
+</div>
+<div class="px-5 py-4 border-t border-outline-variant/30 flex justify-between items-center bg-surface-bright rounded-b-lg">
+<div class="flex gap-4">
+<div class="flex items-center gap-1 text-xs text-outline">
+<span class="material-symbols-outlined text-sm">star</span> 210
+                                </div>
+<div class="flex items-center gap-1 text-xs text-outline">
+<span class="material-symbols-outlined text-sm">fork_right</span> 44
+                                </div>
+</div>
+<span class="text-xs text-[#017A6E] font-semibold">已公开</span>
+</div>
+</div>
+</div>
+<!-- Empty State Hint (for Drafts Context) -->
+<div class="border-t border-[#E7EAEE] pt-10">
+<h3 class="text-h3 font-h3 text-on-surface mb-6">草稿管理</h3>
+<div class="custom-card p-12 flex flex-col items-center justify-center text-center border-dashed bg-transparent">
+<div class="w-16 h-16 rounded-full bg-surface-container flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-3xl text-outline">edit_note</span>
+</div>
+<h4 class="text-h3 font-semibold text-on-surface mb-2">还没有草稿</h4>
+<p class="text-small text-outline mb-6 max-w-sm">您正在构思的新模块会保存在这里。使用我们的提交向导可以帮助您更专业地组织知识。</p>
+<button class="bg-[#017A6E] text-white px-6 py-2.5 rounded-lg text-small font-semibold hover:bg-[#016458] transition-all shadow-md flex items-center gap-2">
+<span class="material-symbols-outlined">add_circle</span>
+                            去提交向导创建
+                        </button>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-[#FBFCFD] border-t border-[#E7EAEE] mt-20">
+<div class="flex flex-col md:flex-row justify-between items-center py-8 px-8 w-full max-w-[1280px] mx-auto">
+<div class="flex items-center gap-4 mb-4 md:mb-0">
+<span class="text-[#017A6E] font-[600]">Know-share</span>
+<span class="font-body text-[13px] text-[#6B7280]">© 2024 Know-share. All rights reserved.</span>
+</div>
+<div class="flex gap-8">
+<a class="font-body text-[13px] text-[#9CA3AF] hover:text-[#1F2937] transition-colors" href="#">隐私政策</a>
+<a class="font-body text-[13px] text-[#9CA3AF] hover:text-[#1F2937] transition-colors" href="#">服务条款</a>
+<a class="font-body text-[13px] text-[#9CA3AF] hover:text-[#1F2937] transition-colors" href="#">联系我们</a>
+</div>
+</div>
+</footer>
+<script>
+        // Micro-interaction for StatBlocks
+        document.querySelectorAll('.custom-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                const icon = card.querySelector('.material-symbols-outlined');
+                if (icon) {
+                    icon.style.transform = 'scale(1.1) rotate(-5deg)';
+                    icon.style.transition = 'transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                }
+            });
+            card.addEventListener('mouseleave', () => {
+                const icon = card.querySelector('.material-symbols-outlined');
+                if (icon) {
+                    icon.style.transform = 'scale(1) rotate(0deg)';
+                }
+            });
+        });
+    </script>
+</body></html>

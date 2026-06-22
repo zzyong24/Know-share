@@ -1,0 +1,249 @@
+project:
+  name: "Know-share"
+  artifact_root: "."
+  current_stage: "07-ui-generation-or-import"
+  frontier: "07-ui-generation-or-import"
+  updated_at: "2026-06-22"
+  work_branch: "claude/gifted-hamilton-c7255e"
+
+stages:
+  "00-intake":
+    status: "passed"
+    artifacts:
+      - path: "PROJECT_CONTEXT.md"
+        role: "implementation-context"
+      - path: "aies/00-control/DEFAULT_ASSUMPTIONS.md"
+        role: "assumption-log"
+    depends_on: []
+    gate: "00-intake-gate"
+    gate_status: "pass"
+    confirmation_required: false
+    invalidated_by: []
+    notes: "质量门证据：`test -f ARTIFACT_MANIFEST.yaml && test -f ID_REGISTRY.md && test -f DECISION_LOG.md && test -f TRACEABILITY_MATRIX.md && test -f PROJECT_CONTEXT.md && test -f DEFAULT_ASSUMPTIONS.md` 返回 `intake-files-present`；源文件已就位：README.md、docs/mvp.md、docs/privacy-model.md、docs/data-contract.md、examples/knowledge-module.manifest.json，以及 7 张设计 PNG。"
+  "01-project-kickoff":
+    status: "passed"
+    artifacts:
+      - path: "AGENTS.md"
+        role: "agent-rules"
+    depends_on: ["00-intake"]
+    gate: "00-intake-gate"
+    gate_status: "pass"
+    confirmation_required: true
+    invalidated_by: []
+    notes: "质量门证据：`test -f AGENTS.md && test -f PROJECT_CONTEXT.md && test -f DEFAULT_ASSUMPTIONS.md` 返回成功。确认已记录于 DEC-003。"
+  "02-product-brainstorming":
+    status: "passed"
+    artifacts:
+      - path: "aies/01-product/FUNCTION_OUTLINE.md"
+        role: "capability-outline"
+    depends_on: ["01-project-kickoff"]
+    gate: "01-product-gate"
+    gate_status: "pass"
+    confirmation_required: true
+    invalidated_by: []
+    notes: "已产出 FUNCTION_OUTLINE.md，包含完整的目标产品能力图谱、初始 FR/NFR ID，以及多 agent 工作包候选项。用户已在 DEC-005 中确认不做 V0.1/V0.2 产品切片。"
+  "03-product-spec":
+    status: "passed"
+    artifacts:
+      - path: "aies/01-product/PRODUCT_SPEC.md"
+        role: "product-source-of-truth"
+    depends_on: ["02-product-brainstorming"]
+    gate: "01-product-gate"
+    gate_status: "pass"
+    confirmation_required: true
+    invalidated_by: []
+    notes: "已产出 PRODUCT_SPEC.md，覆盖问题/用户与任务/核心场景/FR-001~120/NFR-001~007/完整目标产品与关键难点(HARD-01~09)/产品边界/假设/验收/成功信号，全部追溯到 FUNCTION_OUTLINE.md 的 CAP-*/FR-*/NFR-*。A 级确认：身份以 GitHub 为规范（DEC-006）、无经济模型（DEC-007）。按用户反馈（DEC-008）去除'推迟项'式弱化：承诺完整目标产品、仅留 3 条真实边界、将卡点登记为 HARD-01~09 并映射到解决阶段与 PKG 工作包。新增假设 ASM-007、ASM-008。质量门 01-product-gate 内容检查通过；待用户对整份规格签字确认后转 passed 并进入 04-business-flow。"
+  "04-business-flow":
+    status: "passed"
+    artifacts:
+      - path: "aies/01-product/BUSINESS_FLOW.md"
+        role: "business-process-source"
+    depends_on: ["03-product-spec"]
+    gate: "02-business-flow-gate"
+    gate_status: "pass"
+    confirmation_required: true
+    invalidated_by: []
+    notes: "已产出 BUSINESS_FLOW.md：角色、主流程 FLOW-001~008、备选流程、业务规则、交换状态机(FLOW-003 解 HARD-02)、决策点、失败/恢复、审计。解决 HARD-01/02/03/08/09 并贯穿 HARD-04。用户确认：互惠改为可选/支持单向(DEC-009)、绑定收集联系方式且默认私密+交换接受后披露(FR-130/DEC-010)、含轻度后端与聚合统计(FR-140/DEC-011)；ASM-010/011 采纳为 active。产品规格新增 FR-130/FR-140，已记 CHANGE_IMPACT CI-001。质量门 02-business-flow-gate 通过，stage 转 passed。"
+  "05-light-domain-model":
+    status: "passed"
+    artifacts:
+      - path: "aies/01-product/LIGHT_DOMAIN_MODEL.md"
+        role: "domain-vocabulary"
+    depends_on: ["03-product-spec", "04-business-flow"]
+    gate: "03-domain-model-gate"
+    gate_status: "pass"
+    confirmation_required: true
+    invalidated_by: []
+    notes: "已产出 LIGHT_DOMAIN_MODEL.md：实体 ENT-001~021、关系、生命周期(Exchange/Submission/Module/ContactInfo)、不变量 INV-01~11、派生值、外部引用、开放建模问题。编码 DEC-009(互惠可选 INV-05)、DEC-010(联系方式私密披露 INV-03 + ENT-008/009)、DEC-011(轻后端统计 ENT-019)。未做持久化/框架选型。新增建模假设 ASM-012/013。质量门 03-domain-model-gate 内容检查通过；待用户确认词汇与生命周期后转 passed 并进入 06-ia-spec。"
+  "06-ia-spec":
+    status: "passed"
+    artifacts:
+      - path: "aies/02-design/IA_SPEC.md"
+        role: "information-architecture"
+    depends_on: ["03-product-spec", "04-business-flow", "05-light-domain-model"]
+    gate: "04-ia-gate"
+    gate_status: "pass"
+    confirmation_required: true
+    invalidated_by: []
+    notes: "已产出 aies/02-design/IA_SPEC.md：用户心智模型、顶层界面 IA-001~014、导航模型、内容层级、进入/退出点、空状态、权限敏感界面。覆盖 CAP-001~013 与 FR-130/FR-140，权限面与 INV-01/03/04 对齐。新增假设 ASM-014（个人中心收敛）。质量门 04-ia-gate 内容检查通过；待用户确认界面与导航后转 passed 并进入 07-ui-generation-or-import。"
+  "07-ui-generation-or-import":
+    status: "needs-user-confirmation"
+    artifacts:
+      - path: "aies/02-design/UI_RULES.md"
+        role: "ui-source-normalization"
+    depends_on: ["06-ia-spec"]
+    gate: "05-ui-gate"
+    gate_status: "pass"
+    confirmation_required: true
+    invalidated_by: []
+    notes: "已产出 aies/02-design/UI_RULES.md：混合模式（7 张已有图导入 + Stitch 生成 7 个缺失界面）。立唯一规范设计系统——设计令牌 UI-001（主色深青绿 #017A6E，全分辨率采样）、规范图标族 UI-002=Material Symbols Outlined（据生成 HTML 由 Lucide 修订，DEC-012 用户确认）、规范组件 UI-003；生成/还原一致性规则 UI-004（含 image2 漂移防控与生成后检查）。彩色图标徽归一为 IconChip 组件。缺失 7 屏（IA-006/009/010/011/012/013/014）已用 Stitch 全部生成、下载、逐屏核验并归一化，归档于 docs/design/generated/（每屏 .html 真实页面 + .png；Stitch 项目 7946899781188074425 / 设计系统 assets/4528660503651777687）。生成后一致性检查通过：主色命中、仅 Material Symbols Outlined、零 Lucide/FontAwesome/emoji、跨 14 屏同系统；IA-012 外壳英文化漂移已整屏重生成修复。新增 ASM-015（色值采样待核对）、ASM-016（桌面优先）。质量门 05-ui-gate 内容+一致性均 pass；待用户对最终 UI 产物与 7 屏生成结果签字确认后转 passed，进入 08-page-spec。"
+  "08-page-spec":
+    status: "not-started"
+    artifacts:
+      - path: "aies/02-design/PAGE_SPEC.md"
+        role: "page-contracts"
+    depends_on: ["03-product-spec", "06-ia-spec", "07-ui-generation-or-import"]
+    gate: "06-page-spec-gate"
+    gate_status: "not-run"
+    confirmation_required: true
+    invalidated_by: []
+    notes: ""
+  "09-frontend-spec":
+    status: "not-started"
+    artifacts:
+      - path: "aies/03-frontend/FRONTEND_SPEC.md"
+        role: "frontend-plan"
+      - path: "aies/02-design/COMPONENTS_SPEC.md"
+        role: "component-contracts"
+    depends_on: ["08-page-spec"]
+    gate: "07-frontend-spec-gate"
+    gate_status: "not-run"
+    confirmation_required: true
+    invalidated_by: []
+    notes: ""
+  "10-mock-data-spec":
+    status: "not-started"
+    artifacts:
+      - path: "aies/02-design/MOCK_DATA_SPEC.md"
+        role: "mock-data-contracts"
+    depends_on: ["05-light-domain-model", "08-page-spec", "09-frontend-spec"]
+    gate: "08-mock-data-gate"
+    gate_status: "not-run"
+    confirmation_required: false
+    invalidated_by: []
+    notes: ""
+  "11-frontend-implementation":
+    status: "not-started"
+    artifacts:
+      - path: "app/"
+        role: "frontend-implementation"
+    depends_on: ["08-page-spec", "09-frontend-spec", "10-mock-data-spec"]
+    gate: "09-frontend-implementation-gate"
+    gate_status: "not-run"
+    confirmation_required: false
+    invalidated_by: []
+    notes: "在本阶段之前，Task Zero 必须建立一个可运行的项目和绿色基线。"
+  "12-frontend-validation":
+    status: "not-started"
+    artifacts:
+      - path: "aies/03-frontend/FRONTEND_VALIDATION_REPORT.md"
+        role: "browser-validation-evidence"
+    depends_on: ["11-frontend-implementation"]
+    gate: "10-frontend-validation-gate"
+    gate_status: "not-run"
+    confirmation_required: true
+    invalidated_by: []
+    notes: ""
+  "13-backend-spec":
+    status: "not-started"
+    artifacts:
+      - path: "aies/04-backend/BACKEND_SPEC.md"
+        role: "backend-plan"
+    depends_on: ["03-product-spec", "05-light-domain-model", "12-frontend-validation"]
+    gate: "11-backend-spec-gate"
+    gate_status: "not-run"
+    confirmation_required: true
+    invalidated_by: []
+    notes: ""
+  "14-module-workflow-spec":
+    status: "not-started"
+    artifacts:
+      - path: "aies/04-backend/MODULE_WORKFLOW_SPEC.md"
+        role: "backend-module-plan"
+    depends_on: ["13-backend-spec"]
+    gate: "11-backend-spec-gate"
+    gate_status: "not-run"
+    confirmation_required: true
+    invalidated_by: []
+    notes: ""
+  "15-service-contract":
+    status: "not-started"
+    artifacts:
+      - path: "aies/04-backend/SERVICE_CONTRACT.md"
+        role: "frontend-backend-contract"
+    depends_on: ["08-page-spec", "13-backend-spec", "14-module-workflow-spec"]
+    gate: "12-service-contract-gate"
+    gate_status: "not-run"
+    confirmation_required: true
+    invalidated_by: []
+    notes: ""
+  "16-backend-tdd":
+    status: "not-started"
+    artifacts:
+      - path: "server/"
+        role: "backend-implementation"
+      - path: "tests/"
+        role: "backend-test-evidence"
+    depends_on: ["13-backend-spec", "14-module-workflow-spec", "15-service-contract"]
+    gate: "13-tdd-gate"
+    gate_status: "not-run"
+    confirmation_required: false
+    invalidated_by: []
+    notes: "在本阶段之前，契约完整性质量门必须通过。"
+  "17-integration-release":
+    status: "not-started"
+    artifacts:
+      - path: "aies/05-release/INTEGRATION_REPORT.md"
+        role: "integration-evidence"
+      - path: "aies/05-release/RELEASE_REVIEW.md"
+        role: "release-readiness"
+    depends_on: ["12-frontend-validation", "15-service-contract", "16-backend-tdd"]
+    gate: "14-integration-gate"
+    gate_status: "not-run"
+    confirmation_required: true
+    invalidated_by: []
+    notes: ""
+
+stage_defaults:
+  valid_statuses:
+    - "not-started"
+    - "draft"
+    - "needs-user-confirmation"
+    - "blocked"
+    - "passed"
+    - "accepted-risk"
+    - "invalidated"
+  transition_rule: "参见 product-to-code-orchestrator rules/orchestrator-state-machine.md"
+
+consistency_gate:
+  status: "not-run"
+  reason: "仅完成初始收件；完整的双向孤儿扫描将在稳定的需求 ID 存在后开始。"
+  blocks: []
+  downstream_to_upstream: "pending"
+  recorded_in: "aies/00-control/TRACEABILITY_MATRIX.md"
+
+open_items:
+  - id: "OPEN-001"
+    stage: "01-project-kickoff"
+    type: "missing-artifact"
+    description: "在将实现工作分配给并行 agent 之前，先创建项目级别的 AGENTS.md。"
+    owner: "agent"
+    revisit_trigger: "在阶段 02 产品头脑风暴被标记为 passed 之前。"
+    status: "closed"
+  - id: "OPEN-002"
+    stage: "02-product-brainstorming"
+    type: "question"
+    description: "在完整的功能大纲产出后，用户应确认产品范围的处理方式。"
+    owner: "user"
+    revisit_trigger: "在阶段 03 产品规格被标记为 passed 之前。"
+    status: "closed"

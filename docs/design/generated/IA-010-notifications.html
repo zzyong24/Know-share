@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>通知中心 - Know-share</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Inter', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background-color: #FBFCFD;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed": "#83f5f2",
+                        "inverse-surface": "#27313f",
+                        "on-surface-variant": "#3e4947",
+                        "tertiary": "#854129",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container": "#e6eeff",
+                        "surface-variant": "#d9e3f6",
+                        "on-primary": "#ffffff",
+                        "primary-container": "#017a6e",
+                        "surface-bright": "#f8f9ff",
+                        "surface-container-highest": "#d9e3f6",
+                        "tertiary-container": "#a3583f",
+                        "on-tertiary": "#ffffff",
+                        "outline": "#6e7977",
+                        "background": "#f8f9ff",
+                        "outline-variant": "#bdc9c6",
+                        "on-secondary-container": "#00706f",
+                        "surface-dim": "#d0dbed",
+                        "error-container": "#ffdad6",
+                        "surface-container-low": "#eff4ff",
+                        "primary": "#005f55",
+                        "secondary-fixed-dim": "#65d8d5",
+                        "error": "#ba1a1a",
+                        "on-secondary-fixed": "#00201f",
+                        "tertiary-fixed-dim": "#ffb59d",
+                        "on-secondary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-container": "#ffebe6",
+                        "surface-container-high": "#dee9fc",
+                        "secondary": "#006a68",
+                        "on-tertiary-fixed": "#390b00",
+                        "on-secondary-fixed-variant": "#00504e",
+                        "primary-fixed-dim": "#7ad7c8",
+                        "on-tertiary-fixed-variant": "#74341d",
+                        "inverse-on-surface": "#eaf1ff",
+                        "surface-tint": "#006a60",
+                        "on-surface": "#121c2a",
+                        "inverse-primary": "#7ad7c8",
+                        "on-primary-fixed-variant": "#005048",
+                        "primary-fixed": "#96f3e4",
+                        "on-primary-container": "#a8fff0",
+                        "on-background": "#121c2a",
+                        "tertiary-fixed": "#ffdbd0",
+                        "on-primary-fixed": "#00201c",
+                        "on-error": "#ffffff",
+                        "surface": "#f8f9ff",
+                        "secondary-container": "#83f5f2"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "md": "12px",
+                        "max-width": "1280px",
+                        "base": "4px",
+                        "xs": "4px",
+                        "xl": "24px",
+                        "sm": "8px",
+                        "lg": "16px"
+                    },
+                    "fontFamily": {
+                        "code": ["JetBrains Mono"],
+                        "h3": ["Inter"],
+                        "small": ["Inter"],
+                        "label-xs": ["Inter"],
+                        "display": ["Inter"],
+                        "h2": ["Inter"],
+                        "body": ["Inter"],
+                        "headline": ["Inter"]
+                    },
+                    "fontSize": {
+                        "code": ["13px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "h3": ["16px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                        "small": ["13px", {"lineHeight": "1.4", "fontWeight": "400"}],
+                        "label-xs": ["12px", {"lineHeight": "1", "fontWeight": "500"}],
+                        "display": ["30px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                        "h2": ["21px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                        "body": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-[#FBFCFD] text-on-surface antialiased">
+<!-- TopNavBar from JSON -->
+<header class="bg-white dark:bg-white border-b border-[#E7EAEE] shadow-sm sticky top-0 z-50">
+<nav class="flex justify-between items-center h-16 px-8 w-full max-w-[1280px] mx-auto">
+<div class="flex items-center gap-8">
+<div class="text-[20px] font-[600] text-[#017A6E] flex items-center gap-2">
+<span class="w-8 h-8 bg-[#017A6E] rounded-md flex items-center justify-center text-white font-bold">K</span>
+                    Know-share
+                </div>
+<div class="hidden md:flex gap-6 items-center font-headline text-[14px] font-[400]">
+<a class="text-[#6B7280] hover:text-[#1F2937] transition-colors" href="#">发现注册表</a>
+<a class="text-[#6B7280] hover:text-[#1F2937] transition-colors" href="#">公开交换记录</a>
+<a class="text-[#6B7280] hover:text-[#1F2937] transition-colors" href="#">信任网络</a>
+<a class="text-[#6B7280] hover:text-[#1F2937] transition-colors" href="#">Agent 技能</a>
+<a class="text-[#6B7280] hover:text-[#1F2937] transition-colors" href="#">开发文档</a>
+<a class="text-[#6B7280] hover:text-[#1F2937] transition-colors" href="#">关于我们</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden lg:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline-variant text-[20px]">search</span>
+<input class="pl-10 pr-4 py-2 bg-surface-container-low border-none rounded-full text-small w-64 focus:ring-2 focus:ring-primary-container" placeholder="搜索资源、开发者..." type="text"/>
+</div>
+<button class="bg-[#017A6E] text-white px-4 py-2 rounded-lg text-small font-medium hover:bg-[#016458] transition-colors Active:opacity-90">
+                    提交模块
+                </button>
+<button class="text-[#6B7280] hover:text-[#1F2937] p-2 relative">
+<span class="material-symbols-outlined text-[24px]">account_circle</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full border-2 border-white"></span>
+</button>
+</div>
+</nav>
+</header>
+<main class="max-w-[1280px] mx-auto px-8 py-10 min-h-screen">
+<!-- Page Header -->
+<div class="flex justify-between items-end mb-8">
+<div>
+<h1 class="text-[24px] font-semibold text-on-surface leading-tight">通知中心</h1>
+<p class="text-small text-outline-variant mt-1">管理您的系统通知、交换状态及社区动态</p>
+</div>
+<button class="flex items-center gap-1 text-[#017A6E] text-small font-medium hover:bg-[#E6F4F1] px-3 py-1.5 rounded-lg transition-colors">
+<span class="material-symbols-outlined text-[18px]">done_all</span>
+                全部标记已读
+            </button>
+</div>
+<!-- Filter Tabs -->
+<div class="flex gap-8 border-b border-[#E7EAEE] mb-6">
+<button class="text-[#017A6E] font-[600] border-b-2 border-[#017A6E] pb-3 text-body px-1">全部</button>
+<button class="text-[#6B7280] hover:text-[#1F2937] pb-3 text-body px-1 transition-colors">交换</button>
+<button class="text-[#6B7280] hover:text-[#1F2937] pb-3 text-body px-1 transition-colors">评审</button>
+<button class="text-[#6B7280] hover:text-[#1F2937] pb-3 text-body px-1 transition-colors">反馈</button>
+<button class="text-[#6B7280] hover:text-[#1F2937] pb-3 text-body px-1 transition-colors">社区</button>
+</div>
+<!-- Notification Feed -->
+<div class="space-y-3">
+<!-- Unread: Exchange -->
+<div class="bg-white border border-[#E7EAEE] rounded-xl flex items-center p-4 hover:shadow-sm transition-shadow relative overflow-hidden group">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-[#017A6E]"></div>
+<div class="flex items-center flex-1 gap-4">
+<div class="w-10 h-10 rounded-lg bg-[#E6F4F1] flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-[#017A6E]">swap_horiz</span>
+</div>
+<div class="flex flex-col">
+<p class="text-body text-on-surface">
+<span class="font-bold">@knowledge-trader</span> 接受了你的交换请求
+                        </p>
+<span class="text-label-xs text-outline-variant mt-1">2 小时前</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<span class="w-2 h-2 bg-primary rounded-full"></span>
+<a class="text-[#017A6E] text-small font-medium hover:underline" href="#">查看交换</a>
+</div>
+</div>
+<!-- Unread: Review -->
+<div class="bg-white border border-[#E7EAEE] rounded-xl flex items-center p-4 hover:shadow-sm transition-shadow relative overflow-hidden group">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-[#017A6E]"></div>
+<div class="flex items-center flex-1 gap-4">
+<div class="w-10 h-10 rounded-lg bg-[#E6EEFF] flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-[#0061A4]">verified_user</span>
+</div>
+<div class="flex flex-col">
+<p class="text-body text-on-surface">
+                            你的模块<span class="font-bold">《多模态 RAG 检索流水线》</span>通过隐私评审
+                        </p>
+<span class="text-label-xs text-outline-variant mt-1">5 小时前</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<span class="w-2 h-2 bg-primary rounded-full"></span>
+<a class="text-[#017A6E] text-small font-medium hover:underline" href="#">查看</a>
+</div>
+</div>
+<!-- Read: Feedback -->
+<div class="bg-white border border-[#E7EAEE] rounded-xl flex items-center p-4 opacity-80 hover:opacity-100 transition-opacity">
+<div class="flex items-center flex-1 gap-4">
+<div class="w-10 h-10 rounded-lg bg-[#FFF4E6] flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-[#B45309]">grade</span>
+</div>
+<div class="flex flex-col">
+<p class="text-body text-on-surface-variant">
+                            收到一条新的交换反馈（内容质量 <span class="text-[#B45309]">5★</span>）
+                        </p>
+<span class="text-label-xs text-outline-variant mt-1">昨天</span>
+</div>
+</div>
+<a class="text-[#017A6E] text-small font-medium hover:underline" href="#">查看</a>
+</div>
+<!-- Read: Community -->
+<div class="bg-white border border-[#E7EAEE] rounded-xl flex items-center p-4 opacity-80 hover:opacity-100 transition-opacity">
+<div class="flex items-center flex-1 gap-4">
+<div class="w-10 h-10 rounded-lg bg-[#F3E8FF] flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-[#7E22CE]">groups</span>
+</div>
+<div class="flex flex-col">
+<p class="text-body text-on-surface-variant">
+                            你关注的主题 <span class="font-medium text-on-surface">LLM</span> 有 3 个新模块
+                        </p>
+<span class="text-label-xs text-outline-variant mt-1">2 天前</span>
+</div>
+</div>
+<a class="text-[#017A6E] text-small font-medium hover:underline" href="#">查看</a>
+</div>
+</div>
+<!-- Empty State (Optional Visualization) -->
+<div class="mt-16 py-16 flex flex-col items-center justify-center text-center opacity-40">
+<span class="material-symbols-outlined text-[64px] text-outline-variant mb-4">notifications_off</span>
+<h3 class="font-h3 text-h3 text-on-surface">暂无通知</h3>
+<p class="text-small text-outline-variant mt-2">交换/评审/反馈事件会在此提醒</p>
+</div>
+</main>
+<!-- Footer from JSON -->
+<footer class="bg-[#FBFCFD] border-t border-[#E7EAEE]">
+<div class="flex flex-col md:flex-row justify-between items-center py-8 px-8 w-full max-w-[1280px] mx-auto">
+<div class="mb-4 md:mb-0">
+<div class="text-[#017A6E] font-[600] mb-2 flex items-center gap-2">
+<span class="w-6 h-6 bg-[#017A6E] rounded flex items-center justify-center text-white text-[12px] font-bold">K</span>
+                    Know-share
+                </div>
+<p class="font-body text-[13px] text-[#6B7280]">© 2024 Know-share. All rights reserved.</p>
+</div>
+<div class="flex gap-8">
+<a class="font-body text-[13px] text-[#9CA3AF] hover:text-[#1F2937] transition-colors" href="#">隐私政策</a>
+<a class="font-body text-[13px] text-[#9CA3AF] hover:text-[#1F2937] transition-colors" href="#">服务条款</a>
+<a class="font-body text-[13px] text-[#9CA3AF] hover:text-[#1F2937] transition-colors" href="#">联系我们</a>
+</div>
+</div>
+</footer>
+<script>
+        // Micro-interaction for marking as read
+        document.querySelectorAll('.group').forEach(item => {
+            item.addEventListener('click', function() {
+                this.classList.remove('relative', 'overflow-hidden');
+                this.classList.add('opacity-80');
+                const bar = this.querySelector('.bg-[#017A6E]');
+                const dot = this.querySelector('.bg-primary');
+                if(bar) bar.remove();
+                if(dot) dot.remove();
+            });
+        });
+    </script>
+</body></html>

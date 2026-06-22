@@ -7,7 +7,7 @@
 ### 产物元数据
 
 - Stage: `09-frontend-spec`
-- Status: `needs-user-confirmation`
+- Status: `passed（2026-06-23 用户签字）`
 - Upstream IDs: `PAGE-001~105`、`IA-001~014`、`UI-001~004`、`FR-*`/`NFR-*`、`ENT-*`、`INV-*`
 - Decision IDs: `DEC-006`（GitHub 身份）、`DEC-007`（无经济模型）、`DEC-011`（轻后端）、`DEC-012`（Material Symbols 规范图标族）、`DEC-014`（前端栈 Next.js+TS+Tailwind+shadcn/ui）
 - 新增假设: `ASM-062`~`ASM-067`（见文末）

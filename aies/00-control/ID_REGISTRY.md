@@ -150,6 +150,8 @@
 | `ASM-062~067` | 假设 | 阶段09前端架构级假设（栈/状态/图表/共享库归属/图标库/MOCK） | `DEFAULT_ASSUMPTIONS.md` + `03-frontend/FRONTEND_SPEC.md` | `09-frontend-spec`, `DEC-014` | active | — |
 | `ASM-068~107` | 假设 | 阶段09组件级实现假设（40 项，含取数注入/状态文字化/图标映射/子surface等） | 各 `02-design/<模块>/COMPONENTS_SPEC.md` + `_shared` | `09-frontend-spec` | active | 就地登记；ASM-071 注明前端非安全边界、后端须二次校验。 |
 | `RISK-001` | 风险 | 技能/来源数量扩展致网格膨胀 | `02-design/agent-skills/COMPONENTS_SPEC.md` | `FR-080` | mitigated | 已用数据驱动网格化解。 |
+| `MOCK-001~020` | 模拟数据场景 | 各页状态的 MOCK 场景（正常/空/加载/错误/权限敏感） | `02-design/MOCK_DATA_SPEC.md` | `ENT-*`, `PAGE-*`, `INV-01/03/09` | draft | 单一真源、跨模块一致；全合成无 PII。 |
+| `ASM-108~111` | 假设 | 阶段10 Mock 数据假设（交付形态/规模/时间戳/契约对齐） | `DEFAULT_ASSUMPTIONS.md` + `02-design/MOCK_DATA_SPEC.md` | `10-mock-data-spec` | active | — |
 
 ## 完成标准
 

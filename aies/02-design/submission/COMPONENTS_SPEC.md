@@ -9,7 +9,7 @@
 ### 产物元数据
 
 - Stage: `09-frontend-spec`（模块组件规格扇出）
-- Status: `needs-user-confirmation`
+- Status: `passed（2026-06-23 用户签字）`
 - 模块: submission（提交模块向导 + 隐私门），覆盖界面 `IA-004`、页面 `PAGE-020~024`
 - COMP 段（模块特有）: `COMP-070~089`（依 `FRONTEND_SPEC.md` §7 分配；本批用 `COMP-070~078`，`COMP-079~089` 预留）
 - 引用的共享组件: `COMP-007`、`COMP-008`、`COMP-009`、`COMP-010`、`COMP-011`、`COMP-013`、`COMP-019`、`COMP-020`、`COMP-021`、`COMP-022`、`COMP-024`、`COMP-025`、`COMP-029`、`COMP-030`、`COMP-033`

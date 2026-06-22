@@ -9,7 +9,7 @@
 ### 产物元数据
 
 - Stage: `09-frontend-spec`（模块组件扇出）
-- Status: `needs-user-confirmation`
+- Status: `passed（2026-06-23 用户签字）`
 - 模块: about
 - COMP 段（模块特有）: `COMP-210`~`COMP-229`（本规格用 `COMP-210`~`COMP-214`，`COMP-215`~`COMP-229` 预留）
 - Upstream IDs: `PAGE-100`~`PAGE-105`、`IA-013`、`NFR-004`、`NFR-001`、`NFR-007`、`FR-140`、`FLOW-008`、`ENT-019`、`INV-01`/`INV-04`/`INV-09`/`INV-10`、`UI-001`~`UI-004`

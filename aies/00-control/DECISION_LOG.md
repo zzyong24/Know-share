@@ -216,6 +216,21 @@ Revisit Trigger: 若团队改选别的框架/组件库，或决定以 Material S
 Status: active
 ```
 
+```text
+ID: DEC-015
+Date: 2026-06-23
+Stage: 09-frontend-spec
+Type: user-confirmation
+Decision: 用户签字确认阶段 09 前端规格通过——栈（DEC-014）与组件边界确认。FRONTEND_SPEC + 共享组件库 COMP-001~040 + 10 模块组件契约 COMP-041~229 转 passed；架构假设 ASM-062~067 与组件级假设 ASM-068~107（含 RISK-001）保持 active。
+Rationale: 组件契约并行产出后经强制 spec 交叉审核（修共享 Timeline props、统一反馈表单为 COMP-116 单一真源、修 ASM 笔误），跨模块逐项一致、无待决矛盾。阶段 09 转 passed，解锁阶段 10 Mock 数据规格与后续实现。
+Source: 用户于 2026-06-23 的消息「确认 start」。
+Affected Artifacts: aies/03-frontend/FRONTEND_SPEC.md, aies/02-design/_shared/COMPONENTS_SPEC.md + 10 模块 COMPONENTS_SPEC.md, ARTIFACT_MANIFEST.yaml（stage 09 → passed）, 下游 10 mock 数据 / 11 前端实现
+Invalidates: none
+Owner: user
+Revisit Trigger: 若实现阶段发现组件边界需重划（尤以反馈表单归属、共享组件 props 充分性）。
+Status: active
+```
+
 ## 完成标准
 
 - 记录任何 A 级问题的回答。

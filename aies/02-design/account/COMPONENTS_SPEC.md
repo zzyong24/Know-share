@@ -9,7 +9,7 @@
 ### 产物元数据
 
 - Stage: `09-frontend-spec`（模块组件规格扇出）
-- Status: `needs-user-confirmation`
+- Status: `passed（2026-06-23 用户签字）`
 - 模块: account（私域：个人中心 / 通知 / 设置·联系方式）
 - COMP ID 段（本模块特有）: `COMP-150`~`COMP-169`（已用 `COMP-150`~`COMP-157`；`COMP-158`~`COMP-169` 预留）
 - Source inputs: `aies/03-frontend/FRONTEND_SPEC.md`、`aies/02-design/account/PAGE_SPEC.md`（`PAGE-060`~`064`）、`aies/02-design/UI_RULES.md`（`UI-001/002/003`、组件行为规则、`NFR-007`）、`aies/02-design/IA_SPEC.md`（`IA-009/010/014`）、`aies/01-product/LIGHT_DOMAIN_MODEL.md`（`ENT-003/006/007/008/009/013/017/021`、`INV-03/07/08/11`）、`aies/01-product/BUSINESS_FLOW.md`（`FLOW-006/007`）、`aies/00-control/ID_REGISTRY.md`、`docs/design/generated/IA-009-dashboard.html`、`IA-010-notifications.html`、`IA-014-settings-contact.html`

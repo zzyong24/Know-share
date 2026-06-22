@@ -9,7 +9,7 @@
 ### 产物元数据
 
 - Stage: `09-frontend-spec`（组件规格扇出 — trust-feedback 模块）
-- Status: `needs-user-confirmation`
+- Status: `passed（2026-06-23 用户签字）`
 - Owner module: `trust-feedback`
 - COMP-* ID 段（模块特有）: `COMP-110` ~ `COMP-129`（实际使用 `COMP-110`~`COMP-119`；`COMP-120`~`COMP-129` 预留）
 - Upstream IDs: `PAGE-040`、`PAGE-041`、`PAGE-042`、`PAGE-043`；`IA-007`；`FR-050`、`FR-060`；`FLOW-004`；`ENT-001`、`ENT-010`、`ENT-011`、`ENT-012`、`ENT-007`、`ENT-013`、`ENT-020`、`ENT-019`；`INV-04`、`INV-09`、`INV-10`、`INV-11`；`HARD-03`；`NFR-004`、`NFR-006`、`NFR-007`

@@ -70,3 +70,7 @@
 | `ASM-066` | `09-frontend-spec` | 实现图标库用 lucide-react（Material Symbols 的 1:1 替换），维护 docs/icon-map.md。 | shadcn 生态默认；DEC-012 已留替换路径。 | 若坚持 Material Symbols 字体则改用 symbol 组件。 | user | 前端实现确认。 | active |
 | `ASM-067` | `09-frontend-spec` | 数据先对接 MOCK，接口形状最终以阶段 15 SERVICE_CONTRACT 为准。 | 解耦前端进度与后端契约。 | 契约与 MOCK 不一致需回填 query hooks。 | agent | 服务契约阶段。 | active |
 | `ASM-068~107` | `09-frontend-spec` | 组件级实现假设共 40 条（含 1 条 RISK-001），分布于 `_shared` 与 10 模块 `COMPONENTS_SPEC.md`，逐条就地登记。 | 多为组件实现取向（取数注入/状态文字化/图标映射/子 surface 形态等），非阻塞。 | 个别项影响隐私边界落点（如 ASM-071 ConsentGate block 前端非安全边界、后端须二次校验），实现/服务契约阶段核。 | agent | 见各 `02-design/<模块>/COMPONENTS_SPEC.md` 与 `_shared/COMPONENTS_SPEC.md`。 | active |
+| `ASM-108` | `10-mock-data-spec` | MOCK 交付用静态 JSON 种子 + MSW handlers，放 `app/mocks/`。 | 主流、与 Next.js/测试兼容。 | 若偏好 json-server 等需调。 | agent | 前端实现确认。 | active |
+| `ASM-109` | `10-mock-data-spec` | 种子规模（8 用户 / ~12 模块 / ~10 交换）足以覆盖所有页面状态。 | 覆盖各 States 即可，不求量大。 | 演示分页/性能时再扩。 | agent | 前端实现/验证阶段。 | active |
+| `ASM-110` | `10-mock-data-spec` | 时间戳相对"今天"由生成器注入，不硬编码绝对日期。 | 避免 MOCK 日期漂移/过期。 | 若需固定演示日期改为时间锚。 | agent | 前端实现确认。 | active |
+| `ASM-111` | `10-mock-data-spec` | MOCK 数据形态为占位，最终字段以阶段 15 SERVICE_CONTRACT 为准。 | 解耦前端进度与契约。 | 契约定稿后回填种子与 handler。 | agent | 服务契约阶段。 | active |

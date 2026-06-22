@@ -3,7 +3,7 @@
 ## 产物元数据
 
 - Stage: `09-frontend-spec`（组件规格扇出）
-- Status: `needs-user-confirmation`
+- Status: `passed（2026-06-23 用户签字）`
 - 模块: `module-detail`（覆盖 `IA-003`；页面 `PAGE-010~015`）
 - COMP 段（本模块特有）: `COMP-050~069`（`FRONTEND_SPEC.md` §7 分配，防并行碰撞）
 - Upstream IDs:

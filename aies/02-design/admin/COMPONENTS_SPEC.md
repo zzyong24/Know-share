@@ -7,7 +7,7 @@
 ### 产物元数据
 
 - Stage: `09-component-spec`
-- Status: `needs-user-confirmation`
+- Status: `passed（2026-06-23 用户签字）`
 - 模块: `admin`（管理 / 审核控制台，仅管理员 `IA-011`）
 - COMP 段（本模块特有）: `COMP-170~189`
 - Source inputs:

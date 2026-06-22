@@ -11,7 +11,7 @@
 ### 产物元数据
 
 - Stage: `09-component-spec`
-- Status: `needs-user-confirmation`
+- Status: `passed（2026-06-23 用户签字）`
 - 模块: `open-api`（COMP 段 `COMP-190~209`）
 - Upstream IDs: `PAGE-090`、`IA-012`、`FR-110`、`NFR-002`、`NFR-005`、`NFR-006`、`NFR-007`、`ENT-019`、`ENT-003/004/007/010`、`INV-01`、`INV-04`、`INV-09`、`FLOW-008`、`UI-001/002/003`、`UI_RULES.md` 无障碍底线
 - Decision IDs: `DEC-006`（GitHub 身份）、`DEC-007`（无经济模型）、`DEC-011`（轻后端聚合）、`DEC-012`（Material Symbols Outlined 规范图标族）、`DEC-014`（前端栈 Next.js+TS+Tailwind+shadcn/ui）

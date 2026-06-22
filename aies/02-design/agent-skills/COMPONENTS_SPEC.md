@@ -7,7 +7,7 @@
 ### 产物元数据（8 字段）
 
 - **Stage**: `09-frontend-spec`（组件规格扇出）
-- **Status**: `needs-user-confirmation`
+- **Status**: `passed（2026-06-23 用户签字）`
 - **Module**: `agent-skills`
 - **COMP 段（模块特有）**: `COMP-130~149`（本文件拥有；`COMP-140~149` 段位预留）
 - **Upstream IDs**: `PAGE-050`、`PAGE-051`、`IA-008`、`FR-080`（`CAP-009`）、`ENT-016`、`NFR-001`、`NFR-002`、`NFR-005`、`NFR-007`、`INV-01`、`INV-02`、`INV-04`、`INV-08`、`INV-09`、`FLOW-001`、`FLOW-004`、`FLOW-007`、`FR-140`/`FLOW-008`、`UI-001~004`、`DEC-006`、`DEC-012`

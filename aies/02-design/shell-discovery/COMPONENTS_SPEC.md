@@ -3,7 +3,7 @@
 ## Artifact metadata
 
 - Stage: `09-components-spec`
-- Status: `needs-user-confirmation`
+- Status: `passed（2026-06-23 用户签字）`
 - 模块: shell-discovery（覆盖 `PAGE-001` 全局外壳、`PAGE-002` 发现/注册表、`PAGE-003` 全局搜索结果）
 - COMP 段（模块特有）: `COMP-041`~`COMP-049`
 - Upstream IDs:

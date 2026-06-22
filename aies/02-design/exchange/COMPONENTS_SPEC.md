@@ -7,7 +7,7 @@
 ### 产物元数据
 
 - Stage: `09-frontend-spec`（模块组件规格扇出）
-- Status: `needs-user-confirmation`
+- Status: `passed（2026-06-23 用户签字）`
 - Source inputs: `aies/03-frontend/FRONTEND_SPEC.md`、`aies/02-design/exchange/PAGE_SPEC.md`、`aies/02-design/UI_RULES.md`、`aies/02-design/IA_SPEC.md`、`aies/01-product/LIGHT_DOMAIN_MODEL.md`、`aies/01-product/BUSINESS_FLOW.md`、`aies/00-control/ID_REGISTRY.md`、`docs/design/know-share-exchange-records.png`、`docs/design/generated/IA-006-exchange-detail.{html,png}`
 - Upstream IDs: `PAGE-030`、`PAGE-031`、`IA-005`、`IA-006`、`FR-040`、`FR-130`、`FR-050`、`FLOW-003`、`FLOW-004`、`FLOW-005`、`FLOW-006`、`ENT-007`、`ENT-008`、`ENT-009`、`ENT-010`、`ENT-001`、`ENT-011`、`INV-01`、`INV-03`、`INV-04`、`INV-05`、`INV-06`、`UI-001`、`UI-002`、`UI-003`、`NFR-007`
 - 引用的共享组件（不重定义）: `COMP-011` StatusPill、`COMP-012` TrustBadge、`COMP-015` DataTable、`COMP-016` ListRow、`COMP-021` EmptyState、`COMP-022` TopicChip、`COMP-025` ConfirmDialog、`COMP-029` Toast、`COMP-030` FormField、`COMP-032` Pagination/LoadMore、`COMP-033` Skeleton、`COMP-034` Avatar、`COMP-035` RatingInput、`COMP-036` Timeline、`COMP-027` Tabs、`COMP-009` Card、`COMP-007` PrimaryButton、`COMP-008` SecondaryButton

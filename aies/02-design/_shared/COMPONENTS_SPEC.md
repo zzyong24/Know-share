@@ -9,7 +9,7 @@
 ### 产物元数据
 
 - Stage: `09-frontend-spec`
-- Status: `needs-user-confirmation`
+- Status: `passed（2026-06-23 用户签字）`
 - Upstream IDs: `FRONTEND_SPEC.md`（权威 §6 索引、§4 令牌、§5 图标）、`UI-001/002/003`、`IA-001~014`、`PAGE-001~105`、`ENT-*`、`INV-*`、`NFR-007`
 - Decision IDs: `DEC-012`（Material Symbols Outlined 单一图标族；实现期 lucide-react 1:1 替换）、`DEC-014`（前端栈 Next.js+TS+Tailwind+shadcn/ui）；约束遵守 `DEC-007`（无经济模型）
 - COMP 段: `COMP-001~040`（本规格拥有；`COMP-037~040` 标预留/按需）

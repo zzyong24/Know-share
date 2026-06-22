@@ -51,6 +51,21 @@ Revisit Trigger: If the project is renamed, moved, or retargeted to a different 
 Status: active
 ```
 
+```text
+ID: DEC-004
+Date: 2026-06-22
+Stage: 02-product-brainstorming
+Type: tradeoff
+Decision: Decompose Know-share with a vertical-slice hybrid approach: stabilize shared contracts first, then parallelize Discovery, Module Detail, Submission, Exchange, Trust Profile, Agent Skills, Admin, and API work packages.
+Rationale: A pure page-first split would move fast visually but risks schema, trust, privacy, and exchange-state drift across agents. A pure domain-first split is safer but delays visible product validation. The hybrid keeps shared contracts stable while still enabling parallel UI/backend slices later.
+Source: FUNCTION_OUTLINE.md; user request to prepare for multi-agent implementation.
+Affected Artifacts: FUNCTION_OUTLINE.md, TRACEABILITY_MATRIX.md, future PRODUCT_SPEC.md, BUSINESS_FLOW.md, LIGHT_DOMAIN_MODEL.md, IA_SPEC.md, PAGE_SPEC.md, SERVICE_CONTRACT.md
+Invalidates: none
+Owner: agent
+Revisit Trigger: If the user chooses a different MVP slicing or implementation strategy.
+Status: active
+```
+
 ## Completion Standard
 
 - Any A-level question answer is recorded.

@@ -32,16 +32,16 @@ stages:
     invalidated_by: []
     notes: "Gate evidence: `test -f AGENTS.md && test -f PROJECT_CONTEXT.md && test -f DEFAULT_ASSUMPTIONS.md` returned success. Confirmation recorded in DEC-003."
   "02-product-brainstorming":
-    status: "not-started"
+    status: "needs-user-confirmation"
     artifacts:
       - path: "FUNCTION_OUTLINE.md"
         role: "capability-outline"
     depends_on: ["01-project-kickoff"]
     gate: "01-product-gate"
-    gate_status: "not-run"
+    gate_status: "pass"
     confirmation_required: true
     invalidated_by: []
-    notes: ""
+    notes: "FUNCTION_OUTLINE.md produced with capability map, initial FR/NFR IDs, MVP slicing, and multi-agent work package candidates. Requires user confirmation of Q-001 to Q-003 before stage 03."
   "03-product-spec":
     status: "not-started"
     artifacts:

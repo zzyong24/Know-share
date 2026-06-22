@@ -125,7 +125,7 @@ stages:
     gate_status: "pass"
     confirmation_required: true
     invalidated_by: []
-    notes: "按模块扇出为 10 个 PAGE_SPEC.md（shell-discovery/module-detail/submission/exchange/trust-feedback/agent-skills/account/admin/open-api/about），并行多 agent 产出。PAGE-001~105（用到约 32 页）+ 新假设 ASM-017~060 已登记；ID 段无碰撞。每页含模板 9 字段、追溯 IA-*/FR-*/FLOW-*/ENT-*/INV-*、锚定 UI_RULES。生成图 MOCK 文案漂移（about 的链上/E2EE/语义向量、open-api 的企业付费 CTA/加密网关、trust 的世界排名）已在对应 PAGE_SPEC 归正/移除（守 NFR-001/DEC-007）。质量门 06-page-spec-gate 内容自检 pass。待用户确认核心路径页面覆盖与 6 条 needs-confirmation 假设（ASM-021/028/032/033/050/055）后转 passed，进入 09-frontend-spec。"
+    notes: "按模块扇出为 10 个 PAGE_SPEC.md（shell-discovery/module-detail/submission/exchange/trust-feedback/agent-skills/account/admin/open-api/about），并行多 agent 产出。PAGE-001~105（用到约 32 页）+ 新假设 ASM-017~060 已登记；ID 段无碰撞。每页含模板 9 字段、追溯 IA-*/FR-*/FLOW-*/ENT-*/INV-*、锚定 UI_RULES。生成图 MOCK 文案漂移（about 的链上/E2EE/语义向量、open-api 的企业付费 CTA/加密网关、trust 的世界排名）已在对应 PAGE_SPEC 归正/移除（守 NFR-001/DEC-007）。质量门 06-page-spec-gate 内容自检 pass。已由审核子 agent 做交叉审核：修正 10 处（/dashboard→/me 路由不一致 + 9 处 gate 自检 ASM 区间笔误），确认交换状态机/联系方式披露/信任分量纲/遥测/图标族跨模块一致；补齐审核发现的「信任网络」导航着陆缺口（新增 PAGE-043 /trust，登记 ASM-061）。待用户确认核心路径页面覆盖与 7 条 needs-confirmation 假设（ASM-021/028/032/033/050/055/061）后转 passed，进入 09-frontend-spec。"
   "09-frontend-spec":
     status: "not-started"
     artifacts:

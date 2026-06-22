@@ -402,7 +402,7 @@ Findings:
   - 评审动作不自动越过人类同意（模块级边界 + INV-02 block 不可通过）。✅
   - Telemetry 对齐 FR-140/FLOW-008，聚合无 PII（INV-09/NFR-001）。✅
   - 仅管理员权限贯穿；零私有内容（INV-01/04）。✅
-  - 拟新增假设 ASM-049~A05 已标注，未写入 DEFAULT_ASSUMPTIONS.md。✅
+  - 拟新增假设 ASM-049~053 已标注，未写入 DEFAULT_ASSUMPTIONS.md。✅
 Hard-Limit Policy: 本模块拆 6 个 PAGE（PAGE-080~085），系按 IA-011 真源结构（容器/队列/详情/审计/举报流/破坏性确认）与 FR-100 治理能力划分，非按设计图碎片化；广度服务于 HARD-08 治理闭环核心路径，已说明理由。
 Decision: needs-user-confirmation — 待用户确认 5 条新增假设（尤以 ASM-050 批量通过、ASM-053 已处理口径）后转 passed。
 ```

@@ -308,7 +308,7 @@ Findings:
   - Telemetry 仅聚合无 PII（FR-140/FLOW-008/INV-09）。✅
   - 锚定 UI_RULES 组件/令牌（ModuleCard/StatusPill/DonutChart/IconChip/StatBlock、主色 #017A6E、Material Symbols Outlined、等宽 JSON）。✅
   - 子区拆分（PAGE-011~015）有 Hard-Limit Policy 理由说明，同属一个 route，非新增可导航界面。✅
-  - 新增 5 条假设(ASM-021~021)就地标注，未改 DEFAULT_ASSUMPTIONS.md。✅
+  - 新增 5 条假设(ASM-021~025)就地标注，未改 DEFAULT_ASSUMPTIONS.md。✅
 Known risks: ASM-021(联系方式占位语义需确认，关乎 INV-03)、ASM-023(内容承诺字段待数据契约确认)、data-contract.md 未直接核对。
 Decision: 内容自检通过 → 待用户确认本模块页面规格 → Manifest pending→passed
 ```

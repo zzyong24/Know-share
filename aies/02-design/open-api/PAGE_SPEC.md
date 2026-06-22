@@ -181,7 +181,7 @@ Status: pass（内容检查）— 待用户确认
 Evidence: aies/02-design/open-api/PAGE_SPEC.md 对照 docs/design/generated/IA-012-open-api.html、docs/data-contract.md、IA_SPEC.md(IA-012)、UI_RULES.md、PRODUCT_SPEC.md(FR-110/NFR-002/FR-140)、BUSINESS_FLOW.md(FLOW-008)、LIGHT_DOMAIN_MODEL.md(ENT-019/INV-01/04/09)
 Findings:
   - 9 字段全部有项目特定内容，无占位/无泛化填充。✅
-  - 每条主张均追溯到上游 ID 或显式假设（ASM-054~020）。✅
+  - 每条主张均追溯到上游 ID 或显式假设（ASM-054~057）。✅
   - 端点清单与 data-contract 对齐并逐字段标注来源；contact 字段按 INV-03 收紧排除。✅
   - 公开读仅脱敏清单+聚合统计；写操作标 GitHub 认证+同意门（INV-01/04、NFR-005/006、DEC-006）。✅
   - 方法用文字+颜色双重区分；代码块等宽字（NFR-007、UI-001/002）。✅

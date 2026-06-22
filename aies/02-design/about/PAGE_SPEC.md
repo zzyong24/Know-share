@@ -391,6 +391,6 @@ Findings:
   - 锚定 UI_RULES：AppShell/StatBlock/LineChart/Card/Accordion/外链按钮 + 令牌 + 唯一图标族。✅
   - 发现并隔离真源 HTML 文案漂移（"链上/不可篡改链上记录""E2EE""上传语义向量""512 Nodes 硬编码"），
     在 PAGE-101/103/104 显式要求改为可追溯表述，不带入规格（NFR-003/INV-01）。⚠ 见返回风险。
-  - 拟新增假设 ASM-058/102/103 已登记，未改 DEFAULT_ASSUMPTIONS.md。✅
-Decision: continue（待用户确认文案漂移处置与 ASM-058/102/103）→ 转 passed
+  - 拟新增假设 ASM-058~060 已登记，未改 DEFAULT_ASSUMPTIONS.md。✅
+Decision: continue（待用户确认文案漂移处置与 ASM-058~060）→ 转 passed
 ```

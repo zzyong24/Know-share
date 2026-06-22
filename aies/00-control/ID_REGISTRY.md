@@ -129,13 +129,13 @@
 | `PAGE-010~015` | 页面 | module-detail：模块详情及子区 | `02-design/module-detail/PAGE_SPEC.md` | `IA-003`, `FR-020`, `FR-090` | draft | 子区同一路由，非新增界面。 |
 | `PAGE-020~024` | 页面 | submission：5 步提交向导 | `02-design/submission/PAGE_SPEC.md` | `IA-004`, `FR-030`, `FR-090`, `FLOW-001` | draft | 隐私门为强约束步（PAGE-022）。 |
 | `PAGE-030~031` | 页面 | exchange：公开记录 + 交换详情 | `02-design/exchange/PAGE_SPEC.md` | `IA-005`, `IA-006`, `FR-040`, `FR-130` | draft | 联系方式仅 Accepted 后披露。 |
-| `PAGE-040~042` | 页面 | trust-feedback：信任档案/解释/反馈 | `02-design/trust-feedback/PAGE_SPEC.md` | `IA-007`, `FR-050`, `FR-060` | draft | 信任分可解释（HARD-03）。 |
+| `PAGE-040~043` | 页面 | trust-feedback：信任档案/解释/反馈/信任网络着陆页 | `02-design/trust-feedback/PAGE_SPEC.md` | `IA-007`, `FR-050`, `FR-060`, `FR-001` | draft | 信任分可解释（HARD-03）；PAGE-043 补「信任网络」导航着陆缺口（审核）。 |
 | `PAGE-050~051` | 页面 | agent-skills：技能目录 + 详情 | `02-design/agent-skills/PAGE_SPEC.md` | `IA-008`, `FR-080` | draft | 图标徽=IconChip；不自动越过同意。 |
 | `PAGE-060~064` | 页面 | account：个人中心/分区/通知/设置 | `02-design/account/PAGE_SPEC.md` | `IA-009`, `IA-010`, `IA-014`, `FR-060`, `FR-120`, `FR-130` | draft | 联系方式默认私密（INV-03）。 |
 | `PAGE-080~085` | 页面 | admin：审核台/队列/详情/审计/举报/确认 | `02-design/admin/PAGE_SPEC.md` | `IA-011`, `FR-100`, `FLOW-005` | draft | 仅管理员；破坏性操作二次确认。 |
 | `PAGE-090` | 页面 | open-api：API 文档页 | `02-design/open-api/PAGE_SPEC.md` | `IA-012`, `FR-110`, `NFR-002` | draft | 单页；公开读不含 contact（ASM-055）。 |
 | `PAGE-100~105` | 页面 | about：关于/仓库/统计/隐私/FAQ/审计链接 | `02-design/about/PAGE_SPEC.md` | `IA-013`, `NFR-004`, `FR-140` | draft | 统计仅聚合无 PII；文案漂移已归正。 |
-| `ASM-017~060` | 假设 | 阶段08各模块页面级假设（44 项） | `DEFAULT_ASSUMPTIONS.md` + 各 `02-design/<模块>/PAGE_SPEC.md` | `08-page-spec` | active | 详见 DEFAULT_ASSUMPTIONS.md；其中 ASM-021/028/032/033/050/055 标 needs-confirmation。 |
+| `ASM-017~061` | 假设 | 阶段08各模块页面级假设（45 项） | `DEFAULT_ASSUMPTIONS.md` + 各 `02-design/<模块>/PAGE_SPEC.md` | `08-page-spec` | active | 详见 DEFAULT_ASSUMPTIONS.md；其中 ASM-021/028/032/033/050/055/061 标 needs-confirmation。 |
 
 ## 完成标准
 

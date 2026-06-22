@@ -52,7 +52,7 @@
 - 内含导航目标（路由在各自模块页面规格定义，本规格只锚定外壳出口）：
   - 公共主导航：发现 `/`(`IA-002`)、交换记录 `/exchanges`(`IA-005`)、信任网络 `/trust`(`IA-007`)、Agent 技能 `/skills`(`IA-008`)、仓库/帮助 `/about`(`IA-013`)。
   - 右侧常驻：全局搜索框（路由 `/search?q=` → `PAGE-003`）、主色「提交模块」CTA(`/submit`，`IA-004`)、GitHub 登录态(`IA-001`)。
-  - 已登录增项：个人中心 `/dashboard`(`IA-009`)、通知 `/notifications`(`IA-010`，带未读计数徽标)、设置 `/settings`(`IA-014`)，头像菜单展开；具管理员角色时显示审核控制台 `/admin`(`IA-011`)。
+  - 已登录增项：个人中心 `/me`(`IA-009`)、通知 `/notifications`(`IA-010`，带未读计数徽标)、设置 `/settings`(`IA-014`，重定向到 `/settings/contact`)，头像菜单展开；具管理员角色时显示审核控制台 `/admin`(`IA-011`)。
 - Logo 点击回到 `/`(`IA-002`)。
 
 ### Data required

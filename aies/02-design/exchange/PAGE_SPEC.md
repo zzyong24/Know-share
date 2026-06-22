@@ -249,6 +249,6 @@ Findings:
   - 平台只记录关系与状态、零私有内容（INV-01/04）；私有交付通道仅状态/约定文案（ASM-007）。✅
   - 遥测对齐 FR-140/FLOW-008，聚合无 PII（INV-09）。✅
   - 设计真源中的歧义元素已锚定上游并登记假设：offeredModule 可空→单向(INV-05)、IM 按钮→ASM-033、自动验证→ASM-034。✅
-  - 新增假设 ASM-031~021 已标注，未改 DEFAULT_ASSUMPTIONS.md 或其他控制/模块文件。✅
+  - 新增假设 ASM-031~035 已标注，未改 DEFAULT_ASSUMPTIONS.md 或其他控制/模块文件。✅
 Decision: 待用户确认两页契约与新增假设 → 转 passed → 进入下游（COMP/MOCK/服务契约）
 ```

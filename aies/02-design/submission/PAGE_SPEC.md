@@ -453,7 +453,7 @@ Findings:
   - Telemetry 仅聚合、无 PII，对齐 FR-140/FLOW-008/INV-09。✅
   - 锚定 UI-001/UI-002/UI-003 组件与令牌。✅
   - 无仅因设计图包含而存在的页面(5 步均映射 FLOW-001 环节 + IA-004)。✅
-  - 拟新增假设 ASM-026~021 已标注并集中列出,未改 DEFAULT_ASSUMPTIONS.md。✅
+  - 拟新增假设 ASM-026~030 已标注并集中列出,未改 DEFAULT_ASSUMPTIONS.md。✅
 Hard-limit note: 5 个 PAGE 对应单一多步向导(IA-004),非界面膨胀;广度由 FLOW-001 的 5 环节与设计图 Stepper 支撑。
 Decision: continue（内容自检通过）→ 待用户确认 IA-004 步骤划分与新增假设 → 转 passed
 ```

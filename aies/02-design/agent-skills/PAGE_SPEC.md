@@ -219,6 +219,6 @@ Findings:
   - 技能为 agent 侧工具且 agent 可读（NFR-002）；本页不执行技能、不读本地、不越过同意（NFR-005、PROJECT_CONTEXT 非目标）；package-private-repo 仅生成配置不自动协作（ASM-041 拟）。✅
   - 遥测对齐 FR-140/FLOW-008，聚合无 PII（INV-09）。✅
   - PAGE-051 子 surface 为承载 ENT-016 全字段的必要细化，未引入新 IA 界面（gate 第 3 条）。✅
-  - 拟新增假设 ASM-040/018/019 + 一条开放风险已标注，未改 DEFAULT_ASSUMPTIONS.md 或控制/其他模块文件。✅
+  - 拟新增假设 ASM-040/041/042 + 一条开放风险已标注，未改 DEFAULT_ASSUMPTIONS.md 或控制/其他模块文件。✅
 Decision: 内容检查通过 → 待用户确认 → 转 passed
 ```

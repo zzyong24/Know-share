@@ -171,7 +171,7 @@ stages:
     invalidated_by: []
     notes: "单一来源 MOCK_DATA_SPEC.md：按 ENT-* 定义跨模块一致种子（8 用户/~12 模块/~10 交换等），场景 MOCK-001~020 覆盖各 PAGE 的正常/空/加载/错误/权限敏感态；非法/边界记录覆盖隐私门 block、白名单丢弃、降级、限流。全合成无真实 PII，守 INV-01（不含原始内容）/INV-03（联系方式默认私密、仅 Accepted 后披露）/INV-09（统计聚合无 PII）/DEC-007（无经济字段）。交付 app/mocks/（静态 JSON 种子 + MSW），接口形状最终以阶段 15 服务契约为准。新增 ASM-108~111。敏感数据规则均派生自已确认决策（INV/DEC），confirmation_required=false，质量门 08-mock-data-gate 内容自检 pass，stage 转 passed。下一步阶段 11 前先跑 Task Zero（建可运行工程 + 绿色基线）。"
   "11-frontend-implementation":
-    status: "not-started"
+    status: "draft"
     artifacts:
       - path: "app/"
         role: "frontend-implementation"
@@ -180,7 +180,7 @@ stages:
     gate_status: "not-run"
     confirmation_required: false
     invalidated_by: []
-    notes: "在本阶段之前，Task Zero 必须建立一个可运行的项目和绿色基线。"
+    notes: "Task Zero 已完成（2026-06-23）：app/ 立起 Next.js 16+React 19+TS+Tailwind v4(@theme 注入 UI-001 令牌)+shadcn 就绪+TanStack Query/rhf/zod/recharts+MSW+Vitest+Playwright。绿色基线实跑证据：typecheck 0 / test:run 3 passed（红已验证后删）/ lint 干净 / build ✓。命令记于 PROJECT_CONTEXT.md。下一步：按 FRONTEND_SPEC + 各 PAGE/COMPONENTS_SPEC + MOCK 多 agent 并行实现 10 模块（共享组件库先行）。实现完成后跑 09-frontend-implementation-gate。"
   "12-frontend-validation":
     status: "not-started"
     artifacts:

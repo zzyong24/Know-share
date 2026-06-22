@@ -1,0 +1,47 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/*
+  Know-share 规范设计令牌（UI-001 / DEC-012 / DEC-014）
+  Tailwind v4 @theme：令牌即生成工具类（bg-primary / text-accent / rounded-card …）。
+  色值采样自 docs/design/*.png（ASM-015，待像素级核对）。
+*/
+@theme {
+  /* 品牌 / 强调 */
+  --color-primary: #017a6e;
+  --color-primary-hover: #016458;
+  --color-primary-subtle: #e6f4f1;
+  --color-accent: #019997;
+
+  /* 中性 */
+  --color-bg: #fbfcfd;
+  --color-surface: #ffffff;
+  --color-border: #e7eaee;
+  --color-text: #1f2937;
+  --color-text-muted: #6b7280;
+  --color-text-subtle: #9ca3af;
+
+  /* 语义状态 */
+  --color-success: #16a34a;
+  --color-warning: #d97706;
+  --color-danger: #dc2626;
+  --color-info: #2563eb;
+
+  /* 圆角 */
+  --radius-control: 8px;
+  --radius-card: 12px;
+
+  /* 字体（Inter / JetBrains Mono，经 next/font 注入 CSS 变量） */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+}
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+}

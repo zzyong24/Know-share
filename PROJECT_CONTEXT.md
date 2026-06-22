@@ -35,9 +35,24 @@
 
 ## 测试命令与预期证据
 
-- 目前尚无测试运行器。
-- 在阶段 11 前端实现之前，Task Zero 必须建立一个可运行的工程和绿色基线。
-- 预期的未来证据：install/build/lint/test 命令、主要页面的浏览器验证、后端/API 行为的契约测试，以及集成发布评审。
+**Task Zero 已完成（2026-06-23），绿色基线达成。** 前端工程在 `app/`（Next.js 16 + React 19 + TS + Tailwind v4 + shadcn 就绪 + TanStack Query/rhf/zod/recharts + MSW + Vitest + Playwright）。所有命令在 `app/` 目录运行：
+
+| 用途 | 命令 |
+| --- | --- |
+| 安装 | `cd app && npm install` |
+| 开发 | `cd app && npm run dev` |
+| 构建 | `cd app && npm run build` |
+| Lint | `cd app && npm run lint` |
+| 类型检查 | `cd app && npm run typecheck` |
+| 单元/组件测试（全量） | `cd app && npm run test:run` |
+| 单测（watch） | `cd app && npm run test` |
+| 单个测试文件 | `cd app && npx vitest run <path>` |
+| E2E/浏览器（阶段 12） | `cd app && npm run e2e` |
+
+- 绿色基线证据（2026-06-23 实跑）：`typecheck` exit 0；`test:run` 3 passed（含 `cn` 合并/去重/falsy 三例）；故意失败用例验证运行器能报红（1 failed）后删除；`lint` 干净；`build` ✓ 编译成功 + 静态页生成。
+- 设计令牌经 Tailwind v4 `@theme` 注入 `src/app/globals.css`（UI-001，主色 `#017A6E` 等）；字体 Inter + JetBrains Mono 经 `next/font`；图标 lucide-react（Material Symbols 1:1 替换，DEC-012/ASM-066）。
+- MOCK 经 MSW（`src/mocks/`），种子按 MOCK_DATA_SPEC 在实现期填充；接口形状最终以阶段 15 服务契约为准。
+- 预期的后续证据：主要页面浏览器验证（阶段 12）、后端/API 契约测试（阶段 16）、集成发布评审（阶段 17）。
 
 ## 代码组织约定
 

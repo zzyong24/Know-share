@@ -80,6 +80,6 @@
 | `ASM-115` | `13-backend-spec` | Auth.js adapter 表与业务表同库（Neon）。 | 简化。 | 若分库需调。 | agent | 后端 TDD。 | active |
 | `ASM-116` | `13-backend-spec` | Region 新加坡（sin1）+ 就近 Neon/Upstash。 | 延迟与文档一致。 | 受众地域变化需调。 | agent | 部署。 | active |
 | `ASM-117` | `13-backend-spec` | Vercel Cron 驱动到期/反馈窗口/统计物化。 | serverless 周期任务。 | 频次/额度需调。 | agent | 部署。 | active |
-| `ASM-118` | `13-backend-spec` | 本版 Agent 为 User 行动者角色（不建表）；外部 agent 签名身份为扩展面。 | 沿用 ASM-012。 | 认证写 API 需签名身份则升格。 | user | 服务契约。 | needs-confirmation |
+| `ASM-118` | `13-backend-spec` | 本版 Agent 为 User 行动者角色（不建表）；外部 agent 签名身份为扩展面。 | 沿用 ASM-012。 | 认证写 API 需签名身份则升格。 | user | 服务契约。 | active |
 | `ASM-119` | `14-module-workflow-spec` | 信任分重算异步、最终一致。 | 避免写路径阻塞。 | 需强一致则改同步。 | agent | 后端 TDD。 | active |
-| `ASM-120` | `15-service-contract` | 创建/接受/拒绝/取消交换、收藏/认可/举报等写端点为契约新增，前端 MSW 待补齐对齐。 | 契约先行、MSW 后补。 | MSW 不补则前端写路径不可用。 | user | 服务契约确认。 | needs-confirmation |
+| `ASM-120` | `15-service-contract` | 创建/接受/拒绝/取消交换、收藏/认可/举报等写端点为契约新增，前端 MSW 待补齐对齐。 | 契约先行、MSW 后补。 | MSW 不补则前端写路径不可用。 | user | 服务契约确认。 | active |

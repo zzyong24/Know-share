@@ -5,13 +5,13 @@
 ## Artifact metadata
 
 - Stage: `13-backend-spec`
-- Status: `needs-user-confirmation`
+- Status: `passed（2026-06-23 用户签字 DEC-018）`
 - Source inputs: `aies/01-product/PRODUCT_SPEC.md`、`aies/01-product/BUSINESS_FLOW.md`、`aies/01-product/LIGHT_DOMAIN_MODEL.md`、`aies/02-design/*/PAGE_SPEC.md`、前端落地代码 `app/src/lib/queries/*.ts` + `app/src/mocks/handlers/*.ts` + `app/src/lib/types.ts`
 - Upstream IDs: `FR-001`~`FR-140`、`NFR-001`~`NFR-007`、`FLOW-001`~`FLOW-008`、`ENT-001`~`ENT-021`、`INV-01`~`INV-11`、`HARD-01`~`HARD-09`、`PAGE-001`~`PAGE-105`
 - Decision IDs: `DEC-006`（GitHub 规范身份）、`DEC-007`（无经济模型）、`DEC-009`（互惠可选）、`DEC-010`（联系方式默认私密/接受后披露）、`DEC-011`（轻后端+聚合统计）、`DEC-017`（零氪 serverless 栈）
 - 新增假设: `ASM-112`~`ASM-120`（见各节就近标注 + 返回汇总）
 - 新增风险: `RISK-002`~`RISK-005`
-- Manifest status: stage `13-backend-spec` = `needs-user-confirmation`（待用户确认后转 `passed`）
+- Manifest status: stage `13-backend-spec` = `passed（2026-06-23 用户签字 DEC-018）`（待用户确认后转 `passed`）
 
 ---
 

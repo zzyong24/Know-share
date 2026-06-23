@@ -5,13 +5,13 @@
 ## Artifact metadata
 
 - Stage: `15-service-contract`
-- Status: `needs-user-confirmation`
+- Status: `passed（2026-06-23 用户签字 DEC-018）`
 - Upstream IDs: `FR-001`~`FR-140`、`NFR-002/006`、`FLOW-001`~`FLOW-008`、`ENT-*`、`INV-01`~`INV-11`、`PAGE-001`~`PAGE-105`
 - Decision IDs: `DEC-006/007/009/010/011/017`
 - 前端对齐基线: `app/src/lib/queries/*.ts`、`app/src/mocks/handlers/*.ts`、`app/src/lib/types.ts`
 - 新增假设: `ASM-113`（`request schema` 用 zod，与前端 TS 形状互为镜像）、`ASM-118`（外部 agent 签名身份为扩展面）、`ASM-120`（创建/接受/拒绝交换端点为契约新增，前端 MSW 待补）
 - 新增风险: `RISK-004`（前端两套 trust/skills 路径并存，需收敛）
-- Manifest status: stage `15-service-contract` = `needs-user-confirmation`
+- Manifest status: stage `15-service-contract` = `passed（2026-06-23 用户签字 DEC-018）`
 
 ## 契约名 / 消费方 / 提供方
 

@@ -1,8 +1,8 @@
 project:
   name: "Know-share"
   artifact_root: "."
-  current_stage: "13-backend-spec"
-  frontier: "13-backend-spec"
+  current_stage: "16-backend-tdd"
+  frontier: "16-backend-tdd"
   updated_at: "2026-06-23"
   work_branch: "main"
 
@@ -193,7 +193,7 @@ stages:
     invalidated_by: []
     notes: "Playwright（Chromium）对 dev server（MSW 启用）走 11 条核心路径，全过；14 张截图归档 aies/03-frontend/validation-shots/。隐私不变量浏览器层验证：模块详情联系方式锁定、设置默认私密（INV-03）；公开 API 无 contact；统计聚合无 PII。4 项非阻断缺陷已分级定位（列表行 onClick 跳转非<a>建议公开详情改真链接[中]、icon-map 缺 priority_high/smart_toy[低]、Recharts 容器尺寸警告[低]、6 lint warning[低]）。质量门 10-frontend-validation-gate pass、issues 已 triage。待用户确认后转 passed，进入 13-backend-spec（后端规格，扇出+交叉审核）。"
   "13-backend-spec":
-    status: "needs-user-confirmation"
+    status: "passed"
     artifacts:
       - path: "aies/04-backend/BACKEND_SPEC.md"
         role: "backend-plan"
@@ -204,7 +204,7 @@ stages:
     invalidated_by: []
     notes: "栈 DEC-017（零氪 serverless：Vercel + Next Route Handlers + Neon Postgres/Drizzle + Upstash Redis + Resend + GitHub/Auth.js）。BACKEND_SPEC.md 内聚 8 字段：10 域职责、Drizzle schema（ENT-001~021 全表）、Auth.js+GitHub 鉴权与路由权限矩阵、服务端强制 INV-01~11、集成、运维、Vitest+TDD 测试策略、3 边界范围外。已跑强制 spec 交叉审核：双向孤儿扫描全清（无孤儿/越权端点、INV→TEST 全覆盖、FR 全落点）、修 3 处（consent→422、InReview 投影语义）。新增 ASM-112~120、TEST-001~016。质量门 11-backend-spec-gate pass。与 14/15 同批待用户确认。"
   "14-module-workflow-spec":
-    status: "needs-user-confirmation"
+    status: "passed"
     artifacts:
       - path: "aies/04-backend/MODULE_WORKFLOW_SPEC.md"
         role: "backend-module-plan"
@@ -215,7 +215,7 @@ stages:
     invalidated_by: []
     notes: "MODULE_WORKFLOW_SPEC.md：7 个后端工作流（W-1 提交→隐私门→评审→发布；W-2 交换状态机+合法迁移表+W-2a 披露快照；W-3 反馈→信任重算；W-4 审核处置；W-5 通知扇出；W-6 统计聚合；W-7 社交/举报），各含触发/步骤/状态/校验/失败补偿/写表与审计。交换状态机与 FLOW-003 一致（交叉审核确认）。与 13/15 同批待确认。"
   "15-service-contract":
-    status: "needs-user-confirmation"
+    status: "passed"
     artifacts:
       - path: "aies/04-backend/SERVICE_CONTRACT.md"
         role: "frontend-backend-contract"
@@ -237,7 +237,7 @@ stages:
     gate_status: "not-run"
     confirmation_required: false
     invalidated_by: []
-    notes: "在本阶段之前，契约完整性质量门必须通过。"
+    notes: "前置 15b 契约完整性门已通过（2026-06-23）：53 端点均含 方法/路径/用途/鉴权/幂等 + zod 请求响应 + 统一错误码段(4xx/5xx) + 合法状态迁移(→409，与 FLOW-003 一致)；覆盖孤儿扫描由交叉审核扫清。下一步：按 SERVICE_CONTRACT 红→绿实现 server/（Next Route Handlers + Drizzle/Neon + Upstash + Auth.js）+ tests/（TEST-001~016 不变量/契约测试），可按后端域并行；并补前端 MSW 对齐（写端点 ASM-120、/api/exchanges +topics、/api/notifications +unreadCount）与清理 trust/skills 死 hook（RISK-004/DEC-018）。"
   "17-integration-release":
     status: "not-started"
     artifacts:

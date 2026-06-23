@@ -5,13 +5,13 @@
 ## Artifact metadata
 
 - Stage: `14-module-workflow-spec`
-- Status: `needs-user-confirmation`
+- Status: `passed（2026-06-23 用户签字 DEC-018）`
 - Source inputs: `aies/01-product/BUSINESS_FLOW.md`（`FLOW-001`~`FLOW-008`）、`LIGHT_DOMAIN_MODEL.md`、`BACKEND_SPEC.md`、前端 `app/src/lib/queries/*.ts`
 - Upstream IDs: `FLOW-001`~`FLOW-008`、`FR-030/040/050/090/100/120/130/140`、`ENT-005/006/007/009/010/011/015/017/018/019/021`、`INV-01`~`INV-11`、`HARD-01/02/03/07/08/09`
 - Decision IDs: `DEC-006/007/009/010/011/017`
 - 新增假设: `ASM-117`（Vercel Cron 驱动到期/物化）、`ASM-119`（信任重算异步触发，最终一致）
 - 新增风险: `RISK-003`（非法状态迁移）、`RISK-005`（信任重算竞态）
-- Manifest status: stage `14-module-workflow-spec` = `needs-user-confirmation`
+- Manifest status: stage `14-module-workflow-spec` = `passed（2026-06-23 用户签字 DEC-018）`
 
 ---
 

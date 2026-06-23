@@ -10,6 +10,7 @@ import {
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { setupServer } from "msw/node";
+import { http, HttpResponse } from "msw";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { exchangeHandlers } from "@/mocks/handlers/exchange";
 import { ExchangeDetailView } from "@/components/exchange";
@@ -130,6 +131,107 @@ describe("ExchangeDetailView（PAGE-031 集成）", () => {
     // Completed → 开启态，不显示锁定文案。
     expect(
       screen.queryByText("待交换完成后开启反馈。")
+    ).not.toBeInTheDocument();
+  });
+});
+
+/* ── 交换操作面板按 viewerRole + status 门控（接受/拒绝/取消）──────── */
+
+/** 构造一个最小化的 ExchangeDetail（用于覆写详情 handler 演示操作门控）。 */
+function makeDetail(over: Record<string, unknown>) {
+  return {
+    exchangeId: "EX-2024-9001",
+    status: "Requested",
+    createdAt: "2026-06-20",
+    viewerRole: "owner",
+    isAuthenticated: true,
+    direction: "oneway",
+    requester: {
+      login: "growth-lab",
+      verified: true,
+      trustLevel: "medium",
+      role: "requester",
+      successfulExchanges: 3,
+    },
+    target: {
+      login: "knowledge-trader",
+      verified: true,
+      trustLevel: "high",
+      role: "owner",
+      successfulExchanges: 9,
+    },
+    targetModule: {
+      moduleId: "m-km-system",
+      title: "个人知识库治理方法论",
+      summary: "s",
+      topics: ["知识管理"],
+    },
+    timeline: [],
+    verification: [],
+    delivery: {
+      channel: "github_private_repo",
+      channelLabel: "GitHub 私有仓库邀请",
+      deliveryHint: "h",
+    },
+    disclosure: { myContacts: [], myDisclosure: undefined, peerDisclosure: undefined },
+    feedbackWindow: "open",
+    ...over,
+  };
+}
+
+describe("ExchangeDetailView 操作门控（owner/requester）", () => {
+  it("owner 且 Requested：右栏显示「接受」「拒绝」", async () => {
+    server.use(
+      http.get("/api/exchanges/:id", () =>
+        HttpResponse.json(makeDetail({ viewerRole: "owner", status: "Requested" }))
+      )
+    );
+    renderDetail("EX-2024-9001");
+    await waitFor(() =>
+      expect(screen.getByRole("button", { name: "接受" })).toBeInTheDocument()
+    );
+    expect(screen.getByRole("button", { name: "拒绝" })).toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: "取消请求" })
+    ).not.toBeInTheDocument();
+  });
+
+  it("requester 且 Accepted：右栏显示「取消请求」", async () => {
+    server.use(
+      http.get("/api/exchanges/:id", () =>
+        HttpResponse.json(
+          makeDetail({ viewerRole: "requester", status: "Accepted" })
+        )
+      )
+    );
+    renderDetail("EX-2024-9001");
+    await waitFor(() =>
+      expect(
+        screen.getByRole("button", { name: "取消请求" })
+      ).toBeInTheDocument()
+    );
+    expect(screen.queryByRole("button", { name: "接受" })).not.toBeInTheDocument();
+  });
+
+  it("spectator：不渲染交换操作面板（INV-03）", async () => {
+    server.use(
+      http.get("/api/exchanges/:id", () =>
+        HttpResponse.json(
+          makeDetail({
+            viewerRole: "spectator",
+            status: "Requested",
+            isAuthenticated: false,
+          })
+        )
+      )
+    );
+    renderDetail("EX-2024-9001");
+    await waitFor(() =>
+      expect(screen.getByText(/#EX-2024-9001/)).toBeInTheDocument()
+    );
+    expect(screen.queryByRole("button", { name: "接受" })).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: "取消请求" })
     ).not.toBeInTheDocument();
   });
 });

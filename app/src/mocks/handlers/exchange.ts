@@ -7,6 +7,7 @@
 */
 import { http, HttpResponse, type RequestHandler } from "msw";
 import { exchanges } from "@/mocks/fixtures/exchanges";
+import { modules } from "@/mocks/fixtures/modules";
 import {
   buildExchangeDetail,
   ledgerRows,
@@ -235,6 +236,29 @@ export const exchangeHandlers: RequestHandler[] = [
     if (!ex) return new HttpResponse(null, { status: 404 });
     const detail = buildExchangeDetail(ex, exchangeSession.login);
     return HttpResponse.json(detail);
+  }),
+
+  // 我的已发布模块（互惠创建表单 offeredModule 选择源；DEC-009/INV-05）。
+  // 仅返回当前会话拥有的 Published 模块脱敏元数据（无私有内容 INV-04）。
+  http.get("/api/me/modules", ({ request }) => {
+    const status = new URL(request.url).searchParams.get("status");
+    const items = modules
+      .filter((m) => m.ownerLogin === exchangeSession.login)
+      .filter((m) => !status || m.status.toLowerCase() === status.toLowerCase())
+      .map((m) => ({ moduleId: m.id, title: m.title, topics: m.topics }));
+    return HttpResponse.json({ items });
+  }),
+
+  // 目标模块脱敏摘要（创建表单只读预填；公开投影 INV-04）。未知 id → 404。
+  http.get("/api/modules/:id/summary", ({ params }) => {
+    const mod = modules.find((m) => m.id === params.id);
+    if (!mod) return new HttpResponse(null, { status: 404 });
+    return HttpResponse.json({
+      moduleId: mod.id,
+      title: mod.title,
+      summary: mod.summary,
+      topics: mod.topics,
+    });
   }),
 ];
 

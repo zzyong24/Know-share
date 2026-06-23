@@ -14,7 +14,6 @@ import {
 } from "@/components/shared";
 import { useModuleDetail } from "@/lib/queries/module-detail";
 import { useFavoriteModule, useEndorseUser, useReport } from "@/lib/queries/community";
-import { useCreateExchange } from "@/lib/queries/exchange";
 import { ModuleDetailLayout } from "./ModuleDetailLayout";
 import { ModuleSummaryHeader } from "./ModuleSummaryHeader";
 import { SourceStatsPanel } from "./SourceStatsPanel";
@@ -50,7 +49,6 @@ export function ModuleDetailView({
   const ownerHandle = data?.owner.handle ?? "";
   const endorse = useEndorseUser(ownerHandle);
   const report = useReport();
-  const createExchange = useCreateExchange();
 
   const requireLogin = () =>
     notify("请先用 GitHub 登录后再操作", "info");
@@ -82,18 +80,9 @@ export function ModuleDetailView({
     });
   };
 
-  // 发起交换：触发创建（API-019）；成功后跳交换详情，沿用现有 UI 流（最小改动）。
+  // 发起交换：跳互惠创建表单页（/exchanges/new?module=:id），在表单页确认互惠/同意后再 create（API-019）。
   const handleRequestExchange = () => {
-    createExchange.mutate(
-      { targetModuleId: moduleId },
-      {
-        onSuccess: (res) => {
-          notify("已发起交换请求，等待对方确认。", "success");
-          router.push(`/exchanges/${res.exchangeId}`);
-        },
-        onError: () => notify("发起交换失败，请稍后重试。", "error"),
-      }
-    );
+    router.push(`/exchanges/new?module=${encodeURIComponent(moduleId)}`);
   };
 
   if (isLoading) {

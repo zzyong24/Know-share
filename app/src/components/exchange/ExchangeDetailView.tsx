@@ -15,14 +15,18 @@ import { ExchangeTimeline } from "./ExchangeTimeline";
 import { ExchangeContentSummary } from "./ExchangeContentSummary";
 import { ExchangeVerificationSummary } from "./ExchangeVerificationSummary";
 import { ExchangePartyCard } from "./ExchangePartyCard";
+import { ExchangeOwnerActions } from "./ExchangeOwnerActions";
 import { ContactDisclosurePanel } from "./ContactDisclosurePanel";
 import { PrivateDeliveryNote } from "./PrivateDeliveryNote";
 import { ExchangeFeedbackSection } from "./ExchangeFeedbackSection";
 import { FeedbackSurface } from "@/components/trust-feedback"; // COMP-116 单一真源（集成接线）
 import {
+  useAcceptExchange,
+  useCancelExchange,
   useDiscloseContacts,
   useExchangeDetail,
   useMarkDelivered,
+  useRejectExchange,
   useRevokeDisclosure,
 } from "@/lib/queries/exchange";
 
@@ -47,6 +51,9 @@ export function ExchangeDetailView({ exchangeId }: ExchangeDetailViewProps) {
   const disclose = useDiscloseContacts(exchangeId);
   const revoke = useRevokeDisclosure(exchangeId);
   const markDelivered = useMarkDelivered(exchangeId);
+  const accept = useAcceptExchange(exchangeId);
+  const reject = useRejectExchange(exchangeId);
+  const cancel = useCancelExchange(exchangeId);
 
   if (detailQuery.isLoading) {
     return (
@@ -156,6 +163,25 @@ export function ExchangeDetailView({ exchangeId }: ExchangeDetailViewProps) {
               />
             </div>
           </Card>
+
+          {/* 交换操作（接受/拒绝/取消）：按 viewerRole + status 门控（FLOW-003） */}
+          <ExchangeOwnerActions
+            viewerRole={d.viewerRole}
+            status={d.status}
+            isAuthenticated={d.isAuthenticated}
+            accepting={accept.isPending}
+            rejecting={reject.isPending}
+            cancelling={cancel.isPending}
+            onAccept={async () => {
+              await accept.mutateAsync();
+            }}
+            onReject={async (reason) => {
+              await reject.mutateAsync(reason);
+            }}
+            onCancel={async (reason) => {
+              await cancel.mutateAsync(reason);
+            }}
+          />
 
           <ContactDisclosurePanel
             exchangeStatus={d.status}

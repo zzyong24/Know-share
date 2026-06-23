@@ -8,6 +8,7 @@ export { ExchangeDirectionMarker } from "./ExchangeDirectionMarker"; // COMP-091
 export { ExchangeLedgerFilters } from "./ExchangeLedgerFilters"; // COMP-092
 export { ExchangeTimeline } from "./ExchangeTimeline"; // COMP-093
 export { ExchangePartyCard } from "./ExchangePartyCard"; // COMP-094
+export { ExchangeOwnerActions } from "./ExchangeOwnerActions"; // COMP-099 交换操作面板
 export { ContactDisclosurePanel } from "./ContactDisclosurePanel"; // COMP-095
 export { PrivateDeliveryNote } from "./PrivateDeliveryNote"; // COMP-096
 export { ExchangeFeedbackSection } from "./ExchangeFeedbackSection"; // COMP-097
@@ -17,12 +18,15 @@ export { ExchangeContentSummary } from "./ExchangeContentSummary"; // COMP-090~1
 // 页面级视图（路由 PAGE 直接渲染）
 export { ExchangeLedgerView } from "./ExchangeLedgerView"; // PAGE-030
 export { ExchangeDetailView } from "./ExchangeDetailView"; // PAGE-031
+export { ExchangeCreateForm } from "./ExchangeCreateForm"; // PAGE-031b /exchanges/new
 
 export type { ExchangeLedgerTableProps } from "./ExchangeLedgerTable";
 export type { ExchangeDirectionMarkerProps } from "./ExchangeDirectionMarker";
 export type { ExchangeLedgerFiltersProps } from "./ExchangeLedgerFilters";
 export type { ExchangeTimelineProps } from "./ExchangeTimeline";
 export type { ExchangePartyCardProps } from "./ExchangePartyCard";
+export type { ExchangeOwnerActionsProps } from "./ExchangeOwnerActions";
+export type { ExchangeCreateFormProps } from "./ExchangeCreateForm";
 export type { ContactDisclosurePanelProps } from "./ContactDisclosurePanel";
 export type { PrivateDeliveryNoteProps } from "./PrivateDeliveryNote";
 export type {

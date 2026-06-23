@@ -269,6 +269,101 @@ export function useMarkDelivered(id: string) {
   });
 }
 
+/* ── owner/参与方写动作（接受/拒绝/取消；FLOW-003 状态迁移 W-2）────── */
+
+/** 目标所有者接受请求（API-020）：Requested→Accepted。成功后失效详情+台账。 */
+export function useAcceptExchange(id: string) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: () =>
+      apiFetch<ExchangeDetail>(`/api/exchanges/${id}/accept`, {
+        method: "POST",
+      }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: exchangeKeys.detail(id) });
+      qc.invalidateQueries({ queryKey: exchangeKeys.ledger() });
+    },
+  });
+}
+
+/**
+  目标所有者拒绝请求（API-021）：Requested→Rejected；携带原因（对方将收到通知）。
+  成功后失效详情+台账。
+*/
+export function useRejectExchange(id: string) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (reason?: string) =>
+      apiFetch<ExchangeDetail>(`/api/exchanges/${id}/reject`, {
+        method: "POST",
+        body: JSON.stringify({ reason: reason ?? "" }),
+      }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: exchangeKeys.detail(id) });
+      qc.invalidateQueries({ queryKey: exchangeKeys.ledger() });
+    },
+  });
+}
+
+/**
+  参与方中止交换（API-022）：必填原因（后端缺原因 → 400）；合法态 → Cancelled。
+  成功后失效详情+台账。
+*/
+export function useCancelExchange(id: string) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (reason: string) =>
+      apiFetch<ExchangeDetail>(`/api/exchanges/${id}/cancel`, {
+        method: "POST",
+        body: JSON.stringify({ reason }),
+      }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: exchangeKeys.detail(id) });
+      qc.invalidateQueries({ queryKey: exchangeKeys.ledger() });
+    },
+  });
+}
+
+/* ── 互惠创建表单：我的可提供（已发布）模块（offeredModule 选择源）────── */
+
+/** 可在交换中提供的我的已发布模块（脱敏元数据；无私有内容 INV-01/04）。 */
+export interface MyOfferableModule {
+  moduleId: string;
+  title: string;
+  topics: string[];
+}
+
+/**
+  我的已发布模块（互惠创建表单 offeredModule 选择源；DEC-009/INV-05 可选）。
+  仅登录态可取；失败/匿名返回空清单（不阻断单向请求）。
+*/
+export function useMyPublishedModules() {
+  return useQuery({
+    queryKey: ["exchange", "my-modules", "published"] as const,
+    queryFn: async (): Promise<MyOfferableModule[]> => {
+      try {
+        const res = await apiFetch<{ items: MyOfferableModule[] }>(
+          "/api/me/modules?status=published"
+        );
+        return res.items;
+      } catch {
+        return [];
+      }
+    },
+    retry: false,
+  });
+}
+
+/** 目标模块脱敏摘要（创建表单只读预填；公开投影 INV-04）。 */
+export function useExchangeTargetModule(moduleId: string) {
+  return useQuery({
+    queryKey: ["exchange", "target-module", moduleId] as const,
+    queryFn: () =>
+      apiFetch<ExchangeModuleSummary>(`/api/modules/${moduleId}/summary`),
+    enabled: !!moduleId,
+  });
+}
+
 /* ── 台账行 → 状态分组键（FLOW-003；Flagged 不单列 ASM-032）──── */
 export const LEDGER_STATUS_GROUPS: Record<string, ExchangeStatus[]> = {
   active: ["Requested", "Accepted", "PrivatePreparing", "Delivered"],

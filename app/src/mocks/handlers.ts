@@ -48,7 +48,10 @@ function filterAndSortModules(url: URL): KnowledgeModule[] {
 
   if (forceEmpty) return [];
 
-  let items = modules.slice();
+  // 公开发现只含已发布态（Published/Updated）；与后端 listModules 一致（集成缺口修复）。
+  let items = modules.filter(
+    (m) => m.status === "Published" || m.status === "Updated"
+  );
   if (q) {
     items = items.filter(
       (m) =>

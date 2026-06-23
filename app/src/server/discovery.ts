@@ -151,6 +151,9 @@ export async function listModules(
   if (filters.empty) return { items: [], total: 0 };
 
   let rows = await loadModuleRows();
+  // 公开注册表只暴露已发布态（Published/Updated）；Draft/Delisted（及任何评审中态）
+  // 不得出现在公开发现列表（集成发现的缺口修复：approve→Published 才公开可见）。
+  rows = rows.filter((m) => m.status === "Published" || m.status === "Updated");
   const q = filters.q?.toLowerCase();
   if (q) {
     rows = rows.filter(

@@ -7,7 +7,7 @@
 ### 产物元数据
 
 - Stage: `17-integration-release`
-- Status: `needs-user-confirmation`
+- Status: `passed`（2026-06-23 用户签字 DEC-019）
 - Upstream: `SERVICE_CONTRACT`(API-001~053)、`BACKEND_SPEC`/`MODULE_WORKFLOW_SPEC`、`FRONTEND_SPEC`、`FRONTEND_VALIDATION_REPORT`、`INV-01~11`、`DEC-006/007/011/017`
 - 证据: `app/tests/server/integration/cross-domain.test.ts`、全量 `npm run test:run`、阶段12 Playwright 截图
 
@@ -68,7 +68,7 @@
 
 ```text
 Gate: 14-integration-gate
-Status: pass — 待用户确认
+Status: pass（用户 2026-06-23 已签字）
 Evidence: app/tests/server/integration/cross-domain.test.ts（12 跨域用例）；npm run test:run 480 passed；npm run typecheck 0；阶段12 Playwright 11/11；SERVICE_CONTRACT 双向孤儿扫描
 Findings: 前后端契约/数据一致（形状对齐、孤儿扫描清）；release-critical 路径（交换生命周期/提交发布/隐私不变量）端到端覆盖；集成发现 1 缺陷已修；剩余风险均显式（部署凭据/真实BE浏览器联调/写UI接线/字体构建）
 Decision: 契约与数据一致、关键路径端到端通过、风险显式 → 待用户确认 → 转 passed → 进入发布评审签字

@@ -78,6 +78,16 @@ export async function authHandlers() {
 export async function getSession(): Promise<Session | null> {
   if (resolverOverride) return resolverOverride();
   if (testSession !== undefined) return testSession;
+  // dev 联调会话（KNOWSHARE_DEV_SESSION）：免真实 GitHub OAuth，仅 dev 路径生效。
+  // 仅 GitHub 公开身份（login/avatar/isAdmin/verified），无 PII/联系方式（DEC-010/INV-04）。
+  if (process.env.KNOWSHARE_DEV_SESSION && process.env.NODE_ENV !== "test") {
+    return {
+      login: "zyongzhu24",
+      avatarUrl: "https://avatars.example.com/zyongzhu24.png",
+      isAdmin: true,
+      verified: true,
+    };
+  }
   try {
     const { auth } = await getNextAuth();
     const raw = await auth();

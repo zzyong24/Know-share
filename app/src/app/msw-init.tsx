@@ -23,12 +23,17 @@ function LoadingScreen() {
   );
 }
 
+/** 真实 API 模式（dev:real 联调）：关 MSW，客户端 fetch 直打真实 /api。 */
+const REAL_API = process.env.NEXT_PUBLIC_KNOWSHARE_REAL_API === "1";
+
 export function MswInit({ children }: { children: React.ReactNode }) {
-  // 生产环境直接放行；开发环境等待 worker 就绪（或超时/失败兜底）后再渲染。
-  const [ready, setReady] = useState(process.env.NODE_ENV === "production");
+  // 生产环境/真实 API 模式直接放行；开发 MSW 模式等待 worker 就绪后再渲染。
+  const [ready, setReady] = useState(
+    process.env.NODE_ENV === "production" || REAL_API
+  );
 
   useEffect(() => {
-    if (process.env.NODE_ENV === "production") return;
+    if (process.env.NODE_ENV === "production" || REAL_API) return;
     let active = true;
     const done = () => {
       if (active) setReady(true);

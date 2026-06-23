@@ -15,6 +15,8 @@ import * as schema from "./schema";
 export type Db = PgliteDatabase<typeof schema>;
 
 let cached: Db | null = null;
+// dev pglite 真库的单例 promise（KNOWSHARE_DEV_DB=pglite）；memoize 确保仅建一次。
+let devDbPromise: Promise<Db> | null = null;
 
 /** 测试夹具直接注入已建好的 pglite drizzle 句柄（_harness 用）。 */
 export function setDb(db: Db): void {
@@ -27,8 +29,32 @@ export function resetDb(): void {
 }
 
 /**
+  dev 联调真库（opt-in，仅 `KNOWSHARE_DEV_DB==='pglite'`）。
+  懒创建单例 pglite + push schema + 注入种子，仅一次（memoize）。
+  绝不影响：测试路径（已用 setDb 注入，cached 提前命中）、prod 路径（有 DATABASE_URL）。
+  种子/建表逻辑在 dev-seed.ts 中懒加载（drizzle-kit/api 不进 prod 包）。
+*/
+function getDevDb(): Promise<Db> {
+  if (!devDbPromise) {
+    devDbPromise = (async () => {
+      const { PGlite } = await import("@electric-sql/pglite");
+      const { drizzle } = await import("drizzle-orm/pglite");
+      const { pushSchema, seedDevDb } = await import("./dev-seed");
+      const pg = new PGlite();
+      await pushSchema(pg);
+      const db = drizzle(pg, { schema }) as unknown as Db;
+      await seedDevDb(db);
+      console.log("[dev-db] pglite 真库已就绪（push schema + 种子注入）。");
+      return db;
+    })();
+  }
+  return devDbPromise;
+}
+
+/**
   懒获取 DB 句柄。
   - 已注入（测试） → 直接返回。
+  - dev 联调标志（KNOWSHARE_DEV_DB=pglite，非测试、无 DATABASE_URL） → 单例 pglite 真库。
   - 否则按 DATABASE_URL 建 Neon serverless 句柄（仅在首个请求时连）。
   - 缺 DATABASE_URL → 抛错（仅运行期触发，不影响 build）。
 */
@@ -36,6 +62,13 @@ export async function getDb(): Promise<Db> {
   if (cached) return cached;
 
   const url = process.env.DATABASE_URL;
+  if (
+    process.env.KNOWSHARE_DEV_DB === "pglite" &&
+    process.env.NODE_ENV !== "test" &&
+    !url
+  ) {
+    return getDevDb();
+  }
   if (!url) {
     throw new Error(
       "DATABASE_URL 未配置：生产/本地运行需 Neon 连接串；测试请用 _harness 注入 pglite。"

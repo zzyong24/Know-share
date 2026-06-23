@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "dev:real": "KNOWSHARE_DEV_DB=pglite NEXT_PUBLIC_KNOWSHARE_REAL_API=1 KNOWSHARE_DEV_SESSION=demo next dev",
+    "e2e:real": "PW_PORT=3120 PW_REAL_API=1 playwright test tests/e2e/real-api.spec.ts",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",

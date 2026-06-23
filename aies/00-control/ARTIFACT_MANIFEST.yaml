@@ -1,8 +1,8 @@
 project:
   name: "Know-share"
   artifact_root: "."
-  current_stage: "16-backend-tdd"
-  frontier: "16-backend-tdd"
+  current_stage: "17-integration-release"
+  frontier: "17-integration-release"
   updated_at: "2026-06-23"
   work_branch: "main"
 
@@ -226,18 +226,20 @@ stages:
     invalidated_by: []
     notes: "SERVICE_CONTRACT.md：API-001~053 逐端点契约（方法/路径/鉴权/zod/响应/错误/限流/幂等），对齐前端 query hooks/MSW 实际调用。交叉审核：无孤儿端点（前端所有调用命中）、无越权端点（全追溯 FR/PAGE）；6 处契约↔前端差异（1 已修 consent 422、4 记录契约为准 MSW 待对齐、1 为 RISK-004 前端双 trust/skills 路径属死脚手架建议删）。公开读端点不输出 contact/原始内容（INV-03/04）。待用户裁决 5 决策点后转 passed；进入 16 前先跑 15b 契约完整性门。"
   "16-backend-tdd":
-    status: "not-started"
+    status: "passed"
     artifacts:
-      - path: "server/"
+      - path: "app/src/server/"
         role: "backend-implementation"
-      - path: "tests/"
+      - path: "app/src/app/api/"
+        role: "backend-route-handlers"
+      - path: "app/tests/server/"
         role: "backend-test-evidence"
     depends_on: ["13-backend-spec", "14-module-workflow-spec", "15-service-contract"]
     gate: "13-tdd-gate"
-    gate_status: "not-run"
+    gate_status: "pass"
     confirmation_required: false
     invalidated_by: []
-    notes: "前置 15b 契约完整性门已通过（2026-06-23）：53 端点均含 方法/路径/用途/鉴权/幂等 + zod 请求响应 + 统一错误码段(4xx/5xx) + 合法状态迁移(→409，与 FLOW-003 一致)；覆盖孤儿扫描由交叉审核扫清。下一步：按 SERVICE_CONTRACT 红→绿实现 server/（Next Route Handlers + Drizzle/Neon + Upstash + Auth.js）+ tests/（TEST-001~016 不变量/契约测试），可按后端域并行；并补前端 MSW 对齐（写端点 ASM-120、/api/exchanges +topics、/api/notifications +unreadCount）与清理 trust/skills 死 hook（RISK-004/DEC-018）。"
+    notes: "前置 15b 契约完整性门已过。后端按 DEC-017 栈实现于 app/（Next Route Handlers `src/app/api/**` + 服务 `src/server/*.ts` + Drizzle schema/Neon(prod)/pglite(test) + Auth.js GitHub + Upstash + 公开投影守 INV-04）。批次1 地基 + discovery 域；批次2 并行 6 域（exchange/submission/trust-feedback/account/admin/social-skills-about），各严格 TDD 红→绿（import 红 + 断言级不变量红 → 实现转绿）。前端 MSW 对齐契约（形状 + 写端点 handlers + 统一 /api/feedback + 清死 hook）。13-tdd-gate pass：红先于绿证据齐、实现最小对齐契约、468 测试通过（292 前端无回归 + 176 后端）、typecheck 0、lint 0 错误。服务端强制 INV-01~11、FLOW-003 状态机(非法→409)、DEC-007 无经济字段，均有 TEST 守。注：next build 当前因 next/font 拉 Google Fonts 网络受限而失败，同配置本会话稍早多次 build✓、Vercel 有网络则正常（环境项，非回归）。进入 17 集成发布。"
   "17-integration-release":
     status: "not-started"
     artifacts:

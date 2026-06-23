@@ -30,10 +30,37 @@
   /* 圆角 */
   --radius-control: 8px;
   --radius-card: 12px;
+  --radius-pill: 9999px;
+
+  /* 阴影（shadow-card） */
+  --shadow-card: 0 1px 2px 0 rgb(16 24 40 / 0.04), 0 1px 3px 0 rgb(16 24 40 / 0.06);
 
   /* 字体（Inter / JetBrains Mono，经 next/font 注入 CSS 变量） */
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, "PingFang SC", "Microsoft YaHei", sans-serif;
   --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+
+  /*
+    shadcn/ui 基元语义别名 → 复用上面的规范令牌（UI-001）。
+    仅做映射、不重定义品牌色；让 shadcn 基元（Button/Badge/Input…）的
+    bg-primary / text-foreground / border-input / ring 等工具类有对应色值。
+    注意：--color-accent 已是品牌强调色 #019997，shadcn 的 hover 背景同时复用它。
+  */
+  --color-foreground: var(--color-text);
+  --color-background: var(--color-bg);
+  --color-card: var(--color-surface);
+  --color-card-foreground: var(--color-text);
+  --color-popover: var(--color-surface);
+  --color-popover-foreground: var(--color-text);
+  --color-primary-foreground: #ffffff;
+  --color-secondary: var(--color-primary-subtle);
+  --color-secondary-foreground: var(--color-primary);
+  --color-muted: #f3f5f7;
+  --color-muted-foreground: var(--color-text-muted);
+  --color-accent-foreground: #ffffff;
+  --color-destructive: var(--color-danger);
+  --color-destructive-foreground: #ffffff;
+  --color-input: var(--color-border);
+  --color-ring: var(--color-primary);
 }
 
 :root {

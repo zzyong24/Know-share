@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import { Providers } from "./providers";
+import { MswInit } from "./msw-init";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -27,7 +29,11 @@ export default function RootLayout({
       lang="zh-CN"
       className={`${inter.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <MswInit>
+          <Providers>{children}</Providers>
+        </MswInit>
+      </body>
     </html>
   );
 }

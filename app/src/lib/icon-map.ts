@@ -1,0 +1,127 @@
+/*
+  图标映射（DEC-012 / UI-002 / FRONTEND_SPEC §5）
+  全站单一图标族：规范参照 = Material Symbols Outlined；实现以 lucide-react 1:1 等价替换。
+  组件 props 以「规范名」（Material 名，如 swap_horiz）传入，运行时经本表映射到 lucide 组件渲染。
+  禁止第二图标族 / filled 变体 / emoji。GitHub Octocat 为唯一品牌例外（见 octocat.tsx）。
+  人类可读文档见 docs/icon-map.md（与本表保持同步）。
+*/
+import {
+  Search,
+  BadgeCheck,
+  CheckCircle2,
+  ArrowLeftRight,
+  Hourglass,
+  Bell,
+  Shield,
+  ShieldCheck,
+  ShieldAlert,
+  AlertTriangle,
+  AlertCircle,
+  Info,
+  Star,
+  Users,
+  Boxes,
+  TrendingUp,
+  TrendingDown,
+  Minus,
+  ChevronRight,
+  ChevronLeft,
+  ChevronDown,
+  ChevronUp,
+  Copy,
+  Check,
+  X,
+  Plus,
+  Settings,
+  User,
+  LogOut,
+  ExternalLink,
+  Lock,
+  Unlock,
+  Eye,
+  EyeOff,
+  FileText,
+  Folder,
+  Inbox,
+  MessageSquare,
+  ThumbsUp,
+  Flag,
+  ClipboardList,
+  Activity,
+  Tag,
+  Code2,
+  Sparkles,
+  Trash2,
+  Pencil,
+  Send,
+  Clock,
+  Heart,
+  type LucideIcon,
+} from "lucide-react";
+
+/** 规范图标名（Material Symbols Outlined）→ lucide 组件 */
+export const ICON_MAP: Record<string, LucideIcon> = {
+  search: Search,
+  verified: BadgeCheck,
+  check_circle: CheckCircle2,
+  swap_horiz: ArrowLeftRight,
+  hourglass_empty: Hourglass,
+  notifications: Bell,
+  shield: Shield,
+  verified_user: ShieldCheck,
+  gpp_maybe: ShieldAlert,
+  warning: AlertTriangle,
+  error: AlertCircle,
+  info: Info,
+  star: Star,
+  group: Users,
+  inventory_2: Boxes,
+  trending_up: TrendingUp,
+  trending_down: TrendingDown,
+  trending_flat: Minus,
+  chevron_right: ChevronRight,
+  chevron_left: ChevronLeft,
+  expand_more: ChevronDown,
+  expand_less: ChevronUp,
+  content_copy: Copy,
+  check: Check,
+  close: X,
+  add: Plus,
+  settings: Settings,
+  person: User,
+  logout: LogOut,
+  open_in_new: ExternalLink,
+  lock: Lock,
+  lock_open: Unlock,
+  visibility: Eye,
+  visibility_off: EyeOff,
+  description: FileText,
+  folder: Folder,
+  inbox: Inbox,
+  forum: MessageSquare,
+  thumb_up: ThumbsUp,
+  flag: Flag,
+  fact_check: ClipboardList,
+  monitoring: Activity,
+  label: Tag,
+  code: Code2,
+  auto_awesome: Sparkles,
+  delete: Trash2,
+  edit: Pencil,
+  send: Send,
+  schedule: Clock,
+  favorite: Heart,
+};
+
+/** 兜底：未映射图标名退回 Info（开发期 console 告警，避免静默渲染空白）。 */
+export function resolveIcon(name: string | undefined): LucideIcon {
+  if (!name) return Info;
+  const icon = ICON_MAP[name];
+  if (!icon) {
+    if (process.env.NODE_ENV !== "production") {
+      console.warn(`[icon-map] 未映射的图标名 "${name}"，请补充到 ICON_MAP（DEC-012）。`);
+    }
+    return Info;
+  }
+  return icon;
+}

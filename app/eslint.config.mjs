@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // MSW 生成的 service worker（vendor 产物，不纳入 lint）
+    "public/mockServiceWorker.js",
   ]),
 ]);
 

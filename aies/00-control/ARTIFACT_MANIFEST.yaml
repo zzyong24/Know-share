@@ -241,7 +241,7 @@ stages:
     invalidated_by: []
     notes: "前置 15b 契约完整性门已过。后端按 DEC-017 栈实现于 app/（Next Route Handlers `src/app/api/**` + 服务 `src/server/*.ts` + Drizzle schema/Neon(prod)/pglite(test) + Auth.js GitHub + Upstash + 公开投影守 INV-04）。批次1 地基 + discovery 域；批次2 并行 6 域（exchange/submission/trust-feedback/account/admin/social-skills-about），各严格 TDD 红→绿（import 红 + 断言级不变量红 → 实现转绿）。前端 MSW 对齐契约（形状 + 写端点 handlers + 统一 /api/feedback + 清死 hook）。13-tdd-gate pass：红先于绿证据齐、实现最小对齐契约、468 测试通过（292 前端无回归 + 176 后端）、typecheck 0、lint 0 错误。服务端强制 INV-01~11、FLOW-003 状态机(非法→409)、DEC-007 无经济字段，均有 TEST 守。注：next build 当前因 next/font 拉 Google Fonts 网络受限而失败，同配置本会话稍早多次 build✓、Vercel 有网络则正常（环境项，非回归）。进入 17 集成发布。"
   "17-integration-release":
-    status: "not-started"
+    status: "needs-user-confirmation"
     artifacts:
       - path: "aies/05-release/INTEGRATION_REPORT.md"
         role: "integration-evidence"
@@ -249,10 +249,10 @@ stages:
         role: "release-readiness"
     depends_on: ["12-frontend-validation", "15-service-contract", "16-backend-tdd"]
     gate: "14-integration-gate"
-    gate_status: "not-run"
+    gate_status: "pass"
     confirmation_required: true
     invalidated_by: []
-    notes: ""
+    notes: "INTEGRATION_REPORT + RELEASE_REVIEW 产出。集成：前后端同契约（SERVICE_CONTRACT API-001~053），形状一致性 + 双向孤儿扫描清；跨域端到端 12 用例（交换生命周期/提交→审核→发布/隐私不变量端到端）。集成发现并修复 1 缺陷（公开 /api/modules 漏列 Draft/Delisted→限 Published/Updated）。全量 480 测试通过、typecheck 0、lint 0 错误；阶段12 Playwright 11/11。不变量 INV-01~11 服务端强制有 TEST 守。14-integration-gate pass。剩余风险显式（部署凭据/FE↔真实BE 浏览器联调/next build 字体网络/写UI接线/已确认延后项）。待用户签字接受可发布基线 → 流水线完成。"
 
 stage_defaults:
   valid_statuses:
@@ -266,11 +266,11 @@ stage_defaults:
   transition_rule: "参见 product-to-code-orchestrator rules/orchestrator-state-machine.md"
 
 consistency_gate:
-  status: "not-run"
-  reason: "仅完成初始收件；完整的双向孤儿扫描将在稳定的需求 ID 存在后开始。"
+  status: "pass"
+  reason: "多轮 spec 交叉审核（08 页面/09 组件/13-15 后端）+ 后端双向孤儿扫描全清：前端所有 query hooks 命中 API-001~053、每 API 追溯 FR/PAGE、每 INV 有 TEST、每 FR 有落点；ID 体系 FR/NFR/FLOW/ENT/IA/UI/PAGE/COMP/MOCK/API/TEST/ASM/DEC/RISK 全程登记一致；reconcile 0 错误。"
   blocks: []
-  downstream_to_upstream: "pending"
-  recorded_in: "aies/00-control/TRACEABILITY_MATRIX.md"
+  downstream_to_upstream: "clean"
+  recorded_in: "aies/00-control/TRACEABILITY_MATRIX.md + 04-backend 交叉审核报告"
 
 open_items:
   - id: "OPEN-001"

@@ -74,3 +74,12 @@
 | `ASM-109` | `10-mock-data-spec` | 种子规模（8 用户 / ~12 模块 / ~10 交换）足以覆盖所有页面状态。 | 覆盖各 States 即可，不求量大。 | 演示分页/性能时再扩。 | agent | 前端实现/验证阶段。 | active |
 | `ASM-110` | `10-mock-data-spec` | 时间戳相对"今天"由生成器注入，不硬编码绝对日期。 | 避免 MOCK 日期漂移/过期。 | 若需固定演示日期改为时间锚。 | agent | 前端实现确认。 | active |
 | `ASM-111` | `10-mock-data-spec` | MOCK 数据形态为占位，最终字段以阶段 15 SERVICE_CONTRACT 为准。 | 解耦前端进度与契约。 | 契约定稿后回填种子与 handler。 | agent | 服务契约阶段。 | active |
+| `ASM-112` | `13-backend-spec` | DB 列 snake_case、TS camelCase（Drizzle 映射）。 | 惯例。 | 命名风格调整需同步。 | agent | 后端 TDD。 | active |
+| `ASM-113` | `13-backend-spec` | 请求 zod schema 镜像前端 TS 形状。 | 前后端单一形状真源。 | 形状漂移需对齐。 | agent | 服务契约。 | active |
+| `ASM-114` | `13-backend-spec` | Manifest 保留版本，diff/历史为后续扩展。 | 控制范围。 | 需版本 diff 时扩展。 | agent | 后续。 | active |
+| `ASM-115` | `13-backend-spec` | Auth.js adapter 表与业务表同库（Neon）。 | 简化。 | 若分库需调。 | agent | 后端 TDD。 | active |
+| `ASM-116` | `13-backend-spec` | Region 新加坡（sin1）+ 就近 Neon/Upstash。 | 延迟与文档一致。 | 受众地域变化需调。 | agent | 部署。 | active |
+| `ASM-117` | `13-backend-spec` | Vercel Cron 驱动到期/反馈窗口/统计物化。 | serverless 周期任务。 | 频次/额度需调。 | agent | 部署。 | active |
+| `ASM-118` | `13-backend-spec` | 本版 Agent 为 User 行动者角色（不建表）；外部 agent 签名身份为扩展面。 | 沿用 ASM-012。 | 认证写 API 需签名身份则升格。 | user | 服务契约。 | needs-confirmation |
+| `ASM-119` | `14-module-workflow-spec` | 信任分重算异步、最终一致。 | 避免写路径阻塞。 | 需强一致则改同步。 | agent | 后端 TDD。 | active |
+| `ASM-120` | `15-service-contract` | 创建/接受/拒绝/取消交换、收藏/认可/举报等写端点为契约新增，前端 MSW 待补齐对齐。 | 契约先行、MSW 后补。 | MSW 不补则前端写路径不可用。 | user | 服务契约确认。 | needs-confirmation |

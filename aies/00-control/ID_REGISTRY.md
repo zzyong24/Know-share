@@ -152,6 +152,10 @@
 | `RISK-001` | 风险 | 技能/来源数量扩展致网格膨胀 | `02-design/agent-skills/COMPONENTS_SPEC.md` | `FR-080` | mitigated | 已用数据驱动网格化解。 |
 | `MOCK-001~020` | 模拟数据场景 | 各页状态的 MOCK 场景（正常/空/加载/错误/权限敏感） | `02-design/MOCK_DATA_SPEC.md` | `ENT-*`, `PAGE-*`, `INV-01/03/09` | draft | 单一真源、跨模块一致；全合成无 PII。 |
 | `ASM-108~111` | 假设 | 阶段10 Mock 数据假设（交付形态/规模/时间戳/契约对齐） | `DEFAULT_ASSUMPTIONS.md` + `02-design/MOCK_DATA_SPEC.md` | `10-mock-data-spec` | active | — |
+| `API-001~053` | 服务契约操作 | 后端 API 端点（会话/模块/搜索/交换/信任/技能/通知/设置-联系方式/审核/统计 + 写操作） | `04-backend/SERVICE_CONTRACT.md` | `FR-*`, `ENT-*`, `INV-03/04/09`, `DEC-017` | draft | 对齐前端 query hooks/MSW；公开读不输出 contact/原始内容。 |
+| `TEST-001~016` | 测试场景 | 后端契约/不变量关键测试（零私有输出/block 不可绕过/披露门/双方确认/统计无 PII/状态机/限流/无经济字段等） | `04-backend/BACKEND_SPEC.md`(测试策略) | `INV-01~11`, `DEC-007`, `FLOW-003` | draft | 阶段16 TDD 红绿据此。 |
+| `ASM-112~120` | 假设 | 阶段13~15 后端假设（Drizzle 命名/zod 镜像/Manifest 版本/Auth 表共库/Region/Cron/agent 身份/信任异步/写端点 MSW 待补） | `DEFAULT_ASSUMPTIONS.md` + `04-backend/*` | `13~15-backend` | active | 详见 DEFAULT_ASSUMPTIONS.md。 |
+| `RISK-002~005` | 风险 | 栈选型残留/非法状态迁移/前端双路径(trust,skills)待收敛/信任重算竞态 | `04-backend/*` | `DEC-017`, `FLOW-003` | open | RISK-004 待用户确认收敛；其余设计期缓解。 |
 
 ## 完成标准
 

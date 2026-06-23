@@ -23,7 +23,7 @@
 ## 技术栈与版本
 
 - **前端技术栈已批准（DEC-014，2026-06-23）**：`Next.js + TypeScript + Tailwind CSS + shadcn/ui`。Tailwind 承载 UI_RULES 设计令牌（UI-001）；shadcn/ui 为规范组件（UI-003）实现底座；图标规范族 Material Symbols Outlined（DEC-012），lucide-react 为已登记的 1:1 等价替换路径。脚手架仍由阶段 11 前的 Task Zero 建立（含绿色基线）。
-- 含轻度后端服务（DEC-011，FR-140）：动态行为 + 聚合使用统计（不含 PII）；后端栈在阶段 13 后端规格确定。
+- **后端栈已批准（DEC-017，2026-06-23，零氪 serverless）**：部署 Vercel；运行时 Next.js Route Handlers（同 app/）；DB Neon PostgreSQL + Drizzle ORM；缓存/计数/限流 Upstash Redis（聚合统计 FR-140、限流 NFR-006）；邮件 Resend（按需）；鉴权 GitHub OAuth via Auth.js（NextAuth v5，GitHub 规范身份 DEC-006；Clerk 为等价托管替代）。参考：ThirdSpace/03-知识/开发工具/20260319_如何复刻本网站_零氪快速建博客.md。所有服务均免费额度。含轻度后端（DEC-011/FR-140）：动态行为 + 聚合统计（不含 PII）。
 - 现有文档的"静态注册表 + JSON 清单 schema + agent 侧工具"是首个实现可起步的形态，但不缩小目标产品（ASM-008）。
 
 ## 关键实现规则

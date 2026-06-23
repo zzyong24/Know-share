@@ -231,6 +231,21 @@ Revisit Trigger: 若实现阶段发现组件边界需重划（尤以反馈表单
 Status: active
 ```
 
+```text
+ID: DEC-016
+Date: 2026-06-23
+Stage: 12-frontend-validation
+Type: user-confirmation
+Decision: 用户签字确认阶段 12 前端浏览器验证通过（Playwright 11/11 核心路径 + 隐私不变量浏览器层验证）。4 项非阻断缺陷接受为待打磨/发布前修（不阻断后端推进）：列表行 onClick 跳转改真 <Link>[中，建议阶段17前]、icon-map 缺映射、Recharts 容器尺寸、6 lint warning。
+Rationale: 前端实现 + 浏览器验证齐备，核心路径与 INV-03/04/09、DEC-007 在界面与浏览器层兑现；缺陷均非阻断且已分级定位。
+Source: 用户于 2026-06-23 的消息「start」（确认阶段 12 通过、进入阶段 13）。
+Affected Artifacts: aies/03-frontend/FRONTEND_VALIDATION_REPORT.md, ARTIFACT_MANIFEST.yaml（stage 12 → passed）, 下游 13 后端规格
+Invalidates: none
+Owner: user
+Revisit Trigger: 若缺陷 1（详情入口真链接）在发布前未修，或浏览器验证发现回归。
+Status: active
+```
+
 ## 完成标准
 
 - 记录任何 A 级问题的回答。

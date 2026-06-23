@@ -7,7 +7,7 @@
 ### 产物元数据
 
 - Stage: `12-frontend-validation`
-- Status: `needs-user-confirmation`
+- Status: `passed`（2026-06-23 用户签字）
 - Upstream IDs: `PAGE-001~105`、各 `COMP-*`、`INV-03/02/04`、`NFR-007`、`FR-140`
 - Method: Playwright（FRONTEND_SPEC §9 / skill_registry playwright-mcp）
 - 证据: `app/tests/e2e/validation.spec.ts`、`aies/03-frontend/validation-shots/*.png`
@@ -78,7 +78,7 @@
 
 ```text
 Gate: 10-frontend-validation-gate
-Status: pass — 待用户确认
+Status: pass（用户 2026-06-23 已签字确认）
 Evidence: app/tests/e2e/validation.spec.ts（11/11 通过）；aies/03-frontend/validation-shots/*.png（14 张）；dev server + MSW
 Findings: 4 项非阻断缺陷（列表行 onClick 跳转/icon-map 缺映射/Recharts 尺寸警告/6 lint warning），已分级与定位
 Decision: 核心路径与隐私不变量通过、issues 已 triage → 待用户确认 → 转 passed → 进入 13-backend-spec

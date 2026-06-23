@@ -1,8 +1,8 @@
 project:
   name: "Know-share"
   artifact_root: "."
-  current_stage: "12-frontend-validation"
-  frontier: "12-frontend-validation"
+  current_stage: "13-backend-spec"
+  frontier: "13-backend-spec"
   updated_at: "2026-06-23"
   work_branch: "main"
 
@@ -182,7 +182,7 @@ stages:
     invalidated_by: []
     notes: "Task Zero（绿色基线）+ 全 10 模块前端实现完成。批次1 共享地基 COMP-001~040 + MSW/Query 基础设施；批次2 shell-discovery 集成模板（路由分组+SiteShell）+ 并行实现其余 9 模块（module-detail/submission/exchange/trust-feedback/agent-skills/account/admin/open-api/about），模块特有组件 COMP-041~229、各模块 query hooks + MSW fixtures/handlers + 组件/页面测试。集成 pass：模块 handlers 接入聚合器、导航补 开发文档/关于、exchange 反馈区接入 trust COMP-116 单一真源、修 5 lint 错误（effect 内 setState→渲染期模式 等）。09-frontend-implementation-gate 实跑证据（2026-06-23）：lint 0 错误（6 处非阻断 warning，留 stage 12 打磨）、typecheck 0、Vitest 32 文件/292 测试通过、production build ✓（25 条路由）。stage 转 passed，进入 12-frontend-validation（浏览器核心路径验证）。"
   "12-frontend-validation":
-    status: "needs-user-confirmation"
+    status: "passed"
     artifacts:
       - path: "aies/03-frontend/FRONTEND_VALIDATION_REPORT.md"
         role: "browser-validation-evidence"

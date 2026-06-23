@@ -39,6 +39,10 @@ export const queryKeys = {
   },
   search: {
     suggest: (q: string) => ["search", "suggest", q] as const,
+    results: (q: string) => ["search", "results", q] as const,
+  },
+  session: {
+    current: ["session", "current"] as const,
   },
   account: {
     contacts: ["account", "contacts"] as const,

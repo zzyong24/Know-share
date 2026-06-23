@@ -217,3 +217,51 @@ export interface SearchSuggestion {
   label: string;
   href: string;
 }
+
+// ── 发现页筛选 / 排序（PAGE-002 / ASM-017）─────────────
+/** 发现页筛选「类型」维度：以 ENT-003 状态枚举占位（契约就绪后对齐 type）。 */
+export type ModuleType = ModuleStatus;
+
+export type SortKey = "relevance" | "latest" | "popular" | "trust";
+
+export interface FilterValue {
+  type?: ModuleType[];
+  topic?: string[];
+  trustLevel?: TrustLevel[];
+  verifiedOnly?: boolean;
+}
+
+export interface FilterOptions {
+  types: ModuleType[];
+  topics: Topic[];
+  trustLevels: TrustLevel[];
+}
+
+// ── 全局搜索结果面（PAGE-003）──────────────────────────
+export type SearchScope = "all" | "modules" | "topics" | "users" | "exchanges";
+
+/** 用户搜索结果项（ENT-001 公开字段；非 PII/非 ENT-008）。 */
+export interface UserResult {
+  login: string;
+  avatarUrl: string;
+  githubVerified: boolean;
+  trustScore?: number;
+  domainTags?: string[];
+}
+
+/** 交换搜索结果项（ENT-007 脱敏台账行；不含私有通道内容 INV-04）。 */
+export interface ExchangeResult {
+  id: string;
+  direction: "incoming" | "outgoing" | "mutual";
+  status: ExchangeStatus;
+  updatedAt: string;
+  targetModuleTitle?: string;
+}
+
+export interface SearchResults {
+  modules: KnowledgeModule[];
+  topics: Topic[];
+  users: UserResult[];
+  exchanges: ExchangeResult[];
+  counts: Record<Exclude<SearchScope, "all">, number>;
+}

@@ -51,8 +51,8 @@ export function DonutChart({
   return (
     <figure role="img" aria-label={summary}>
       <div className="flex flex-col items-center gap-4 sm:flex-row">
-        <div style={{ height, width: height }} className="relative">
-          <ResponsiveContainer width="100%" height="100%">
+        <div style={{ height, width: height, minHeight: height, minWidth: height }} className="relative">
+          <ResponsiveContainer width="100%" height="100%" minWidth={height} minHeight={height}>
             <PieChart>
               <Pie
                 data={segments}

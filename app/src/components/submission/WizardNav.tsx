@@ -39,7 +39,10 @@ export function WizardNav({
 }: WizardNavProps) {
   const nextDisabled = !canProceed || busy;
   return (
-    <div className="mt-6 flex flex-wrap items-center justify-between gap-3 border-t border-border pt-4">
+    <div
+      data-step={step}
+      className="mt-6 flex flex-wrap items-center justify-between gap-3 border-t border-border pt-4"
+    >
       <div className="flex items-center gap-2">
         {canGoBack && (
           <SecondaryButton iconLeft="chevron_left" onClick={onBack} disabled={busy}>

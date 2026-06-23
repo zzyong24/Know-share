@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import {
   Avatar,
   DataTable,
@@ -26,7 +27,14 @@ export interface ExchangeLedgerTableProps {
   onRowClick: (exchangeId: string) => void;
   onPartyClick?: (login: string) => void;
   onTopicClick?: (topic: string) => void;
+  /** 详情深链（默认 /exchanges/:id）；用于真实可爬取链接（NFR-002）。 */
+  rowHref?: (exchangeId: string) => string;
+  /** 参与方主页深链（默认 /u/:login）。 */
+  partyHref?: (login: string) => string;
 }
+
+const defaultRowHref = (id: string) => `/exchanges/${id}`;
+const defaultPartyHref = (login: string) => `/u/${login}`;
 
 function statusPill(status: ExchangeLedgerRow["status"]) {
   const meta = EXCHANGE_STATUS_META[status] ?? {
@@ -38,6 +46,7 @@ function statusPill(status: ExchangeLedgerRow["status"]) {
 
 function partyCell(
   party: ExchangeLedgerRow["requester"],
+  partyHref: (login: string) => string,
   onPartyClick?: (login: string) => void
 ) {
   return (
@@ -52,7 +61,12 @@ function partyCell(
         verified={party.verified}
         onClick={onPartyClick ? () => onPartyClick(party.login) : undefined}
       />
-      <span className="truncate text-sm text-text">@{party.login}</span>
+      <Link
+        href={partyHref(party.login)}
+        className="truncate text-sm text-text hover:text-primary focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none rounded"
+      >
+        @{party.login}
+      </Link>
     </span>
   );
 }
@@ -64,13 +78,20 @@ export function ExchangeLedgerTable({
   onRowClick,
   onPartyClick,
   onTopicClick,
+  rowHref = defaultRowHref,
+  partyHref = defaultPartyHref,
 }: ExchangeLedgerTableProps) {
   const columns: ColumnDef<ExchangeLedgerRow>[] = [
     {
       id: "exchangeId",
       header: "交换号",
       cell: (r) => (
-        <span className="font-mono text-xs text-text-muted">#{r.exchangeId}</span>
+        <Link
+          href={rowHref(r.exchangeId)}
+          className="font-mono text-xs text-text-muted hover:text-primary focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none rounded"
+        >
+          #{r.exchangeId}
+        </Link>
       ),
     },
     {
@@ -78,9 +99,9 @@ export function ExchangeLedgerTable({
       header: "双方",
       cell: (r) => (
         <div className="flex items-center gap-2">
-          {partyCell(r.requester, onPartyClick)}
+          {partyCell(r.requester, partyHref, onPartyClick)}
           <ExchangeDirectionMarker direction={r.direction} />
-          {partyCell(r.target, onPartyClick)}
+          {partyCell(r.target, partyHref, onPartyClick)}
         </div>
       ),
     },
@@ -89,9 +110,12 @@ export function ExchangeLedgerTable({
       header: "目标模块",
       cell: (r) => (
         <div className="min-w-0">
-          <span className="block truncate text-sm font-medium text-text">
+          <Link
+            href={rowHref(r.exchangeId)}
+            className="block truncate text-sm font-medium text-text hover:text-primary focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none rounded"
+          >
             {r.targetModuleName}
-          </span>
+          </Link>
           {r.offeredModuleName && (
             <span className="block truncate text-xs text-text-subtle">
               对等：{r.offeredModuleName}

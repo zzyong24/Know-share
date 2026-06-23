@@ -10,7 +10,7 @@
   - DEC-007：无付费排名（无任何 price/fee/payment/sponsored 字段）。
   路由处理器只做 HTTP 编解码，业务在本层（便于契约/不变量测试直接调本层与 handler）。
 */
-import { eq, and, inArray } from "drizzle-orm";
+import { eq, inArray } from "drizzle-orm";
 import { getDb } from "@/server/db/client";
 import * as schema from "@/server/db/schema";
 import { getRedis } from "@/server/redis";

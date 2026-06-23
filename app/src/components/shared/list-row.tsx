@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import Link from "next/link";
 import { cn } from "@/lib/utils";
 
 /*
@@ -55,13 +56,13 @@ export function ListRow({
             </>
           )}
           {href ? (
-            <a
+            <Link
               href={href}
               onClick={onClick}
               className="truncate text-sm font-medium text-text hover:text-primary focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none rounded"
             >
               {title}
-            </a>
+            </Link>
           ) : (
             <span className="truncate text-sm font-medium text-text">{title}</span>
           )}

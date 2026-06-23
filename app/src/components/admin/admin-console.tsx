@@ -63,7 +63,7 @@ export function AdminConsole() {
   const moderate = useModerate();
   const bulkApprove = useBulkApprove();
 
-  const items = queue.data?.items ?? [];
+  const items = useMemo(() => queue.data?.items ?? [], [queue.data?.items]);
   const filtered = useMemo(() => applyFilter(items, filter), [items, filter]);
   const selectedItem = items.find((i) => i.id === selectedId);
 

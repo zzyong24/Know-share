@@ -98,7 +98,11 @@ export function SourceTypePicker({
         required
         error={errors.moduleType}
         renderControl={(a11y) => (
-          <div role="radiogroup" aria-label="模块类型" className="flex flex-wrap gap-2">
+          <div
+            {...a11y}
+            role="radiogroup"
+            className="flex flex-wrap gap-2"
+          >
             {moduleTypeOptions.map((opt) => {
               const selected = value.moduleType === opt.value;
               return (
@@ -107,7 +111,6 @@ export function SourceTypePicker({
                   type="button"
                   role="radio"
                   aria-checked={selected}
-                  aria-invalid={a11y["aria-invalid"]}
                   disabled={disabled}
                   onClick={() => onChange({ moduleType: opt.value })}
                   className={cn(

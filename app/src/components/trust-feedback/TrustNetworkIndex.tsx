@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import {
   StatBlock,
   ListRow,
@@ -44,7 +45,6 @@ export interface TrustNetworkIndexProps {
   loading?: boolean;
   isError?: boolean;
   onFilterChange: (next: NetworkFilters) => void;
-  onContributorClick: (login: string) => void;
   onFollow?: (login: string) => void;
   onEndorse?: (login: string) => void;
   onRequireAuth?: () => void;
@@ -61,7 +61,6 @@ export function TrustNetworkIndex({
   loading = false,
   isError = false,
   onFilterChange,
-  onContributorClick,
   onFollow,
   onRequireAuth,
   onRetry,
@@ -162,14 +161,13 @@ export function TrustNetworkIndex({
               <p className="mt-0.5 text-xs text-text-subtle">{sec.rationale}</p>
               <div className="mt-2 flex flex-wrap gap-2">
                 {sec.logins.map((login) => (
-                  <button
+                  <Link
                     key={login}
-                    type="button"
-                    onClick={() => onContributorClick(login)}
+                    href={`/u/${login}`}
                     className="inline-flex items-center gap-1.5 rounded-pill border border-border px-2 py-0.5 text-xs text-text hover:border-primary focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
                   >
                     <Avatar login={login} size="xs" />@{login}
-                  </button>
+                  </Link>
                 ))}
               </div>
             </Card>
@@ -200,16 +198,13 @@ export function TrustNetworkIndex({
             {contributors.map((c) => (
               <ListRow
                 key={c.login}
+                href={`/u/${c.login}`}
                 leading={<Avatar src={c.avatarUrl} login={c.login} size="md" verified={c.verified} />}
                 title={
-                  <button
-                    type="button"
-                    onClick={() => onContributorClick(c.login)}
-                    className="text-sm font-medium text-text hover:text-primary focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
-                  >
+                  <>
                     {c.displayName}{" "}
                     <span className="font-normal text-text-subtle">@{c.login}</span>
-                  </button>
+                  </>
                 }
                 subtitle={
                   <span className="flex flex-wrap items-center gap-1.5">

@@ -37,7 +37,6 @@ let h: Harness;
 /** 测试主体的固定身份（种子在测试内插入，独立于 fixtures）。 */
 let requesterId: string; // alice（请求方）
 let ownerId: string; // bob（目标模块所有者）
-let strangerId: string; // carol（旁观者，非参与方）
 let publishedModuleId: string; // bob 的已发布目标模块
 let offeredModuleId: string; // alice 的可选自有模块
 
@@ -83,13 +82,11 @@ async function seedDomain(): Promise<void> {
     .insert(schema.users)
     .values({ githubId: "gh-bob", login: "bob", displayName: "Bob", avatarUrl: "b", githubVerified: true })
     .returning({ id: schema.users.id });
-  const [carol] = await db
+  await db
     .insert(schema.users)
-    .values({ githubId: "gh-carol", login: "carol", displayName: "Carol", avatarUrl: "c", githubVerified: true })
-    .returning({ id: schema.users.id });
+    .values({ githubId: "gh-carol", login: "carol", displayName: "Carol", avatarUrl: "c", githubVerified: true });
   requesterId = alice.id;
   ownerId = bob.id;
-  strangerId = carol.id;
 
   const [target] = await db
     .insert(schema.knowledgeModules)

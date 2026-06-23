@@ -31,7 +31,6 @@ import { POST as bulkApprove } from "@/app/api/admin/bulk-approve/route";
 
 let h: Harness;
 
-let adminId: string;
 let submitterId: string;
 let reporterId: string;
 
@@ -66,10 +65,9 @@ function expectNoForbidden(node: unknown): void {
 
 async function seedDomain(): Promise<void> {
   const db = h.db;
-  const [admin] = await db
+  await db
     .insert(schema.users)
-    .values({ githubId: "gh-admin", login: "admin", displayName: "Admin", avatarUrl: "a", githubVerified: true, isAdmin: true })
-    .returning({ id: schema.users.id });
+    .values({ githubId: "gh-admin", login: "admin", displayName: "Admin", avatarUrl: "a", githubVerified: true, isAdmin: true });
   const [sub] = await db
     .insert(schema.users)
     .values({ githubId: "gh-submitter", login: "submitter", displayName: "Sub", avatarUrl: "s", githubVerified: true })
@@ -78,7 +76,6 @@ async function seedDomain(): Promise<void> {
     .insert(schema.users)
     .values({ githubId: "gh-reporter", login: "reporter", displayName: "Rep", avatarUrl: "r", githubVerified: true })
     .returning({ id: schema.users.id });
-  adminId = admin.id;
   submitterId = sub.id;
   reporterId = rep.id;
 }

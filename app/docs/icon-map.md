@@ -62,3 +62,17 @@
 | `send` | `Send` | 交付 / 提交 |
 | `schedule` | `Clock` | 时间 / 准备中 |
 | `favorite` | `Heart` | 收藏 |
+| `priority_high` | `AlertOctagon` | 高风险标记 |
+| `smart_toy` | `Bot` | 系统 / 自动化主体 |
+| `search_off` | `SearchX` | 搜索无结果 / 未找到 |
+| `refresh` | `RefreshCw` | 重试 / 刷新 |
+| `gavel` | `Gavel` | 裁决 / 处置 |
+| `undo` | `Undo2` | 撤销 |
+| `block` | `Ban` | 阻断 / 拒绝 |
+| `done_all` | `CheckCheck` | 全部完成 / 批量通过 |
+| `task_alt` | `CircleCheckBig` | 任务完成 / 通过 |
+| `history` | `History` | 历史 / 审计记录 |
+| `tune` | `SlidersHorizontal` | 筛选 / 调节 |
+| `north_east` | `ArrowUpRight` | 发起（出向交换） |
+| `south_west` | `ArrowDownLeft` | 收到（入向交换） |
+| `rate_review` | `MessageSquareText` | 评审 / 反馈 |

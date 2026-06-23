@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 /*
   COMP-172 QueueFilterBar（队列筛选条）。
   「全部 / 已过滤风险项 / 来源:提交 / 来源:举报」切换，驱动队列数据集（ASM-049）。
-  toggle group 语义：role=tablist，当前项 aria-pressed；筛选项文字非仅颜色（NFR-007）。
+  toggle group 语义：role=tablist + role=tab，当前项 aria-selected；筛选项文字非仅颜色（NFR-007）。
 */
 export interface QueueFilterValue {
   status: "all" | "risk";
@@ -45,8 +45,7 @@ export function QueueFilterBar({ value, counts, onChange }: QueueFilterBarProps)
             key={o.key}
             type="button"
             role="tab"
-            aria-pressed={active}
-            aria-current={active ? "true" : undefined}
+            aria-selected={active}
             onClick={() => onChange(o.next)}
             className={cn(
               "inline-flex items-center gap-1 rounded-pill border px-3 py-1 text-xs font-medium focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none",

@@ -67,7 +67,6 @@ export function TrustNetworkView() {
         loading={isLoading}
         isError={isError}
         onFilterChange={setFilters}
-        onContributorClick={(login) => router.push(`/u/${login}`)}
         onFollow={(login) => notify(`已关注 @${login}。`, "success")}
         onRequireAuth={() => notify("请先使用 GitHub 登录后再继续。", "info")}
         onRetry={() => refetch()}

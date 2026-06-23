@@ -13,7 +13,7 @@
   约束：只调既有 route handler / service，只用 h.db 在测试内播种，不改 src/ 与 _harness。
 */
 import { describe, it, expect, beforeEach, afterEach } from "vitest";
-import { setupHarness, schema, deterministicUuid, type Harness } from "../_harness";
+import { setupHarness, schema, type Harness } from "../_harness";
 import { FORBIDDEN_PUBLIC_FIELDS } from "@/server/projection";
 import { eq } from "drizzle-orm";
 

@@ -44,8 +44,8 @@ export function LineChart({
 
   return (
     <figure role="img" aria-label={summary}>
-      <div style={{ height }}>
-        <ResponsiveContainer width="100%" height="100%">
+      <div style={{ height, width: "100%", minHeight: height }}>
+        <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={height}>
           <ReLineChart data={data} margin={{ top: 8, right: 8, bottom: 8, left: 0 }}>
             <CartesianGrid stroke="var(--color-border)" strokeDasharray="3 3" />
             <XAxis dataKey="x" stroke="var(--color-text-subtle)" fontSize={12} />

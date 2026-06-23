@@ -240,7 +240,7 @@ const peerDisclosureSeed: ExchangeDisclosureSnapshot = {
   disclosedAt: "2026-06-21",
 };
 
-function channelFor(ex: Exchange): {
+function channelFor(): {
   channel: ExchangeDeliveryChannel;
   channelLabel: string;
   deliveryHint: string;
@@ -311,7 +311,7 @@ export function buildExchangeDetail(
       : undefined,
     timeline: timelineFor(ex),
     verification: verificationFor(ex),
-    delivery: channelFor(ex),
+    delivery: channelFor(),
     disclosure,
     feedbackWindow,
   };

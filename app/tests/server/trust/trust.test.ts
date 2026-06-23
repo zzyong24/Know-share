@@ -18,7 +18,7 @@
 import { describe, it, expect, beforeEach, afterEach } from "vitest";
 import { setupHarness, deterministicUuid, type Harness } from "../_harness";
 import { schema } from "../_harness";
-import { eq, and } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { FORBIDDEN_PUBLIC_FIELDS } from "@/server/projection";
 
 // 被测路由处理器（实现后存在）。
@@ -382,7 +382,6 @@ describe("API-013 POST /api/feedback（提交反馈 + 重算 W-3）", () => {
         .limit(1)
         .then((r) => r[0].id);
 
-    const ownerAId = await ids("zyongzhu24"); // 已验证 owner，模块 m-agent-memory
     const ownerBId = await ids("rag-builder"); // 已验证 owner，模块 m-multimodal-rag
     const requesterId = await ids("newcomer");
 
@@ -390,7 +389,7 @@ describe("API-013 POST /api/feedback（提交反馈 + 重算 W-3）", () => {
     const moduleB = deterministicUuid("m-multimodal-rag");
 
     // 两笔等价交换。
-    const [exA] = await db
+    await db
       .insert(schema.exchanges)
       .values({
         publicRef: "EX-2024-7001",

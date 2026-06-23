@@ -1,11 +1,10 @@
 import { http, HttpResponse, type RequestHandler } from "msw";
 import { modules, manifests, topics } from "./fixtures/modules";
 import { exchanges } from "./fixtures/exchanges";
+import { ledgerRows, ledgerTopics } from "./fixtures/exchange";
 import { users } from "./fixtures/users";
 import { session, demoSession } from "./fixtures/session";
 import {
-  trustProfiles,
-  agentSkills,
   notifications,
   usageStats,
   reviewQueue,
@@ -25,6 +24,7 @@ import { agentSkillsHandlers } from "./handlers/agent-skills";
 import { accountHandlers } from "./handlers/account";
 import { adminHandlers } from "./handlers/admin";
 import { aboutHandlers } from "./handlers/about";
+import { communityHandlers } from "./handlers/community";
 
 /*
   MSW 请求处理器（MOCK_DATA_SPEC / MOCK-001~020）。
@@ -89,6 +89,7 @@ export const handlers: RequestHandler[] = [
   ...accountHandlers,
   ...adminHandlers,
   ...aboutHandlers,
+  ...communityHandlers,
 
   // 模块（MOCK-001/002）：支持 type/topic/trustLevel/verifiedOnly/q/sort/empty
   http.get("/api/modules", ({ request }) => {
@@ -107,27 +108,29 @@ export const handlers: RequestHandler[] = [
   // 主题（发现筛选）
   http.get("/api/topics", () => HttpResponse.json({ items: topics })),
 
-  // 交换（MOCK-005/006/007）
-  http.get("/api/exchanges", () =>
-    HttpResponse.json({ items: exchanges, total: exchanges.length })
-  ),
+  // 交换台账（MOCK-005/006/007）：契约形状 {items,total,topics}（DEC-018 / API-014）。
+  // 与 exchange 模块 handler 一致——含 topics 供详情页筛选 chip；排除 Flagged/InReview（ASM-032）。
+  http.get("/api/exchanges", () => {
+    const items = ledgerRows.filter(
+      (r) => r.status !== "Flagged" && r.status !== "InReview"
+    );
+    return HttpResponse.json({
+      items,
+      total: items.length,
+      topics: ledgerTopics,
+    });
+  }),
   http.get("/api/exchanges/:id", ({ params }) => {
     const ex = exchanges.find((x) => x.id === params.id);
     return ex ? HttpResponse.json(ex) : new HttpResponse(null, { status: 404 });
   }),
 
-  // 信任档案（MOCK-008/009）
-  http.get("/api/trust/:login", ({ params }) => {
-    const tp = trustProfiles.find((x) => x.login === params.login);
-    return tp ? HttpResponse.json(tp) : new HttpResponse(null, { status: 404 });
-  }),
-
-  // 技能（MOCK-011）
-  http.get("/api/skills", () => HttpResponse.json({ items: agentSkills })),
-
-  // 通知（MOCK-014）
+  // 通知（MOCK-014）：契约形状 {items,unreadCount}（DEC-018 / API-033）。
   http.get("/api/notifications", () =>
-    HttpResponse.json({ items: notifications })
+    HttpResponse.json({
+      items: notifications,
+      unreadCount: notifications.filter((n) => !n.read).length,
+    })
   ),
 
   // 平台统计（MOCK-018）

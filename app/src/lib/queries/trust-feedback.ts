@@ -257,11 +257,12 @@ export function useFeedbackEligibility(exchangeId: string) {
 export function useSubmitFeedback(peerLogin?: string) {
   const qc = useQueryClient();
   return useMutation({
+    // 契约 API-013：统一走 POST /api/feedback（body 带 exchangeId），与后端一致（DEC-018）。
     mutationFn: (payload: FeedbackPayload) =>
-      apiFetch<{ ok: true; exchangeId: string }>(
-        `/api/exchanges/${encodeURIComponent(payload.exchangeId)}/feedback`,
-        { method: "POST", body: JSON.stringify(payload) }
-      ),
+      apiFetch<{ ok: true; exchangeId: string }>("/api/feedback", {
+        method: "POST",
+        body: JSON.stringify(payload),
+      }),
     onSuccess: (_data, payload) => {
       qc.invalidateQueries({
         queryKey: trustFeedbackKeys.feedbackEligibility(payload.exchangeId),

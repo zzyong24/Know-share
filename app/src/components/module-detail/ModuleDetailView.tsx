@@ -13,6 +13,8 @@ import {
   notify,
 } from "@/components/shared";
 import { useModuleDetail } from "@/lib/queries/module-detail";
+import { useFavoriteModule, useEndorseUser, useReport } from "@/lib/queries/community";
+import { useCreateExchange } from "@/lib/queries/exchange";
 import { ModuleDetailLayout } from "./ModuleDetailLayout";
 import { ModuleSummaryHeader } from "./ModuleSummaryHeader";
 import { SourceStatsPanel } from "./SourceStatsPanel";
@@ -43,8 +45,56 @@ export function ModuleDetailView({
   const [endorsed, setEndorsed] = useState(false);
   const [reportOpen, setReportOpen] = useState(false);
 
+  // 写动作接线（DEC-018）：收藏 / 认可 / 举报 / 发起交换走真实 mutation（MSW mock 可用）。
+  const favorite = useFavoriteModule(moduleId);
+  const ownerHandle = data?.owner.handle ?? "";
+  const endorse = useEndorseUser(ownerHandle);
+  const report = useReport();
+  const createExchange = useCreateExchange();
+
   const requireLogin = () =>
     notify("请先用 GitHub 登录后再操作", "info");
+
+  // 收藏：乐观切换本地态 + 提交 mutation；失败回滚并提示。
+  const handleToggleFavorite = () => {
+    const nextFavorited = !favorited;
+    setFavorited(nextFavorited);
+    favorite.mutate(
+      { toggle: true },
+      {
+        onError: () => {
+          setFavorited(!nextFavorited);
+          notify("操作失败，请稍后重试。", "error");
+        },
+      }
+    );
+  };
+
+  // 认可：乐观切换 + 提交 mutation；失败回滚。
+  const handleToggleEndorse = () => {
+    const nextEndorsed = !endorsed;
+    setEndorsed(nextEndorsed);
+    endorse.mutate(undefined, {
+      onError: () => {
+        setEndorsed(!nextEndorsed);
+        notify("操作失败，请稍后重试。", "error");
+      },
+    });
+  };
+
+  // 发起交换：触发创建（API-019）；成功后跳交换详情，沿用现有 UI 流（最小改动）。
+  const handleRequestExchange = () => {
+    createExchange.mutate(
+      { targetModuleId: moduleId },
+      {
+        onSuccess: (res) => {
+          notify("已发起交换请求，等待对方确认。", "success");
+          router.push(`/exchanges/${res.exchangeId}`);
+        },
+        onError: () => notify("发起交换失败，请稍后重试。", "error"),
+      }
+    );
+  };
 
   if (isLoading) {
     return (
@@ -108,8 +158,8 @@ export function ModuleDetailView({
               isAuthenticated={isAuthenticated}
               socialState={{ favorited, endorsed, rateLimited: false }}
               isOwnerViewing={isOwnerViewing}
-              onToggleFavorite={() => setFavorited((f) => !f)}
-              onToggleEndorse={() => setEndorsed((e) => !e)}
+              onToggleFavorite={handleToggleFavorite}
+              onToggleEndorse={handleToggleEndorse}
               onReport={() => setReportOpen(true)}
               onCopyDeepLink={() =>
                 navigator.clipboard?.writeText(
@@ -159,9 +209,7 @@ export function ModuleDetailView({
                 exchangeIntent={fullManifest.exchange_intent}
                 isAuthenticated={isAuthenticated}
                 isOwnerViewing={isOwnerViewing}
-                onRequestExchange={() =>
-                  router.push(`/exchanges/new?target=${module.id}`)
-                }
+                onRequestExchange={handleRequestExchange}
                 onRequireLogin={requireLogin}
               />
             </>
@@ -177,7 +225,14 @@ export function ModuleDetailView({
         tone="danger"
         onConfirm={() => {
           setReportOpen(false);
-          notify("举报已提交，将进入人工复核", "success");
+          report.mutate(
+            { targetType: "module", targetId: moduleId, reason: "用户从模块详情页提交举报" },
+            {
+              onSuccess: () =>
+                notify("举报已提交，将进入人工复核", "success"),
+              onError: () => notify("举报提交失败，请稍后重试。", "error"),
+            }
+          );
         }}
         onCancel={() => setReportOpen(false)}
         onOpenChange={setReportOpen}

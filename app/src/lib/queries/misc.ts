@@ -6,8 +6,6 @@ import { useQuery } from "@tanstack/react-query";
 import { apiFetch } from "@/lib/api";
 import { queryKeys } from "@/lib/query-keys";
 import type {
-  TrustProfile,
-  AgentSkill,
   Notification,
   Topic,
   UsageStat,
@@ -15,20 +13,12 @@ import type {
   SearchSuggestion,
 } from "@/lib/types";
 
-export function useTrustProfile(login: string) {
-  return useQuery({
-    queryKey: queryKeys.trust.profile(login),
-    queryFn: () => apiFetch<TrustProfile>(`/api/trust/${login}`),
-    enabled: !!login,
-  });
-}
-
-export function useSkills() {
-  return useQuery({
-    queryKey: queryKeys.skills.all,
-    queryFn: () => apiFetch<{ items: AgentSkill[] }>("/api/skills"),
-  });
-}
+/*
+  RISK-004 / DEC-018 收敛：已删除零消费的旧路径 hook —— useTrustProfile(/api/trust/:login)、
+  useSkills(/api/skills)。规范路径走 useTrustProfileAggregate(/api/trust-profiles/:login,
+  trust-feedback.ts) 与 useSkillCatalog(/api/skills/catalog, agent-skills.ts)。
+  对应弃用端点 API-027 / API-030 的 MSW handler 已从聚合器移除。
+*/
 
 export function useNotifications() {
   return useQuery({

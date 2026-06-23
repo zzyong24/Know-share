@@ -190,6 +190,41 @@ export function useExchangeViewer() {
   });
 }
 
+/* ── 创建交换（API-019 / ASM-120）──────────────────────────── */
+
+export interface CreateExchangeInput {
+  targetModuleId: string;
+  offeredModuleId?: string;
+}
+
+export interface CreateExchangeResult {
+  exchangeId: string;
+  status: ExchangeStatus;
+}
+
+/**
+  创建交换请求（API-019）。目标 Published + 可选自有模块（INV-05/DEC-009）；
+  缺 Consent → 后端 422（前端始终携带 actionType:"exchange"，INV-08）。
+*/
+export function useCreateExchange() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (input: CreateExchangeInput) =>
+      apiFetch<CreateExchangeResult>("/api/exchanges", {
+        method: "POST",
+        body: JSON.stringify({
+          targetModuleId: input.targetModuleId,
+          offeredModuleId: input.offeredModuleId,
+          consent: { actionType: "exchange" },
+        }),
+      }),
+    onSuccess: () => {
+      // 台账可能新增一行 → 失效列表缓存。
+      qc.invalidateQueries({ queryKey: exchangeKeys.all });
+    },
+  });
+}
+
 /* ── Mutations（写动作：披露/撤回/交付确认）──────────────────── */
 
 function useInvalidateDetail(id: string) {

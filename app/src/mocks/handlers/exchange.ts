@@ -20,6 +20,7 @@ import type {
   ExchangeDisclosureSnapshot,
   ExchangeLedgerRow,
 } from "@/lib/queries/exchange";
+import type { ExchangeStatus } from "@/lib/types";
 
 /** 本模块演示会话：登录为 @knowledge-trader（EX-2024-8846 的请求方，可演示披露门控）。 */
 const exchangeSession: Session = {
@@ -31,6 +32,59 @@ const exchangeSession: Session = {
 
 /** 运行期可变披露状态（仅本进程；演示「披露→撤回」语义 ASM-013）。 */
 const disclosureState = new Map<string, ExchangeDisclosureSnapshot>();
+
+/** 运行期状态覆盖（演示 accept/reject/cancel 写动作的状态迁移；仅本进程）。 */
+const statusOverride = new Map<string, ExchangeStatus>();
+
+/** 运行期新建交换计数（演示创建 → 生成脱敏号）。 */
+let createSeq = 9100;
+
+/** 合法状态迁移（W-2 子集；非法 → 409，ASM-120 守语义不违背）。 */
+const ACCEPT_FROM: ExchangeStatus[] = ["Requested"];
+const REJECT_FROM: ExchangeStatus[] = ["Requested"];
+const CANCEL_FROM: ExchangeStatus[] = [
+  "Requested",
+  "Accepted",
+  "PrivatePreparing",
+];
+
+/** 测试间重置运行期状态（afterEach 可调用，避免跨用例污染）。 */
+export function __resetExchangeRuntime() {
+  disclosureState.clear();
+  statusOverride.clear();
+  createSeq = 9100;
+}
+
+/** 应用运行期状态覆盖到 detail（accept/reject/cancel 后的展示态）。 */
+function withRuntimeStatus(detail: ExchangeDetail): ExchangeDetail {
+  const next = statusOverride.get(detail.exchangeId);
+  return next ? { ...detail, status: next } : detail;
+}
+
+/**
+  通用状态迁移（W-2）：校验当前有效态在 allowedFrom 内，否则 409；写运行期覆盖；
+  返回更新后的 ExchangeDetail（含运行期披露/状态）。未知 id → 404。
+*/
+function transition(
+  id: string,
+  allowedFrom: ExchangeStatus[],
+  next: ExchangeStatus
+) {
+  const ex = exchanges.find((x) => x.id === id);
+  if (!ex) return new HttpResponse(null, { status: 404 });
+  const current = statusOverride.get(id) ?? ex.status;
+  if (!allowedFrom.includes(current)) {
+    return HttpResponse.json(
+      { error: "illegal-transition", message: `不可从 ${current} 迁移。` },
+      { status: 409 }
+    );
+  }
+  statusOverride.set(id, next);
+  const detail = buildExchangeDetail(ex, exchangeSession.login);
+  return HttpResponse.json(
+    withRuntimeStatus(withRuntimeDisclosure(detail))
+  );
+}
 
 function filterLedger(url: URL): ExchangeLedgerRow[] {
   const sp = url.searchParams;
@@ -90,12 +144,59 @@ export const exchangeHandlers: RequestHandler[] = [
     });
   }),
 
-  // 交换详情（PAGE-031）：按会话身份派生 viewerRole + 披露门控（INV-03）。
+  // 交换详情（PAGE-031）：按会话身份派生 viewerRole + 披露门控（INV-03）+ 运行期状态/披露覆盖。
   http.get("/api/exchanges/:id", ({ params }) => {
     const ex = exchanges.find((x) => x.id === params.id);
     if (!ex) return new HttpResponse(null, { status: 404 });
     const detail = buildExchangeDetail(ex, exchangeSession.login);
-    return HttpResponse.json(withRuntimeDisclosure(detail));
+    return HttpResponse.json(withRuntimeStatus(withRuntimeDisclosure(detail)));
+  }),
+
+  // 创建交换请求（API-019 / ASM-120）：目标 Published + 可选自有模块；缺 consent → 422（INV-08）。
+  // body: { targetModuleId, offeredModuleId?, consent: { actionType:"exchange" } }
+  // 响应：{ exchangeId, status:"Requested" }（201）。
+  http.post("/api/exchanges", async ({ request }) => {
+    const body = (await request.json().catch(() => ({}))) as {
+      targetModuleId?: string;
+      offeredModuleId?: string;
+      consent?: { actionType?: string };
+    };
+    if (!body.consent || body.consent.actionType !== "exchange") {
+      return HttpResponse.json(
+        { error: "consent-required", missing: ["consent"] },
+        { status: 422 }
+      );
+    }
+    if (!body.targetModuleId) {
+      return HttpResponse.json(
+        { error: "target-required", missing: ["targetModuleId"] },
+        { status: 400 }
+      );
+    }
+    const exchangeId = `EX-${new Date().getFullYear()}-${createSeq++}`;
+    return HttpResponse.json(
+      { exchangeId, status: "Requested" as ExchangeStatus },
+      { status: 201 }
+    );
+  }),
+
+  // 目标所有者接受（API-020）：Requested→Accepted；非法迁移 → 409（W-2）。
+  http.post("/api/exchanges/:id/accept", ({ params }) =>
+    transition(String(params.id), ACCEPT_FROM, "Accepted")
+  ),
+
+  // 目标所有者拒绝（API-021）：Requested→Rejected；非法 → 409。
+  http.post("/api/exchanges/:id/reject", ({ params }) =>
+    transition(String(params.id), REJECT_FROM, "Rejected")
+  ),
+
+  // 参与方中止（API-022）：必填原因；合法态 → Cancelled；非法 → 409。
+  http.post("/api/exchanges/:id/cancel", async ({ params, request }) => {
+    const body = (await request.json().catch(() => ({}))) as { reason?: string };
+    if (!body.reason?.trim()) {
+      return HttpResponse.json({ error: "reason-required" }, { status: 400 });
+    }
+    return transition(String(params.id), CANCEL_FROM, "Cancelled");
   }),
 
   // 披露联系方式（仅 Accepted+ 参与方；写 Consent → 生成快照 ENT-009）。

@@ -27,6 +27,8 @@ function navKeyFromPath(pathname: string): string {
   if (pathname.startsWith("/exchanges")) return "exchanges";
   if (pathname.startsWith("/trust") || pathname.startsWith("/u/")) return "trust";
   if (pathname.startsWith("/skills")) return "skills";
+  if (pathname.startsWith("/developers")) return "developers";
+  if (pathname.startsWith("/about")) return "about";
   if (pathname.startsWith("/notifications")) return "notifications";
   if (pathname.startsWith("/admin")) return "admin";
   return "";

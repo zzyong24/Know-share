@@ -33,6 +33,8 @@ export const DEFAULT_NAV_ITEMS: NavItem[] = [
   { key: "exchanges", label: "交换记录", href: "/exchanges" },
   { key: "trust", label: "信任网络", href: "/trust" },
   { key: "skills", label: "Agent 技能", href: "/skills" },
+  { key: "developers", label: "开发文档", href: "/developers" },
+  { key: "about", label: "关于", href: "/about" },
   { key: "notifications", label: "通知", href: "/notifications", requiresAuth: true },
   { key: "admin", label: "审核台", href: "/admin", requiresAdmin: true },
 ];

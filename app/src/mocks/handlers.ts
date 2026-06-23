@@ -16,6 +16,15 @@ import type {
   SearchSuggestion,
   TrustLevel,
 } from "@/lib/types";
+// 各模块 handlers（阶段11批次2 并行产出，集成 pass 在此汇总；单一真源）
+import { moduleDetailHandlers } from "./handlers/module-detail";
+import { submissionHandlers } from "./handlers/submission";
+import { exchangeHandlers } from "./handlers/exchange";
+import { trustHandlers } from "./handlers/trust-feedback";
+import { agentSkillsHandlers } from "./handlers/agent-skills";
+import { accountHandlers } from "./handlers/account";
+import { adminHandlers } from "./handlers/admin";
+import { aboutHandlers } from "./handlers/about";
 
 /*
   MSW 请求处理器（MOCK_DATA_SPEC / MOCK-001~020）。
@@ -66,8 +75,20 @@ function filterAndSortModules(url: URL): KnowledgeModule[] {
 }
 
 export const handlers: RequestHandler[] = [
-  // 会话（FR-140/DEC-011；失败时前端降级匿名 PAGE-001）
-  http.get("/api/session", () => HttpResponse.json(session)),
+  // 会话：开发 mock 默认登录态（demoSession，含管理员角色），便于走通公开/私域/审核全站演示。
+  // 真实身份以 GitHub 为准（DEC-006）；session=null 的匿名分支由各模块测试用自有 setupServer 覆盖。
+  // 置于最前 → 覆盖各模块 handlers 内自带的 /api/session，保证全站会话一致。
+  http.get("/api/session", () => HttpResponse.json(demoSession)),
+
+  // 各模块 handlers 优先于下方通用占位（模块路由更丰富，如交换台账筛选/详情/披露）。
+  ...moduleDetailHandlers,
+  ...submissionHandlers,
+  ...exchangeHandlers,
+  ...trustHandlers,
+  ...agentSkillsHandlers,
+  ...accountHandlers,
+  ...adminHandlers,
+  ...aboutHandlers,
 
   // 模块（MOCK-001/002）：支持 type/topic/trustLevel/verifiedOnly/q/sort/empty
   http.get("/api/modules", ({ request }) => {

@@ -10,6 +10,7 @@ import { eq, desc } from "drizzle-orm";
 import { getDb } from "@/server/db/client";
 import { getRedis } from "@/server/redis";
 import * as schema from "@/server/db/schema";
+import { manifestUploadSchema } from "@/server/manifest-schema";
 import type { Session } from "@/lib/types";
 
 // ── 错误：携带可向上映射为 HTTP 状态码（路由处理器解码）。────────────
@@ -268,6 +269,125 @@ export async function createDraftFromModule(
   });
 
   return projectDraft(row);
+}
+
+export interface AgentUploadResult {
+  submissionId: string;
+  moduleId: string;
+  status: "Draft";
+  privacyGate: {
+    overall: "pass" | "warn" | "block";
+    findings: PrivacyFindingOut[];
+  };
+}
+
+/**
+  Agent 原生上传（POST /api/submissions）：持脱敏 Manifest 建 Draft 模块。
+  - INV-01/03：assertSanitizedManifest + manifestUploadSchema strict（多余键/原始值 → 400）。
+  - INV-02：隐私门服务端复核，block → 409 不落库。
+  - 落 knowledge_module(Draft)+manifest+submission(Draft,moduleId)+privacy_scan，写 audit。
+  - 停在 Draft（NFR-005）：agent 只准备草稿；公开发布需主人在 UI 显式提交/确认。
+*/
+export async function createSubmissionFromManifest(
+  session: Session | null,
+  rawManifest: unknown
+): Promise<AgentUploadResult> {
+  const user = await requireUser(session);
+  if (!rawManifest || typeof rawManifest !== "object") {
+    throw new SubmissionError(400, "bad-request", "缺少 manifest。");
+  }
+  const manifestObj = rawManifest as Record<string, unknown>;
+
+  // INV-01：原始私有值/禁止字段先拦（明确错误）。
+  assertSanitizedManifest(manifestObj);
+
+  // 契约校验（strict：多余键即拒，守 INV-01/03 边界）。
+  const parsed = manifestUploadSchema.safeParse(manifestObj);
+  if (!parsed.success) {
+    throw new SubmissionError(
+      400,
+      "invalid-manifest",
+      parsed.error.issues
+        .map((i) => `${i.path.join(".")}: ${i.message}`)
+        .join("; ")
+    );
+  }
+  const m = parsed.data;
+
+  // 隐私门服务端复核（INV-02：block 不可绕过）。
+  const scan = evaluateScan(manifestObj);
+  if (scan.overallStatus === "block") {
+    throw new SubmissionError(409, "privacy-block", "隐私门为 block，不可上传（INV-02）。");
+  }
+
+  const db = await getDb();
+  const [mod] = await db
+    .insert(schema.knowledgeModules)
+    .values({
+      ownerId: user.id,
+      title: m.title,
+      summary: m.summary,
+      status: "Draft",
+      freshness: m.freshness ?? null,
+    })
+    .returning({ id: schema.knowledgeModules.id });
+
+  await db.insert(schema.manifests).values({
+    moduleId: mod.id,
+    summary: m.summary,
+    topics: m.topics,
+    freshness: m.freshness ?? null,
+    sourceStats: (m.source_stats ?? {}) as never,
+    contentCommitment: m.content_commitment ?? null,
+    privacyBoundary: m.privacy_boundary ?? null,
+    sensitivity: m.sensitivity,
+    coveredQuestions: m.covered_questions ?? null,
+    sourceTypes: m.source_types,
+    version: m.version,
+    isCurrent: false, // 未发布，approve 时才置 current
+  });
+
+  const [sub] = await db
+    .insert(schema.submissions)
+    .values({
+      moduleId: mod.id,
+      submitterId: user.id,
+      status: "Draft",
+      step: 5,
+      draftData: {
+        module: {
+          title: m.title,
+          oneLineIntent: m.summary,
+          moduleType: "",
+          sourceTypes: m.source_types,
+        },
+        manifest: m,
+      } as never,
+    })
+    .returning({ id: schema.submissions.id });
+
+  await db.insert(schema.privacyScans).values({
+    submissionId: sub.id,
+    overallStatus: scan.overallStatus,
+    findings: scan.findings as never,
+    sensitivityDeclaration: scan.sensitivityDeclaration,
+    scannerVersion: scan.scannerVersion,
+  });
+
+  await db.insert(schema.auditLog).values({
+    actorId: user.id,
+    action: "submission.agent-upload",
+    targetType: "submission",
+    targetId: sub.id,
+    metadata: { gate: scan.overallStatus, moduleId: mod.id } as never,
+  });
+
+  return {
+    submissionId: sub.id,
+    moduleId: mod.id,
+    status: "Draft",
+    privacyGate: { overall: scan.overallStatus, findings: scan.findings },
+  };
 }
 
 // ── API-011：本机技能目录（ENT-016；只读，登录可见）。──────────────────

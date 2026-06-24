@@ -8,6 +8,10 @@ import { notify } from "@/components/shared";
 import {
   useDashboard,
   useMeSection,
+  useDeleteDraft,
+  useDelistModule,
+  useCreateEditDraft,
+  useToggleFavorite,
 } from "@/lib/queries/account";
 import type { KnowledgeModule, Exchange } from "@/lib/types";
 import type { DraftItem } from "@/lib/queries/account";
@@ -28,6 +32,10 @@ export function MeDashboardView({ section }: MeDashboardViewProps) {
 
   const dash = useDashboard();
   const sec = useMeSection<unknown>(safeSection);
+  const deleteDraft = useDeleteDraft();
+  const delistModule = useDelistModule();
+  const editDraft = useCreateEditDraft();
+  const toggleFav = useToggleFavorite();
 
   const received = dash.data?.subNavBadges.received ?? 0;
   const navItems: AccountSubNavItem[] = [
@@ -91,19 +99,41 @@ export function MeDashboardView({ section }: MeDashboardViewProps) {
             loading={sec.isLoading}
             error={sec.isError}
             onRetry={() => sec.refetch()}
-            onFilter={() => notify("筛选面板（占位）。", "info")}
-            onModuleAction={(id, action) =>
-              action === "viewPublic"
-                ? router.push(`/modules/${id}`)
-                : notify(`模块操作：${action}（占位）。`, "info")
-            }
-            onDraftAction={(id, action) =>
-              action === "continue"
-                ? router.push(`/submit?draft=${id}`)
-                : notify("草稿已删除（占位）。", "success")
-            }
+            onModuleAction={(id, action) => {
+              if (action === "viewPublic") {
+                router.push(`/modules/${id}`);
+                return;
+              }
+              if (action === "delist") {
+                delistModule.mutate(id, {
+                  onSuccess: () => notify("模块已下架，不再公开可见。", "success"),
+                  onError: () => notify("下架失败，请稍后重试。", "error"),
+                });
+                return;
+              }
+              // edit：建编辑草稿后进提交向导（提交通过后更新原模块为新版本）。
+              editDraft.mutate(id, {
+                onSuccess: (d) => router.push(`/submit?draft=${d.id}`),
+                onError: () => notify("无法发起编辑，请稍后重试。", "error"),
+              });
+            }}
+            onDraftAction={(id, action) => {
+              if (action === "continue") {
+                router.push(`/submit?draft=${id}`);
+                return;
+              }
+              deleteDraft.mutate(id, {
+                onSuccess: () => notify("草稿已删除。", "success"),
+                onError: () => notify("删除失败，请稍后重试。", "error"),
+              });
+            }}
             onExchangeOpen={(id) => router.push(`/exchanges/${id}`)}
-            onFavoriteToggle={() => notify("已更新收藏（占位）。", "success")}
+            onFavoriteToggle={(id, on) =>
+              toggleFav.mutate(id, {
+                onSuccess: () => notify(on ? "已收藏。" : "已取消收藏。", "success"),
+                onError: () => notify("操作失败，请稍后重试。", "error"),
+              })
+            }
           />
         </section>
       </div>

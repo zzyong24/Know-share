@@ -41,7 +41,14 @@ export interface MySectionListProps {
   onFavoriteToggle?: (moduleId: string, on: boolean) => void;
   onLoadMore?: () => void;
   onRetry?: () => void;
-  onFilter?: () => void;
+}
+
+/** 列表项的可筛选标题（模块/草稿/交换字段不同）。 */
+function itemText(it: KnowledgeModule | DraftItem | Exchange): string {
+  if ("title" in it && typeof it.title === "string") return it.title;
+  if ("moduleTitle" in it) return it.moduleTitle;
+  if ("targetModuleTitle" in it) return it.targetModuleTitle;
+  return "";
 }
 
 const SECTION_TITLE: Record<MeSection, { title: string; desc: string }> = {
@@ -70,22 +77,46 @@ export function MySectionList({
   onFavoriteToggle,
   onLoadMore,
   onRetry,
-  onFilter,
 }: MySectionListProps) {
   const [pending, setPending] = useState<Pending>(null);
+  const [filterOpen, setFilterOpen] = useState(false);
+  const [q, setQ] = useState("");
   const meta = SECTION_TITLE[section];
+
+  // 客户端按标题筛选当前分区（轻量、即时；不触发后端）。
+  const query = q.trim().toLowerCase();
+  const allItems = items as Array<KnowledgeModule | DraftItem | Exchange>;
+  const visible = query
+    ? allItems.filter((it) => itemText(it).toLowerCase().includes(query))
+    : allItems;
 
   function header() {
     return (
-      <div className="mb-4 flex items-start justify-between gap-2">
-        <div>
-          <h2 className="text-base font-semibold text-text">{meta.title}</h2>
-          <p className="text-sm text-text-muted">{meta.desc}</p>
-        </div>
-        {onFilter && (
-          <SecondaryButton size="sm" iconLeft="label" onClick={onFilter} aria-label="筛选">
+      <div className="mb-4 flex flex-col gap-3">
+        <div className="flex items-start justify-between gap-2">
+          <div>
+            <h2 className="text-base font-semibold text-text">{meta.title}</h2>
+            <p className="text-sm text-text-muted">{meta.desc}</p>
+          </div>
+          <SecondaryButton
+            size="sm"
+            iconLeft="label"
+            onClick={() => setFilterOpen((v) => !v)}
+            aria-label="筛选"
+            aria-expanded={filterOpen}
+          >
             筛选
           </SecondaryButton>
+        </div>
+        {filterOpen && (
+          <input
+            type="search"
+            value={q}
+            onChange={(e) => setQ(e.target.value)}
+            placeholder="按标题筛选当前列表…"
+            aria-label="按标题筛选当前列表"
+            className="w-full rounded-control border border-border bg-surface px-3 py-2 text-sm text-text focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
+          />
         )}
       </div>
     );
@@ -161,6 +192,7 @@ export function MySectionList({
 
   // ── 空态（每分区独立 CTA 目标）──
   if (isEmpty) {
+    // （筛选无关：本分区本就无数据，走 CTA 空态）
     const EMPTY: Record<MeSection, { icon: string; title: string; desc: string; cta: { label: string; href: string } }> = {
       modules: {
         icon: "folder",
@@ -207,9 +239,21 @@ export function MySectionList({
     );
   }
 
+  // ── 筛选无匹配（本分区有数据，但当前关键词筛掉了全部）──
+  if (visible.length === 0) {
+    return (
+      <div>
+        {header()}
+        <p className="rounded-card border border-border bg-surface px-4 py-6 text-center text-sm text-text-muted">
+          没有匹配「{q.trim()}」的结果。
+        </p>
+      </div>
+    );
+  }
+
   // ── 模块 / 收藏：ModuleCard 网格 ──
   if (section === "modules" || section === "favorites") {
-    const mods = items as KnowledgeModule[];
+    const mods = visible as KnowledgeModule[];
     return (
       <div>
         {header()}
@@ -242,7 +286,7 @@ export function MySectionList({
 
   // ── 草稿：列表行 ──
   if (section === "drafts") {
-    const ds = items as DraftItem[];
+    const ds = visible as DraftItem[];
     const SCAN_META: Record<string, { tone: Tone; label: string }> = {
       pass: { tone: "success", label: "隐私门通过" },
       warn: { tone: "warning", label: "隐私门警告" },
@@ -298,7 +342,7 @@ export function MySectionList({
   }
 
   // ── 收到 / 发起的交换：ListRow + StatusPill（状态含文字）──
-  const exs = items as Exchange[];
+  const exs = visible as Exchange[];
   return (
     <div>
       {header()}

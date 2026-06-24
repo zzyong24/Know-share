@@ -56,6 +56,61 @@ export function useMeSection<T>(section: MeSection) {
 
 export type { DraftItem };
 
+// ── PAGE-061 分区写动作（草稿删除 / 模块下架 / 编辑 / 收藏切换）──
+// 成功后失效对应分区 + 概览徽标，列表自动刷新。
+
+/** 删除草稿（DELETE /api/submissions/:id；仅本人、仅 Draft）。 */
+export function useDeleteDraft() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) =>
+      apiFetch(`/api/submissions/${id}`, { method: "DELETE" }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: accountKeys.section("drafts") });
+      qc.invalidateQueries({ queryKey: accountKeys.dashboard });
+    },
+  });
+}
+
+/** 下架自己已发布的模块（POST /api/modules/:id/delist）。 */
+export function useDelistModule() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) =>
+      apiFetch(`/api/modules/${id}/delist`, { method: "POST" }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: accountKeys.section("modules") });
+      qc.invalidateQueries({ queryKey: accountKeys.dashboard });
+    },
+  });
+}
+
+/** 对自己模块发起编辑：建草稿，返回草稿 id（前端跳 /submit?draft=:id）。 */
+export function useCreateEditDraft() {
+  return useMutation({
+    mutationFn: (moduleId: string) =>
+      apiFetch<{ id: string }>(`/api/modules/${moduleId}/edit-draft`, {
+        method: "POST",
+      }),
+  });
+}
+
+/** 收藏分区里取消收藏（POST /api/modules/:id/favorite，toggle 幂等）。 */
+export function useToggleFavorite() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (moduleId: string) =>
+      apiFetch(`/api/modules/${moduleId}/favorite`, {
+        method: "POST",
+        body: JSON.stringify({ toggle: true }),
+      }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: accountKeys.section("favorites") });
+      qc.invalidateQueries({ queryKey: accountKeys.dashboard });
+    },
+  });
+}
+
 // ── PAGE-062 通知 ──
 export type NotificationFilter =
   | "all"

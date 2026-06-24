@@ -72,6 +72,9 @@ export function ContactMethodsForm({
     useState<Record<string, ContactVisibility>>(buildVisibility);
   const [confirmPublic, setConfirmPublic] = useState(false);
   const [dirty, setDirty] = useState(false);
+  // 自定义渠道「立即关联」：内联输入账号/链接（默认私密，INV-03）。
+  const [linkOpen, setLinkOpen] = useState(false);
+  const [customValue, setCustomValue] = useState("");
 
   // contactMethods 引用变化（异步到达/刷新）时在渲染期同步，避免 effect 内 setState。
   const [prevMethods, setPrevMethods] = useState(contactMethods);
@@ -114,16 +117,27 @@ export function ContactMethodsForm({
 
   function buildMethods(): ContactMethod[] {
     const values = getValues();
-    return contactMethods.map((m) => ({
-      ...m,
-      visibility: visibility[m.id] ?? "private",
-      maskedValue:
-        m.type === "github"
-          ? values.github
-          : m.type === "email"
-            ? values.email
-            : m.maskedValue,
-    }));
+    return contactMethods.map((m) => {
+      // 自定义渠道：已输入关联值则置 isSet + 默认私密。
+      if (m.type === "custom" && customValue.trim()) {
+        return {
+          ...m,
+          isSet: true,
+          visibility: visibility[m.id] ?? "private",
+          maskedValue: customValue.trim(),
+        };
+      }
+      return {
+        ...m,
+        visibility: visibility[m.id] ?? "private",
+        maskedValue:
+          m.type === "github"
+            ? values.github
+            : m.type === "email"
+              ? values.email
+              : m.maskedValue,
+      };
+    });
   }
 
   async function persist() {
@@ -222,33 +236,72 @@ export function ContactMethodsForm({
           </div>
         )}
 
-        {/* Custom（未设态） */}
+        {/* Custom（未设态）：内联关联输入 */}
         {custom && (
-          <div className="flex items-center justify-between gap-3 p-4">
-            <div className="flex items-center gap-3">
-              <IconChip icon={custom.icon} tone="neutral" size="md" />
-              <div>
-                <div className="flex items-center gap-2">
-                  <span className="font-medium text-text">{custom.label}</span>
-                  {(() => {
-                    const s = statusFor(custom);
-                    return (
-                      <StatusPill tone={s.tone} label={s.label} size="sm" />
-                    );
-                  })()}
+          <div className="flex flex-col gap-3 p-4">
+            <div className="flex items-center justify-between gap-3">
+              <div className="flex items-center gap-3">
+                <IconChip icon={custom.icon} tone="neutral" size="md" />
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-medium text-text">{custom.label}</span>
+                    {(() => {
+                      const s = statusFor(custom);
+                      return (
+                        <StatusPill tone={s.tone} label={s.label} size="sm" />
+                      );
+                    })()}
+                  </div>
+                  <p className="text-sm text-text-muted">
+                    {customValue.trim() || custom.maskedValue}
+                  </p>
                 </div>
-                <p className="text-sm text-text-muted">{custom.maskedValue}</p>
               </div>
+              {!linkOpen && (
+                <SecondaryButton
+                  size="sm"
+                  iconLeft="add"
+                  onClick={() => setLinkOpen(true)}
+                >
+                  立即关联
+                </SecondaryButton>
+              )}
             </div>
-            <SecondaryButton
-              size="sm"
-              iconLeft="add"
-              onClick={() =>
-                notify("打开关联面板（占位）。新增渠道默认私密。", "info")
-              }
-            >
-              立即关联
-            </SecondaryButton>
+            {linkOpen && (
+              <div className="flex items-center gap-2">
+                <Input
+                  value={customValue}
+                  onChange={(e) => setCustomValue(e.target.value)}
+                  placeholder="输入该渠道账号或链接（默认私密）"
+                  aria-label={`关联 ${custom.label}`}
+                />
+                <PrimaryButton
+                  size="sm"
+                  disabled={saving}
+                  onClick={async () => {
+                    if (!customValue.trim()) {
+                      notify("请输入要关联的账号或链接。", "error");
+                      return;
+                    }
+                    setDirty(true);
+                    await persist();
+                    setLinkOpen(false);
+                  }}
+                >
+                  保存关联
+                </PrimaryButton>
+                <SecondaryButton
+                  size="sm"
+                  variant="ghost"
+                  onClick={() => {
+                    setLinkOpen(false);
+                    setCustomValue("");
+                  }}
+                >
+                  取消
+                </SecondaryButton>
+              </div>
+            )}
           </div>
         )}
       </div>

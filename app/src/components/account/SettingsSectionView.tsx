@@ -16,6 +16,12 @@ import {
 } from "@/components/shared";
 import { Switch } from "@/components/ui/switch";
 import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
   useConsents,
   useRevokeConsent,
   useAccountIdentity,
@@ -53,6 +59,9 @@ export function SettingsSectionView({ section }: { section: SettingsSection }) {
 function PrivacySection() {
   const consents = useConsents("all-consent");
   const revoke = useRevokeConsent();
+  const [detailId, setDetailId] = useState<string | null>(null);
+  const detail = consents.data?.items.find((r) => r.id === detailId) ?? null;
+
   return (
     <div>
       <h1 className="mb-1 text-lg font-semibold text-text">隐私与同意</h1>
@@ -65,7 +74,7 @@ function PrivacySection() {
         error={consents.isError}
         mode="all-consent"
         onRetry={() => consents.refetch()}
-        onViewDetail={() => notify("同意详情（占位）。", "info")}
+        onViewDetail={(id) => setDetailId(id)}
         onRevoke={(id) =>
           revoke.mutate(id, {
             onSuccess: () => {
@@ -75,6 +84,40 @@ function PrivacySection() {
           })
         }
       />
+
+      <Dialog open={!!detail} onOpenChange={(o) => !o && setDetailId(null)}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>同意详情</DialogTitle>
+          </DialogHeader>
+          {detail && (
+            <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 text-sm">
+              <dt className="text-text-muted">对象</dt>
+              <dd className="text-text">@{detail.counterpartyHandle}</dd>
+              <dt className="text-text-muted">披露内容</dt>
+              <dd className="text-text">{detail.disclosedMethods.join("、")}</dd>
+              <dt className="text-text-muted">时间</dt>
+              <dd className="text-text">{detail.date}</dd>
+              {detail.exchangeRef && (
+                <>
+                  <dt className="text-text-muted">关联交换</dt>
+                  <dd className="text-text">{detail.exchangeRef}</dd>
+                </>
+              )}
+              <dt className="text-text-muted">来源</dt>
+              <dd className="text-text">{detail.source}</dd>
+              <dt className="text-text-muted">可撤回</dt>
+              <dd className="text-text">
+                {detail.revoked
+                  ? "已撤回"
+                  : detail.revocable
+                    ? "是（仅对未来生效）"
+                    : "否"}
+              </dd>
+            </dl>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

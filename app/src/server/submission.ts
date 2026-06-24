@@ -158,6 +158,118 @@ export async function getDraft(
   return projectDraft(row);
 }
 
+/**
+  删除草稿（个人中心写动作）。仅本人、仅 Draft 态可删。
+  - 未登录 → 401；非本人 → 403；不存在 → 404；非 Draft（已提交/已公开）→ 409。
+  - 删除写 audit_log（INV-11）；无原始内容/无 PII。
+*/
+export async function deleteDraft(
+  session: Session | null,
+  id: string
+): Promise<{ id: string; deleted: true }> {
+  const user = await requireUser(session);
+  const db = await getDb();
+  const [row] = await db
+    .select()
+    .from(schema.submissions)
+    .where(eq(schema.submissions.id, id))
+    .limit(1);
+  if (!row) {
+    throw new SubmissionError(404, "not-found", "草稿不存在。");
+  }
+  if (row.submitterId !== user.id) {
+    throw new SubmissionError(403, "forbidden", "仅本人可删除该草稿。");
+  }
+  if (row.status !== "Draft") {
+    throw new SubmissionError(
+      409,
+      "not-draft",
+      "仅未提交的草稿可删除（已进入评审或已公开的提交不可删）。"
+    );
+  }
+
+  await db.delete(schema.submissions).where(eq(schema.submissions.id, id));
+  await db.insert(schema.auditLog).values({
+    actorId: user.id,
+    action: "submission.delete-draft",
+    targetType: "submission",
+    targetId: id,
+  });
+  return { id, deleted: true };
+}
+
+/**
+  从已有模块发起「编辑」：建一个 moduleId 指向原模块的 Draft 草稿，
+  draftData 以模块当前 manifest 脱敏数据预填（无原始内容 INV-01）。
+  提交 → 审核 → approve 时 publishSubmission 按 moduleId 更新原模块为新版本，
+  不产生重复模块。仅本人；模块不存在 → 404；越权 → 403。
+*/
+export async function createDraftFromModule(
+  session: Session | null,
+  moduleId: string
+): Promise<SubmissionDraftOut> {
+  const user = await requireUser(session);
+  const db = await getDb();
+
+  const [mod] = await db
+    .select()
+    .from(schema.knowledgeModules)
+    .where(eq(schema.knowledgeModules.id, moduleId))
+    .limit(1);
+  if (!mod) {
+    throw new SubmissionError(404, "not-found", "模块不存在。");
+  }
+  if (mod.ownerId !== user.id) {
+    throw new SubmissionError(403, "forbidden", "仅本人可编辑该模块。");
+  }
+
+  const [man] = await db
+    .select()
+    .from(schema.manifests)
+    .where(eq(schema.manifests.moduleId, moduleId))
+    .limit(1);
+
+  const draftData = {
+    module: {
+      title: mod.title,
+      oneLineIntent: mod.summary,
+      moduleType: mod.type ?? "",
+      sourceTypes: [],
+    },
+    manifest: man
+      ? {
+          summary: man.summary,
+          topics: man.topics,
+          freshness: man.freshness,
+          sourceStats: man.sourceStats,
+          contentCommitment: man.contentCommitment ?? null,
+          privacyBoundary: man.privacyBoundary ?? null,
+          version: man.version,
+        }
+      : null,
+  };
+
+  const [row] = await db
+    .insert(schema.submissions)
+    .values({
+      moduleId,
+      submitterId: user.id,
+      status: "Draft",
+      step: 1,
+      draftData: draftData as never,
+    })
+    .returning();
+
+  await db.insert(schema.auditLog).values({
+    actorId: user.id,
+    action: "module.edit-draft",
+    targetType: "module",
+    targetId: moduleId,
+  });
+
+  return projectDraft(row);
+}
+
 // ── API-011：本机技能目录（ENT-016；只读，登录可见）。──────────────────
 // 默认目录（脱敏；privacyLevel=local 表示扫描/生成在本机执行 ASM-028）。
 const DEFAULT_SKILLS = [

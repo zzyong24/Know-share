@@ -45,6 +45,11 @@ export const communityHandlers: RequestHandler[] = [
     return HttpResponse.json({ favorited, favoriteCount: count });
   }),
 
+  // 本人下架自己已发布的模块（个人中心；mock 直接成功）
+  http.post("/api/modules/:id/delist", ({ params }) =>
+    HttpResponse.json({ id: String(params.id), status: "Delisted" })
+  ),
+
   // 认可（API-050）：不能认可自己 → 400；唯一信号（INV-07/INV-10）。
   http.post("/api/users/:login/endorse", ({ params }) => {
     const login = String(params.login);

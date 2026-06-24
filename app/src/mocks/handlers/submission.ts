@@ -42,6 +42,16 @@ export const submissionHandlers: RequestHandler[] = [
     return HttpResponse.json({ ...newDraft, id: String(params.id) });
   }),
 
+  // 删除草稿（个人中心；仅本人、仅 Draft —— mock 直接成功）
+  http.delete("/api/submissions/:id", ({ params }) =>
+    HttpResponse.json({ id: String(params.id), deleted: true })
+  ),
+
+  // 从模块发起编辑：建 moduleId 指向原模块的 Draft 草稿（返回草稿外壳）
+  http.post("/api/modules/:id/edit-draft", ({ params }) =>
+    HttpResponse.json({ ...newDraft, id: `draft-of-${params.id}` })
+  ),
+
   // 本机可用 Agent 技能 / MCP（ENT-016；COMP-073）
   http.get("/api/submissions/skills", () =>
     HttpResponse.json({ items: submissionSkills })

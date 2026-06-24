@@ -17,7 +17,7 @@ import type { SearchSuggestion } from "@/lib/types";
   - 会话：useSession（失败降级匿名，ASM-019）。
   - 导航：next/navigation useRouter().push + usePathname 推导 activeNav（替换地基里的 onNavigate 占位）。
   - 搜索：onSubmit → /search?q=；联想由 useSearchSuggest 注入。
-  - 登录/提交/未登录写动作：占位引导（OAuth 接入留给 auth 模块；此处给出可用降级提示）。
+  - 登录/退出：真实 GitHub OAuth（signIn/signOut，DEC-006）；匿名写动作引导发起登录（不绕过同意门 NFR-005）。
   各段 layout 用 <SiteShell> 包裹自己的 children 即可，无需重写外壳。
 */
 

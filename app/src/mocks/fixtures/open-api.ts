@@ -286,6 +286,12 @@ export const DEVELOPER_RESOURCES: {
   href: string;
   external?: boolean;
 }[] = [
+  // 机读入口（agent 进站即可自配置；FR-110/NFR-002）
+  { label: "机读 API 描述（OpenAPI 3.1）", href: "/api/openapi.json", external: true },
+  { label: "Manifest 格式规范（JSON Schema）", href: "/api/manifest-schema", external: true },
+  { label: "Agent 集成说明（llms.txt）", href: "/llms.txt", external: true },
+  { label: "Plugin 发现清单（ai-plugin.json）", href: "/.well-known/ai-plugin.json", external: true },
+  // 人读资源
   { label: "访问文档库", href: "/about", external: false },
   { label: "查看仓库与示例", href: "https://github.com/know-share", external: true },
 ];

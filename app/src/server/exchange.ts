@@ -11,6 +11,7 @@ import * as schema from "@/server/db/schema";
 import { getSession } from "@/server/auth";
 import { getRedis } from "@/server/redis";
 import { assertNoForbidden } from "@/server/projection";
+import { notifyUser } from "@/server/notify";
 import type { Session, ExchangeStatus, TrustLevel } from "@/lib/types";
 import type {
   ExchangeLedgerRow,
@@ -572,7 +573,18 @@ async function transitionByOwner(
 }
 
 export async function acceptExchange(id: string): Promise<ExchangeDetail> {
-  return transitionByOwner(id, "Accepted", "accept");
+  const detail = await transitionByOwner(id, "Accepted", "accept");
+  const row = await loadExchange(id);
+  if (row) {
+    await notifyUser({
+      userId: row.requesterId,
+      type: "exchange",
+      title: "交换请求已被接受",
+      body: `你发起的交换 ${row.publicRef} 已被接受，可开始私下准备。`,
+      href: `/exchanges/${row.publicRef}`,
+    });
+  }
+  return detail;
 }
 
 export async function rejectExchange(
@@ -597,6 +609,13 @@ export async function rejectExchange(
     action: "exchange.reject",
     targetType: "exchange",
     targetId: id,
+  });
+  await notifyUser({
+    userId: row.requesterId,
+    type: "exchange",
+    title: "交换请求被婉拒",
+    body: `你发起的交换 ${row.publicRef} 未被接受。`,
+    href: `/exchanges/${row.publicRef}`,
   });
   return (await getExchangeDetail(id, session))!;
 }
@@ -625,6 +644,42 @@ export async function cancelExchange(
     targetType: "exchange",
     targetId: id,
   });
+  return (await getExchangeDetail(id, session))!;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   开始私下准备（W-2；Accepted→PrivatePreparing）。任一参与方可触发，
+   表示双方进入平台外私下交付协调阶段。非法迁移 409、非参与方 403、写 audit。
+   ════════════════════════════════════════════════════════════════ */
+export async function startPreparing(id: string): Promise<ExchangeDetail> {
+  const session = await requireSession();
+  const row = await loadExchange(id);
+  if (!row) throw new DomainError(404, "not-found");
+  await rateLimit("start-preparing", session.login);
+  const { userId, ownerId } = await assertParticipant(row, session);
+  assertTransition(row.status, "PrivatePreparing");
+  const db = await getDb();
+  await db
+    .update(schema.exchanges)
+    .set({ status: "PrivatePreparing", updatedAt: new Date() })
+    .where(eq(schema.exchanges.id, id));
+  await db.insert(schema.auditLog).values({
+    actorId: userId,
+    action: "exchange.start-preparing",
+    targetType: "exchange",
+    targetId: id,
+  });
+  // 通知对方（发起方触发则通知所有者，反之亦然）。
+  const counterpart = userId === row.requesterId ? ownerId : row.requesterId;
+  if (counterpart) {
+    await notifyUser({
+      userId: counterpart,
+      type: "exchange",
+      title: "交换进入私下准备",
+      body: `交换 ${row.publicRef} 已进入私下准备阶段，可在平台外协调交付。`,
+      href: `/exchanges/${row.publicRef}`,
+    });
+  }
   return (await getExchangeDetail(id, session))!;
 }
 
@@ -742,8 +797,17 @@ export async function markDelivered(id: string): Promise<ExchangeDetail> {
   const ownConfirmed = role === "owner" ? true : row.ownerConfirmedDelivery;
 
   let nextStatus = row.status as ExchangeStatus;
-  // 双方各自确认才迁移 Delivered→Completed（INV-06）。
-  if (
+  if (row.status === "PrivatePreparing") {
+    // 首次标记交付：PrivatePreparing→Delivered（记录该方确认）；
+    // 另一方再确认时（status 已是 Delivered）才双方齐备 → Completed（INV-06）。
+    assertTransition(row.status, "Delivered");
+    nextStatus = "Delivered";
+    if (reqConfirmed && ownConfirmed) {
+      assertTransition("Delivered", "Completed");
+      nextStatus = "Completed";
+    }
+  } else if (
+    // 双方各自确认才迁移 Delivered→Completed（INV-06）。
     row.status === "Delivered" &&
     reqConfirmed &&
     ownConfirmed
@@ -762,6 +826,26 @@ export async function markDelivered(id: string): Promise<ExchangeDetail> {
     targetType: "exchange",
     targetId: id,
   });
+  // 交换完成 → 通知双方（INV-06 双确认达成）。
+  if (nextStatus === "Completed") {
+    const ownerId = await ownerIdOf(row.targetModuleId);
+    await notifyUser({
+      userId: row.requesterId,
+      type: "exchange",
+      title: "交换已完成",
+      body: `交换 ${row.publicRef} 已双方确认完成，可前往评价。`,
+      href: `/exchanges/${row.publicRef}`,
+    });
+    if (ownerId) {
+      await notifyUser({
+        userId: ownerId,
+        type: "exchange",
+        title: "交换已完成",
+        body: `交换 ${row.publicRef} 已双方确认完成，可前往评价。`,
+        href: `/exchanges/${row.publicRef}`,
+      });
+    }
+  }
   return (await getExchangeDetail(id, session))!;
 }
 

@@ -269,6 +269,18 @@ export function useMarkDelivered(id: string) {
   });
 }
 
+/** 开始私下准备（Accepted→PrivatePreparing；任一参与方，进入平台外交付协调）。 */
+export function useStartPreparing(id: string) {
+  const invalidate = useInvalidateDetail(id);
+  return useMutation({
+    mutationFn: () =>
+      apiFetch<ExchangeDetail>(`/api/exchanges/${id}/start-preparing`, {
+        method: "POST",
+      }),
+    onSuccess: invalidate,
+  });
+}
+
 /* ── owner/参与方写动作（接受/拒绝/取消；FLOW-003 状态迁移 W-2）────── */
 
 /** 目标所有者接受请求（API-020）：Requested→Accepted。成功后失效详情+台账。 */

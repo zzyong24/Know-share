@@ -13,8 +13,11 @@ export interface PrivateDeliveryNoteProps {
   channel: ExchangeDeliveryChannel;
   channelLabel: string;
   deliveryHint: string;
+  /** Accepted 态：参与方可「开始私下准备」（Accepted→PrivatePreparing）。 */
+  canStartPreparing?: boolean;
   canMarkDelivered: boolean;
   imButtonEnabled: boolean;
+  onStartPreparing?: () => void;
   onMarkDelivered: () => void;
   onOpenIm: () => void;
 }
@@ -22,8 +25,10 @@ export interface PrivateDeliveryNoteProps {
 export function PrivateDeliveryNote({
   channelLabel,
   deliveryHint,
+  canStartPreparing = false,
   canMarkDelivered,
   imButtonEnabled,
+  onStartPreparing,
   onMarkDelivered,
   onOpenIm,
 }: PrivateDeliveryNoteProps) {
@@ -44,6 +49,11 @@ export function PrivateDeliveryNote({
       </div>
 
       <div className="mt-3 flex flex-col gap-2">
+        {canStartPreparing && (
+          <PrimaryButton iconLeft="play_arrow" onClick={onStartPreparing} fullWidth>
+            开始私下准备
+          </PrimaryButton>
+        )}
         {canMarkDelivered && (
           <PrimaryButton iconLeft="check_circle" onClick={onMarkDelivered} fullWidth>
             标记为已交付

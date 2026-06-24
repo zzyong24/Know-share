@@ -26,6 +26,7 @@ import {
   useDiscloseContacts,
   useExchangeDetail,
   useMarkDelivered,
+  useStartPreparing,
   useRejectExchange,
   useRevokeDisclosure,
 } from "@/lib/queries/exchange";
@@ -51,6 +52,7 @@ export function ExchangeDetailView({ exchangeId }: ExchangeDetailViewProps) {
   const disclose = useDiscloseContacts(exchangeId);
   const revoke = useRevokeDisclosure(exchangeId);
   const markDelivered = useMarkDelivered(exchangeId);
+  const startPreparing = useStartPreparing(exchangeId);
   const accept = useAcceptExchange(exchangeId);
   const reject = useRejectExchange(exchangeId);
   const cancel = useCancelExchange(exchangeId);
@@ -84,9 +86,9 @@ export function ExchangeDetailView({ exchangeId }: ExchangeDetailViewProps) {
   };
   const imEnabled =
     !!d.disclosure.peerDisclosure?.contacts.some((c) => c.type === "im");
-  const canMarkDelivered =
-    (d.viewerRole === "requester" || d.viewerRole === "owner") &&
-    PRIVATE_PREP_STATES.includes(d.status);
+  const isParticipant = d.viewerRole === "requester" || d.viewerRole === "owner";
+  const canMarkDelivered = isParticipant && PRIVATE_PREP_STATES.includes(d.status);
+  const canStartPreparing = isParticipant && d.status === "Accepted";
 
   return (
     <div className="space-y-6">
@@ -202,8 +204,13 @@ export function ExchangeDetailView({ exchangeId }: ExchangeDetailViewProps) {
             channel={d.delivery.channel}
             channelLabel={d.delivery.channelLabel}
             deliveryHint={d.delivery.deliveryHint}
+            canStartPreparing={canStartPreparing}
             canMarkDelivered={canMarkDelivered}
             imButtonEnabled={imEnabled}
+            onStartPreparing={() => {
+              startPreparing.mutate();
+              notify("已进入私下准备阶段，可在平台外协调交付。", "success");
+            }}
             onMarkDelivered={() => {
               markDelivered.mutate();
               notify("已记录你的交付确认，等待对方确认。", "success");

@@ -15,6 +15,7 @@ import { getDb } from "@/server/db/client";
 import * as schema from "@/server/db/schema";
 import { getSession } from "@/server/auth";
 import { assertNoForbidden } from "@/server/projection";
+import { notifyUser } from "@/server/notify";
 import type { Session, AuditEntry } from "@/lib/types";
 import type {
   AdminReviewItem,
@@ -371,6 +372,13 @@ async function publishSubmission(submissionId: string): Promise<string | null> {
     .update(schema.submissions)
     .set({ status: "Published" })
     .where(eq(schema.submissions.id, submissionId));
+  await notifyUser({
+    userId: sub.submitterId,
+    type: "review",
+    title: "你的模块已通过审核并发布",
+    body: "提交已通过隐私门与人工评审，现已在公开注册表可见。",
+    href: "/me/modules",
+  });
   return sub.moduleId;
 }
 
@@ -390,6 +398,13 @@ async function returnSubmission(submissionId: string): Promise<string | null> {
     .update(schema.submissions)
     .set({ status: "ChangesRequested" })
     .where(eq(schema.submissions.id, submissionId));
+  await notifyUser({
+    userId: sub.submitterId,
+    type: "review",
+    title: "你的提交需要修改",
+    body: "评审建议你按反馈调整后重新提交。",
+    href: "/me/drafts",
+  });
   return sub.moduleId;
 }
 

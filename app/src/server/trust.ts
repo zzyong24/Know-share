@@ -14,6 +14,7 @@ import { eq, inArray } from "drizzle-orm";
 import { getDb } from "@/server/db/client";
 import * as schema from "@/server/db/schema";
 import { getRedis } from "@/server/redis";
+import { notifyUser } from "@/server/notify";
 import { assertNoForbidden } from "@/server/projection";
 import type { Session } from "@/lib/types";
 import type {
@@ -756,6 +757,14 @@ export async function submitFeedback(
   if (subjectId) {
     const comp = await recomputeTrust(subjectId);
     recomputedScore = comp.score;
+    // FR-120：通知被评方收到反馈（不含评分细节，仅事件级）。
+    await notifyUser({
+      userId: subjectId,
+      type: "feedback",
+      title: "你收到一条交换反馈",
+      body: "一次已完成的交换收到了对方反馈，你的信任档案已更新。",
+      href: "/me",
+    });
   }
 
   // INV-11：写 audit（无 PII / 无原始内容）。

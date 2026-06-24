@@ -42,6 +42,7 @@ let createSeq = 9100;
 
 /** 合法状态迁移（W-2 子集；非法 → 409，ASM-120 守语义不违背）。 */
 const ACCEPT_FROM: ExchangeStatus[] = ["Requested"];
+const START_PREP_FROM: ExchangeStatus[] = ["Accepted"];
 const REJECT_FROM: ExchangeStatus[] = ["Requested"];
 const CANCEL_FROM: ExchangeStatus[] = [
   "Requested",
@@ -184,6 +185,11 @@ export const exchangeHandlers: RequestHandler[] = [
   // 目标所有者接受（API-020）：Requested→Accepted；非法迁移 → 409（W-2）。
   http.post("/api/exchanges/:id/accept", ({ params }) =>
     transition(String(params.id), ACCEPT_FROM, "Accepted")
+  ),
+
+  // 任一参与方开始私下准备：Accepted→PrivatePreparing；非法 → 409。
+  http.post("/api/exchanges/:id/start-preparing", ({ params }) =>
+    transition(String(params.id), START_PREP_FROM, "PrivatePreparing")
   ),
 
   // 目标所有者拒绝（API-021）：Requested→Rejected；非法 → 409。

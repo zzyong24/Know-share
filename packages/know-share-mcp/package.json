@@ -1,0 +1,22 @@
+{
+  "name": "know-share-mcp",
+  "version": "1.0.0",
+  "description": "Know-share 本机 Skill：扫描知识库 → 脱敏 → 校验 → 上传脱敏清单（不上传原文）",
+  "type": "module",
+  "bin": {
+    "know-share": "./src/cli.mjs"
+  },
+  "exports": {
+    ".": "./src/lib.mjs"
+  },
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT"
+}

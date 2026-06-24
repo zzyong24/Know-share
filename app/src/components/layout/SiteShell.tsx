@@ -3,6 +3,7 @@
 import * as React from "react";
 import { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
+import { signIn, signOut } from "next-auth/react";
 import { AppShell } from "@/components/shared/app-shell";
 import { DEFAULT_NAV_ITEMS } from "@/components/shared/top-nav";
 import { notify } from "@/components/shared/toast";
@@ -58,13 +59,20 @@ export function SiteShell({ children, containerWidth, sidebar }: SiteShellProps)
 
   const handleSelectSuggestion = (item: SearchSuggestion) => router.push(item.href);
 
-  const requireAuth = () => {
-    // OAuth 接入在 auth 模块；此处降级提示，不绕过同意门（NFR-005）。
-    notify("请先使用 GitHub 登录后再继续。", "info");
+  // 显式登录：跳转 GitHub OAuth（DEC-006）。回跳后整页重载，useSession 重取真实会话。
+  const handleSignIn = () => {
+    void signIn("github");
+  };
+  // 退出：清 NextAuth 会话并回首页（整页重载，useSession 归零为匿名）。
+  const handleSignOut = () => {
+    void signOut({ callbackUrl: "/" });
   };
 
-  const handleSignIn = () => requireAuth();
-  const handleSignOut = () => notify("已退出登录。", "success");
+  // 受保护写动作在匿名时的引导：提示 + 直接发起登录，不绕过同意门（NFR-005）。
+  const requireAuth = () => {
+    notify("请先使用 GitHub 登录后再继续。", "info");
+    handleSignIn();
+  };
 
   const handleMenuSelect = (key: string) => {
     const map: Record<string, string> = {

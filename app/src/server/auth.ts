@@ -41,16 +41,54 @@ async function buildNextAuth() {
       }),
     ],
     secret: process.env.AUTH_SECRET,
+    // 无 DB adapter → JWT 会话（serverless 友好，免每请求查库）。身份回填在 jwt 回调。
+    session: { strategy: "jwt" },
     callbacks: {
+      // 登录时把 GitHub 公开身份写进 token，并 upsert 平台用户（读回 isAdmin/verified）。
+      // account+profile 仅在初次登录存在 → DB 回填每次登录一次，后续请求复用 token。
+      async jwt({ token, account, profile }) {
+        if (account && profile) {
+          const p = profile as unknown as Record<string, unknown>;
+          const login = typeof p.login === "string" ? p.login : null;
+          const githubId = p.id != null ? String(p.id) : null;
+          if (login && githubId) {
+            const avatarUrl =
+              typeof p.avatar_url === "string" ? p.avatar_url : "";
+            const displayName =
+              typeof p.name === "string" && p.name ? p.name : login;
+            const t = token as unknown as Record<string, unknown>;
+            t.login = login;
+            t.avatarUrl = avatarUrl;
+            try {
+              const { upsertUserFromGitHub } = await import("@/server/users");
+              const u = await upsertUserFromGitHub({
+                githubId,
+                login,
+                displayName,
+                avatarUrl,
+              });
+              t.isAdmin = u.isAdmin;
+              t.verified = u.githubVerified;
+              if (u.avatarUrl) t.avatarUrl = u.avatarUrl;
+            } catch {
+              // 回填失败不阻断登录：仅公开身份进 token，权限保守为 false。
+              t.isAdmin = false;
+              t.verified = false;
+            }
+          }
+        }
+        return token;
+      },
       // 将 GitHub 公开身份投影进 session（无 PII/无联系方式，DEC-010/INV-04）。
       session({ session, token }) {
         if (session.user) {
-          // login/avatar 由 GitHub profile 注入到 token（按需扩展）。
           const u = session.user as unknown as Record<string, unknown>;
           const t = token as unknown as Record<string, unknown>;
           u.login = t.login;
           u.isAdmin = t.isAdmin;
           u.verified = t.verified;
+          // getSession() 读 user.image 作头像（avatarUrl 单一来源）。
+          if (typeof t.avatarUrl === "string" && t.avatarUrl) u.image = t.avatarUrl;
         }
         return session;
       },

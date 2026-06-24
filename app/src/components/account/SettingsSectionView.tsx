@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { signOut } from "next-auth/react";
 import { ConsentRecordList } from "./ConsentRecordList";
 import { SettingsSubNav } from "./SettingsSubNav";
 import {
@@ -81,7 +81,6 @@ function PrivacySection() {
 
 // ── 账户：GitHub 身份只读 + 退出登录 ──
 function AccountSection() {
-  const router = useRouter();
   const { data, isLoading } = useAccountIdentity();
   const [confirmLogout, setConfirmLogout] = useState(false);
 
@@ -145,8 +144,7 @@ function AccountSection() {
         onCancel={() => setConfirmLogout(false)}
         onConfirm={() => {
           setConfirmLogout(false);
-          notify("已退出登录（占位）。", "success");
-          router.push("/");
+          void signOut({ callbackUrl: "/" });
         }}
       />
     </div>

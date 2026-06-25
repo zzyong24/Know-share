@@ -6,14 +6,22 @@
 */
 import { readdir, readFile, writeFile, mkdir, stat } from "node:fs/promises";
 import { join, relative, dirname, extname } from "node:path";
+import { homedir } from "node:os";
+import { execFile } from "node:child_process";
+import { promisify } from "node:util";
 import {
   scanFiles,
   redactText,
   buildManifest,
   validateManifest,
   uploadManifest,
+  pickToken,
 } from "./lib.mjs";
 import { MANIFEST_SCHEMA } from "./schema.mjs";
+
+const execFileP = promisify(execFile);
+/** 本地凭据（know-share login 写入；token 解析链兜底读取）。 */
+const CRED_PATH = join(homedir(), ".know-share", "credentials.json");
 
 const TEXT_EXT = new Set([".md", ".markdown", ".txt", ".mdx", ".org", ".rst"]);
 
@@ -56,6 +64,87 @@ async function readTextFiles(dir) {
 
 function csv(v) {
   return typeof v === "string" ? v.split(",").map((s) => s.trim()).filter(Boolean) : undefined;
+}
+
+/** 读 `gh auth token`（装了 GitHub CLI 并登录 → 零配置取 token）。失败/未装 → null。 */
+async function ghAuthToken() {
+  try {
+    const { stdout } = await execFileP("gh", ["auth", "token"], { timeout: 5000 });
+    const t = stdout.trim();
+    return t || null;
+  } catch {
+    return null;
+  }
+}
+
+/** 读本地凭据文件（know-share login 写入）。 */
+async function storedToken() {
+  try {
+    const j = JSON.parse(await readFile(CRED_PATH, "utf8"));
+    return typeof j.token === "string" && j.token ? j.token : null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+  token 解析链（让用户基本无感，不必手搓/裸存）：
+  --token → KNOWSHARE_TOKEN/GITHUB_TOKEN → `gh auth token` → ~/.know-share 凭据。
+*/
+async function resolveToken(args) {
+  return pickToken({
+    explicit: typeof args.token === "string" ? args.token : undefined,
+    env: process.env.KNOWSHARE_TOKEN || process.env.GITHUB_TOKEN || undefined,
+    gh: await ghAuthToken(),
+    stored: await storedToken(),
+  });
+}
+
+/** know-share login —— GitHub OAuth Device Flow，授权后把 token 存到 ~/.know-share。 */
+async function cmdLogin(args) {
+  const clientId = (typeof args["client-id"] === "string" && args["client-id"]) || process.env.KNOW_SHARE_CLIENT_ID;
+  if (!clientId)
+    throw new Error(
+      "缺少 --client-id（或 KNOW_SHARE_CLIENT_ID）：填平台 GitHub OAuth App 的 Client ID（需在 OAuth App 设置勾选 Enable Device Flow）"
+    );
+  const dc = await fetch("https://github.com/login/device/code", {
+    method: "POST",
+    headers: { Accept: "application/json", "Content-Type": "application/json" },
+    body: JSON.stringify({ client_id: clientId, scope: "read:user" }),
+  }).then((r) => r.json());
+  if (!dc.device_code) throw new Error("发起 device flow 失败：" + (dc.error_description || JSON.stringify(dc)));
+
+  process.stdout.write(
+    `\n请在浏览器打开：${dc.verification_uri}\n输入设备码：${dc.user_code}\n（授权后自动继续，等待中…）\n`
+  );
+  const interval = (dc.interval || 5) * 1000;
+  const deadline = Date.now() + (dc.expires_in || 900) * 1000;
+  while (Date.now() < deadline) {
+    await new Promise((r) => setTimeout(r, interval));
+    const tok = await fetch("https://github.com/login/oauth/access_token", {
+      method: "POST",
+      headers: { Accept: "application/json", "Content-Type": "application/json" },
+      body: JSON.stringify({
+        client_id: clientId,
+        device_code: dc.device_code,
+        grant_type: "urn:ietf:params:oauth:grant-type:device_code",
+      }),
+    }).then((r) => r.json());
+    if (tok.access_token) {
+      await mkdir(dirname(CRED_PATH), { recursive: true });
+      await writeFile(
+        CRED_PATH,
+        JSON.stringify({ token: tok.access_token, savedAt: new Date().toISOString() }, null, 2),
+        { mode: 0o600 }
+      );
+      process.stdout.write(`✓ 已登录并保存凭据 → ${CRED_PATH}\n之后 upload 无需 --token，自动读取。\n`);
+      return;
+    }
+    if (tok.error && tok.error !== "authorization_pending" && tok.error !== "slow_down") {
+      throw new Error("授权失败：" + (tok.error_description || tok.error));
+    }
+  }
+  throw new Error("设备码已过期，请重试 know-share login");
 }
 
 async function cmdScan(args) {
@@ -141,10 +230,13 @@ async function cmdValidate(args) {
 async function cmdUpload(args) {
   const file = args._[0] || args.file;
   const apiBase = args.api || process.env.KNOWSHARE_API;
-  const token = args.token || process.env.KNOWSHARE_TOKEN || process.env.GITHUB_TOKEN;
-  if (!file) throw new Error("用法：know-share upload <manifest.json> --api <平台地址> --token <GitHub 细粒度 token>");
+  const token = await resolveToken(args);
+  if (!file) throw new Error("用法：know-share upload <manifest.json> --api <平台地址> [--token <token>]");
   if (!apiBase) throw new Error("缺少 --api（或环境变量 KNOWSHARE_API）");
-  if (!token) throw new Error("缺少 --token（或 KNOWSHARE_TOKEN / GITHUB_TOKEN）");
+  if (!token)
+    throw new Error(
+      "未取得 token。任选其一：--token <token>、环境变量 KNOWSHARE_TOKEN、`gh auth login`（自动用 gh auth token）、或先 `know-share login`。"
+    );
   const manifest = JSON.parse(await readFile(file, "utf8"));
 
   // 上传前本地兜底校验。
@@ -168,10 +260,15 @@ async function cmdUpload(args) {
 
 const HELP = `know-share —— 本机知识模块发布工具（脱敏清单，不上传原文）
 
+  know-share login    --client-id <OAuth App Client ID>   # 一次性浏览器授权，存凭据到 ~/.know-share
   know-share scan     --input <目录> [--title --summary --topics a,b --source-types notes --sensitivity low] [--out manifest.json]
   know-share redact   --input <目录> --out <目录>
   know-share validate <manifest.json> [--api <平台地址>]
-  know-share upload   <manifest.json> --api <平台地址> --token <GitHub 细粒度 token>
+  know-share upload   <manifest.json> --api <平台地址> [--token <token>]
+
+token 解析顺序（upload）：--token → KNOWSHARE_TOKEN/GITHUB_TOKEN → \`gh auth token\` → ~/.know-share 凭据。
+  · 装了 GitHub CLI 并 \`gh auth login\` → 直接可用，无需手动 token。
+  · 否则 \`know-share login\` 走 OAuth Device Flow 一次，之后自动读取。
 
 边界：平台只接收脱敏清单（不托管原文 INV-01）；上传只建 Draft，公开发布需主人站内确认（NFR-005）。
 机读入口：<平台>/llms.txt、<平台>/api/openapi.json、<平台>/api/manifest-schema`;
@@ -182,6 +279,7 @@ async function main() {
   const args = parseArgs(argv.slice(1));
   try {
     switch (cmd) {
+      case "login": await cmdLogin(args); break;
       case "scan": await cmdScan(args); break;
       case "redact": await cmdRedact(args); break;
       case "validate": await cmdValidate(args); break;

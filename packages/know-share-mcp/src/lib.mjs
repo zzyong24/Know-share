@@ -164,3 +164,14 @@ export async function uploadManifest(manifest, { apiBase, token, fetchImpl } = {
   const body = await res.json().catch(() => ({}));
   return { status: res.status, body };
 }
+
+/**
+  token 解析优先级（纯函数，便于测试）：
+  显式 --token > 环境变量 > gh auth token > 本地存储凭据。任一非空即取，全空 → null。
+*/
+export function pickToken({ explicit, env, gh, stored } = {}) {
+  for (const t of [explicit, env, gh, stored]) {
+    if (typeof t === "string" && t.trim()) return t.trim();
+  }
+  return null;
+}

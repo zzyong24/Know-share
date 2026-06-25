@@ -1,9 +1,9 @@
 /*
   skills 域服务层（API-028 技能目录，只读）。
   注：旧 API-030 GET /api/skills 已 DEC-018 弃用，**本服务不实现**；统一走 /api/skills/catalog。
-  从 agent_skills（ENT-016）读出只读目录 → 投影为前端 SkillCatalogResponse 形状。
-  零私有内容（INV-01/04）：install/命令仅占位，绝不含真实路径/密钥/私有 URL；
-  公开输出末尾过 assertNoForbidden 兜底。
+  目录为「平台预置参考内容」：5 个规范技能 + 来源/流程/安装区块，**静态定义**（不依赖
+  agent_skills 表 seed，避免空库→目录空）。零私有内容（INV-01/04）：install/命令仅占位，
+  绝不含真实路径/密钥/私有 URL；公开输出末尾过 assertNoForbidden 兜底。
 */
 import { assertNoForbidden } from "@/server/projection";
 import type { Tone } from "@/lib/types";
@@ -107,7 +107,6 @@ const CANONICAL_SKILLS: SkillDetailDto[] = [
     consentNote:
       "实际生成在你的机器上进行，发布前由你人工确认；本目录不代为运行、不读取你的本地路径。",
     flowRef: "FLOW-001",
-    docsUrl: "https://docs.example.com/skills/create-manifest",
   },
   {
     id: "sk-reduct-manifest",
@@ -126,7 +125,6 @@ const CANONICAL_SKILLS: SkillDetailDto[] = [
     privacyNote: "在本机执行脱敏；不上传原始内容，隐私由你掌控（NFR-001 / INV-01）。",
     consentNote: "脱敏在本地完成，结果由你审阅后才进入下一步；不自动提交、不自动交换。",
     flowRef: "FLOW-001",
-    docsUrl: "https://docs.example.com/skills/redact-knowledge",
   },
   {
     id: "sk-validate-manifest",
@@ -145,7 +143,6 @@ const CANONICAL_SKILLS: SkillDetailDto[] = [
     privacyNote: "仅读取你提供的 manifest 元数据；不触及原始知识内容（INV-02）。",
     consentNote: "校验是只读检查，不修改你的文件，也不发起任何提交或交换。",
     flowRef: "FLOW-001",
-    docsUrl: "https://docs.example.com/skills/validate-manifest",
   },
   {
     id: "sk-package-repo",
@@ -165,7 +162,6 @@ const CANONICAL_SKILLS: SkillDetailDto[] = [
     consentNote:
       "本技能不自动建立协作、不自动发起 PR、不越过同意边界（ASM-041 / NFR-005）；越过同意的动作需你本人确认。",
     flowRef: "FLOW-003",
-    docsUrl: "https://docs.example.com/skills/package-private-repo",
   },
   {
     id: "sk-submit-feedback",
@@ -184,7 +180,6 @@ const CANONICAL_SKILLS: SkillDetailDto[] = [
     privacyNote: "在平台侧记录聚合反馈与信用；不携带原始知识内容（INV-09）。",
     consentNote: "提交反馈是你主动发起的动作；本目录页不代为提交。",
     flowRef: "FLOW-004",
-    docsUrl: "https://docs.example.com/skills/submit-feedback",
   },
 ];
 

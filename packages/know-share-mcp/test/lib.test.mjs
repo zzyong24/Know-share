@@ -125,3 +125,14 @@ test("uploadManifest 缺 token/apiBase 报错", async () => {
   await assert.rejects(() => uploadManifest({}, { apiBase: "x" }));
   await assert.rejects(() => uploadManifest({}, { token: "t" }));
 });
+
+import { pickToken } from "../src/lib.mjs";
+
+test("pickToken：优先级 显式 > env > gh > 存储；全空→null", () => {
+  assert.equal(pickToken({ explicit: "a", env: "b", gh: "c", stored: "d" }), "a");
+  assert.equal(pickToken({ env: "b", gh: "c", stored: "d" }), "b");
+  assert.equal(pickToken({ gh: "c", stored: "d" }), "c");
+  assert.equal(pickToken({ stored: "d" }), "d");
+  assert.equal(pickToken({ explicit: "  ", env: " x " }), "x"); // 空白跳过+trim
+  assert.equal(pickToken({}), null);
+});

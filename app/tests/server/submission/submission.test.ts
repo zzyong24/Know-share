@@ -277,7 +277,7 @@ describe("API-012 POST /api/submissions/privacy-scan", () => {
         submissionId: sid,
         manifest: {
           ...sanitizedManifest,
-          summary: "包含 secret token 的描述",
+          summary: "示例 api_key=ghp_0123456789abcdefghij0123 的描述",
         },
       })
     );
@@ -289,8 +289,8 @@ describe("API-012 POST /api/submissions/privacy-scan", () => {
       .where(eq(schema.privacyScans.submissionId, sid));
     expect(scans.length).toBeGreaterThan(0);
     expect(scans[0].overallStatus).toBe("block");
-    // INV-01：findings 不含原始命中值（不出现 "secret token" 全文回显）。
-    expect(JSON.stringify(scans[0].findings)).not.toContain("token");
+    // INV-01：findings 不含原始命中值（不回显命中的 token 串）。
+    expect(JSON.stringify(scans[0].findings)).not.toContain("ghp_");
   });
 
   it("限流：超限 → 429（NFR-006）", async () => {

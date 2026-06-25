@@ -131,7 +131,12 @@ describe("POST /api/submissions —— Agent 上传脱敏 Manifest", () => {
 
   it("隐私门 block（summary 含疑似密钥）→ 409，不落库（INV-02）", async () => {
     const res = await uploadRoute(
-      uploadReq({ manifest: { ...validManifest, summary: "包含 api_key 片段的摘要" } })
+      uploadReq({
+        manifest: {
+          ...validManifest,
+          summary: "示例配置 api_key: sk-live-deadbeef1234 的摘要",
+        },
+      })
     );
     expect(res.status).toBe(409);
     const mods = await h.db.select().from(schema.knowledgeModules);

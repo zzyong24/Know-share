@@ -18,5 +18,19 @@
   "engines": {
     "node": ">=20"
   },
+  "keywords": [
+    "know-share",
+    "knowledge",
+    "agent",
+    "mcp",
+    "manifest",
+    "privacy"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zzyong24/knowshare.git",
+    "directory": "packages/know-share-mcp"
+  },
+  "homepage": "https://knowshare-beige.vercel.app",
   "license": "MIT"
 }

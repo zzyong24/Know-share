@@ -466,14 +466,26 @@ function assertSanitizedManifest(manifest: Record<string, unknown>): void {
 */
 function evaluateScan(manifest: Record<string, unknown>): PrivacyScanResultOut {
   const findings: PrivacyFindingOut[] = [];
-  const blob = `${String(manifest.summary ?? "")} ${String(
-    manifest.redaction_notes ?? ""
-  )}`.toLowerCase();
+  // 扫描自由文本字段（保留原始大小写，便于模式匹配）。
+  const blob = [
+    manifest.title,
+    manifest.summary,
+    manifest.redaction_notes,
+    ...(Array.isArray(manifest.covered_questions)
+      ? (manifest.covered_questions as unknown[])
+      : []),
+  ]
+    .map((x) => String(x ?? ""))
+    .join(" ");
 
   let overall: "pass" | "warn" | "block" = "pass";
 
-  // 凭据/密钥模式 → block（不回显命中片段，仅指向字段）。
-  if (/secret|token|密钥|api[_-]?key|password/.test(blob)) {
+  // 凭据/密钥「模式」→ block：仅命中真实赋值（key:val / key=val）或已知 token 形态 /
+  // 私钥块，不再裸词误杀（如「无密钥」「用 token 上传」等描述性文字）。与本机 CLI 规则一致。
+  const SECRET_ASSIGN = /(?:api[_-]?key|secret|password|token|密钥)\s*[:=]\s*\S+/i;
+  const SECRET_TOKEN = /\b(?:ghp|gho|github_pat)_[A-Za-z0-9_]{20,}\b/i;
+  const PRIVATE_KEY = /-----BEGIN [A-Z ]*PRIVATE KEY-----/i;
+  if (SECRET_ASSIGN.test(blob) || SECRET_TOKEN.test(blob) || PRIVATE_KEY.test(blob)) {
     findings.push({
       ruleCategory: "secret/credential",
       severity: "block",
@@ -485,7 +497,7 @@ function evaluateScan(manifest: Record<string, unknown>): PrivacyScanResultOut {
   }
 
   // 路径/私有 URL → warn。
-  if (/\/users\/|c:\\|https?:\/\/.*\.(internal|local)/.test(blob)) {
+  if (/\/users\/|c:\\|https?:\/\/.*\.(internal|local)/i.test(blob)) {
     findings.push({
       ruleCategory: "path",
       severity: "warn",

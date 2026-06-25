@@ -446,7 +446,7 @@ describe("场景2 提交→审核→发布（跨 submission+admin+discovery）",
     // 隐私门扫描命中关键字 → block。
     h.setSession(SESS.bob);
     const scanRes = await postPrivacyScan(
-      postReq("/api/submissions/privacy-scan", { submissionId, manifest: { ...cleanManifest, summary: "包含 secret token 的描述" } })
+      postReq("/api/submissions/privacy-scan", { submissionId, manifest: { ...cleanManifest, summary: "示例 api_key: sk-live-deadbeef1234 的描述" } })
     );
     expect((await scanRes.json()).overallStatus).toBe("block");
 

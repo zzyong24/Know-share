@@ -11,13 +11,13 @@ import {
   API_CATEGORIES,
   API_ENDPOINTS,
   DEVELOPER_RESOURCES,
-  STATS_TEASER_MOCK,
 } from "@/mocks/fixtures/open-api";
 import type {
   ApiCategory,
   ApiCategoryId,
   ApiEndpoint,
 } from "@/mocks/fixtures/open-api";
+import { useAboutStats } from "@/lib/queries/about";
 
 /*
   PAGE-090 开放 API 文档页编排组件（route /developers）。
@@ -38,6 +38,21 @@ export function OpenApiView({
     categories[0]?.id
   );
 
+  // 真实平台聚合统计（/api/stats/usage → about-stats 同源）；空库即显示 0，绝不写死假数。
+  const statsQuery = useAboutStats();
+  const s = statsQuery.data?.stats;
+  const teaserMetrics = s
+    ? {
+        usersCount: s.activeUsers,
+        modulesCount: s.modulesTotal,
+        exchangesCount: s.exchangesTotal,
+        // about-stats 的通过率单位是 %（0–100），StatsTeaser 期望比率（0–1）。
+        privacyGatePassRate: s.privacyGatePassRate / 100,
+        window: statsQuery.data?.meta.window ?? "",
+        asOf: "",
+      }
+    : undefined;
+
   if (!endpoints.length) {
     return <ApiDocsEmptyState />;
   }
@@ -45,7 +60,9 @@ export function OpenApiView({
   return (
     <div className="mx-auto flex max-w-7xl flex-col gap-6">
       <ZeroLeakBanner
-        statsSlot={<StatsTeaser metrics={STATS_TEASER_MOCK} />}
+        statsSlot={
+          <StatsTeaser metrics={teaserMetrics} loading={statsQuery.isLoading} />
+        }
       />
 
       <div className="grid gap-6 md:grid-cols-[256px_1fr]">

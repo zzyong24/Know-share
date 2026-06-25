@@ -21,9 +21,12 @@ export function SupportedSourceBadge({
   onClick,
 }: SupportedSourceBadgeProps) {
   const linked = asLink && !!source.href;
+  // 防御：iconChip 缺失（后端/契约偏差）也不崩页，回退中性占位（避免整页错误边界）。
+  const glyph = source.iconChip?.glyph ?? "folder";
+  const tone = source.iconChip?.tone ?? "neutral";
   const inner = (
     <>
-      <IconChip icon={source.iconChip.glyph} tone={source.iconChip.tone} size="sm" />
+      <IconChip icon={glyph} tone={tone} size="sm" />
       <span className="text-sm text-text">{source.name}</span>
     </>
   );

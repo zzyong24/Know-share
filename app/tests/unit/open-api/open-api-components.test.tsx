@@ -1,6 +1,8 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import type { ComponentProps } from "react";
 import {
   ZeroLeakBanner,
   ApiCategoryNav,
@@ -242,10 +244,20 @@ describe("ApiDocsEmptyState（COMP-199）", () => {
   });
 });
 
+// OpenApiView 现在用 useAboutStats（真实统计），渲染需 QueryClientProvider。
+function renderOpenApi(props: ComponentProps<typeof OpenApiView> = {}) {
+  const client = new QueryClient({ defaultOptions: { queries: { retry: false } } });
+  return render(
+    <QueryClientProvider client={client}>
+      <OpenApiView {...props} />
+    </QueryClientProvider>
+  );
+}
+
 // ── PAGE-090 OpenApiView 集成 ───────────────────────────
 describe("OpenApiView（PAGE-090）", () => {
   it("渲染承诺横幅 + 分类导航 + 全部端点", () => {
-    render(<OpenApiView />);
+    renderOpenApi();
     expect(screen.getByText(/零私有内容泄露/)).toBeInTheDocument();
     expect(screen.getByRole("navigation", { name: "API 分类" })).toBeInTheDocument();
     // 6 个端点路径均出现
@@ -257,7 +269,7 @@ describe("OpenApiView（PAGE-090）", () => {
     expect(API_ENDPOINTS.length).toBeGreaterThanOrEqual(6);
   });
   it("首端点默认展开、其余收起（PAGE-090 States）", () => {
-    render(<OpenApiView />);
+    renderOpenApi();
     // 首卡（GET /api/modules）展开按钮 aria-expanded=true
     expect(
       screen.getByRole("button", { name: /收起 GET \/api\/modules/ })
@@ -279,7 +291,7 @@ describe("OpenApiView（PAGE-090）", () => {
     expect(container.textContent).not.toMatch(/contact/i);
   });
   it("空端点配置时回退空态（PAGE-090 States「空状态」）", () => {
-    render(<OpenApiView endpoints={[]} />);
+    renderOpenApi({ endpoints: [] });
     expect(screen.getByText(/文档加载失败/)).toBeInTheDocument();
   });
   it("所有 GET 标公开读、所有 POST 标需认证写，无公开写（验收 3）", () => {

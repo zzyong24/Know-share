@@ -17,35 +17,43 @@ export interface SkillCardProps {
 }
 
 export function SkillCard({ skill, onOpenDetail, onDocsClick }: SkillCardProps) {
-  const run = RUN_LOCATION_META[skill.runLocation];
+  // 防御：后端目录形状可能缺部分展示字段（与卡片契约偏差）——一律回退，绝不让整页错误边界。
+  const run = RUN_LOCATION_META[skill.runLocation] ?? {
+    tone: "neutral" as const,
+    label: skill.runLocation ?? "—",
+    icon: "smart_toy",
+  };
   const hasDocs = !!skill.docsUrl;
+  const displayName = skill.zhName ?? skill.name;
+  const glyph = skill.iconChip?.glyph ?? "smart_toy";
+  const glyphTone = skill.iconChip?.tone ?? "primary";
 
   return (
     <Card
       interactive
-      aria-label={`查看技能详情：${skill.zhName}`}
+      aria-label={`查看技能详情：${displayName}`}
       onClick={() => onOpenDetail?.(skill.slug)}
       header={
         <div className="flex items-start justify-between gap-2">
-          <IconChip icon={skill.iconChip.glyph} tone={skill.iconChip.tone} size="lg" />
+          <IconChip icon={glyph} tone={glyphTone} size="lg" />
           <StatusPill tone={run.tone} label={run.label} icon={run.icon} size="sm" />
         </div>
       }
     >
       <div className="flex flex-col gap-2">
         <div>
-          <h3 className="text-sm font-semibold text-text">{skill.zhName}</h3>
+          <h3 className="text-sm font-semibold text-text">{displayName}</h3>
           <p className="font-mono text-xs text-text-muted">{skill.name}</p>
         </div>
         <p className="text-sm text-text-muted">{skill.summary}</p>
         <dl className="flex flex-col gap-1 text-xs text-text-muted">
           <div className="flex gap-1">
             <dt className="shrink-0 font-medium text-text">输入</dt>
-            <dd>{skill.input}</dd>
+            <dd>{skill.input ?? "—"}</dd>
           </div>
           <div className="flex gap-1">
             <dt className="shrink-0 font-medium text-text">输出</dt>
-            <dd>{skill.output}</dd>
+            <dd>{skill.output ?? "—"}</dd>
           </div>
         </dl>
         <div

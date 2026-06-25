@@ -9,6 +9,7 @@ import { eq } from "drizzle-orm";
 import { getDb } from "@/server/db/client";
 import * as schema from "@/server/db/schema";
 import { assertNoForbidden } from "@/server/projection";
+import type { Tone } from "@/lib/types";
 
 /** 前端目录消费形状（对齐 src/mocks/fixtures/agent-skills.ts AgentSkillDetail 的核心字段）。 */
 export interface SkillDetailDto {
@@ -26,7 +27,7 @@ export interface SkillDetailDto {
 
 export interface SkillCatalogDto {
   skills: SkillDetailDto[];
-  sources: { id: string; name: string }[];
+  sources: { id: string; name: string; iconChip: { glyph: string; tone: Tone } }[];
   flowSteps: { id: string; label: string }[];
   exampleCommands: { skillId: string; label: string; command: string }[];
   install: { mcpConfig: string; skillInstallText: string };
@@ -34,15 +35,15 @@ export interface SkillCatalogDto {
 }
 
 /* 静态目录区块（平台只读文档；占位包名/命令，无密钥/私有 URL，INV-01/04）。 */
-const SUPPORTED_SOURCES = [
-  { id: "obsidian", name: "Obsidian" },
-  { id: "logseq", name: "Logseq" },
-  { id: "notion", name: "Notion" },
-  { id: "markdown", name: "MarkDown" },
-  { id: "yuque", name: "语雀" },
-  { id: "feishu", name: "飞书文档" },
-  { id: "local-folder", name: "本地文件夹" },
-  { id: "custom", name: "其他自定义格式" },
+const SUPPORTED_SOURCES: SkillCatalogDto["sources"] = [
+  { id: "obsidian", name: "Obsidian", iconChip: { glyph: "description", tone: "accent" } },
+  { id: "logseq", name: "Logseq", iconChip: { glyph: "inventory_2", tone: "info" } },
+  { id: "notion", name: "Notion", iconChip: { glyph: "folder", tone: "neutral" } },
+  { id: "markdown", name: "MarkDown", iconChip: { glyph: "code", tone: "primary" } },
+  { id: "yuque", name: "语雀", iconChip: { glyph: "label", tone: "success" } },
+  { id: "feishu", name: "飞书文档", iconChip: { glyph: "forum", tone: "info" } },
+  { id: "local-folder", name: "本地文件夹", iconChip: { glyph: "folder", tone: "warning" } },
+  { id: "custom", name: "其他自定义格式", iconChip: { glyph: "auto_awesome", tone: "accent" } },
 ];
 
 const FLOW_STEPS = [

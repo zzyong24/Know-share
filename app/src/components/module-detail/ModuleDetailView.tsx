@@ -23,7 +23,7 @@ import { ManifestPreview } from "./ManifestPreview";
 import { TrustSignalAside } from "./TrustSignalAside";
 import { RequestExchangeCTA } from "./RequestExchangeCTA";
 
-const AUDIT_RULES_URL = "https://github.com/know-share/rules#privacy";
+const AUDIT_RULES_URL = "/docs/rules";
 
 export interface ModuleDetailViewProps {
   moduleId: string;

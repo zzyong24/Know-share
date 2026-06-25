@@ -16,6 +16,10 @@ import {
   validateManifest,
   uploadManifest,
   pickToken,
+  getAuthedLogin,
+  createPrivateRepo,
+  putRepoFile,
+  inviteCollaborator,
 } from "./lib.mjs";
 import { MANIFEST_SCHEMA } from "./schema.mjs";
 
@@ -258,6 +262,61 @@ async function cmdUpload(args) {
   }
 }
 
+async function cmdPackageRepo(args) {
+  const token = await resolveToken(args);
+  const name = (typeof args.repo === "string" && args.repo) || args._[0];
+  const invite = typeof args.invite === "string" ? args.invite : undefined;
+  const source = typeof args.source === "string" ? args.source : undefined;
+  if (!token)
+    throw new Error(
+      "未取得 token（同 upload：--token / gh auth login / know-share login）。建私有仓库需 token 具备 repo 权限。"
+    );
+  if (!name)
+    throw new Error(
+      "用法：know-share package-private-repo --repo <仓库名> [--invite <对方GitHub用户名>] [--source <脱敏内容目录>]"
+    );
+
+  const owner = await getAuthedLogin({ token });
+  if (!owner) throw new Error("token 无效或无权限：无法确认 GitHub 身份（需 repo 权限）。");
+
+  process.stdout.write(`创建私有仓库 ${owner}/${name} …\n`);
+  const created = await createPrivateRepo({ token, name });
+  if (created.status !== 201) {
+    throw new Error(
+      `建仓失败 [${created.status}]：${created.body.message || ""}（仓库名可能已存在）`
+    );
+  }
+  const repoUrl = created.body.html_url || `https://github.com/${owner}/${name}`;
+
+  // 可选：上传脱敏内容（交付物应已脱敏；平台外、点对点）。
+  if (source) {
+    const files = await readTextFiles(source);
+    if (!files.length) throw new Error(`目录无文本文件：${source}`);
+    let ok = 0;
+    for (const f of files) {
+      const r = await putRepoFile({ token, owner, repo: name, path: f.name, content: f.text });
+      if (r.status === 201 || r.status === 200) ok++;
+      else process.stderr.write(`  ⚠ 上传 ${f.name} 失败 [${r.status}]：${r.body.message || ""}\n`);
+    }
+    process.stdout.write(`已上传 ${ok}/${files.length} 个文件到私有仓库。\n`);
+  }
+
+  // 可选：邀请对方为只读协作者。
+  if (invite) {
+    const inv = await inviteCollaborator({ token, owner, repo: name, username: invite });
+    if (inv.status === 201)
+      process.stdout.write(`已邀请 @${invite} 为只读协作者（对方需在 GitHub 接受邀请）。\n`);
+    else if (inv.status === 204) process.stdout.write(`@${invite} 已是协作者。\n`);
+    else process.stderr.write(`⚠ 邀请失败 [${inv.status}]：${inv.body.message || ""}\n`);
+  }
+
+  process.stdout.write(
+    `✓ 私有交付仓库就绪：${repoUrl}\n` +
+      "边界：内容只在你与对方之间，平台不经手（INV-01）；对方接受邀请后即可只读访问。\n" +
+      (invite ? "" : "提示：加 --invite <对方GitHub用户名> 可直接邀请只读访问。\n")
+  );
+}
+
 const HELP = `know-share —— 本机知识模块发布工具（脱敏清单，不上传原文）
 
   know-share login    --client-id <OAuth App Client ID>   # 一次性浏览器授权，存凭据到 ~/.know-share
@@ -265,6 +324,7 @@ const HELP = `know-share —— 本机知识模块发布工具（脱敏清单，
   know-share redact   --input <目录> --out <目录>
   know-share validate <manifest.json> [--api <平台地址>]
   know-share upload   <manifest.json> --api <平台地址> [--token <token>]
+  know-share package-private-repo --repo <名> [--invite <对方GitHub用户名>] [--source <脱敏内容目录>]   # 私下交付：建私有仓库+邀请只读
 
 token 解析顺序（upload）：--token → KNOWSHARE_TOKEN/GITHUB_TOKEN → \`gh auth token\` → ~/.know-share 凭据。
   · 装了 GitHub CLI 并 \`gh auth login\` → 直接可用，无需手动 token。
@@ -284,6 +344,7 @@ async function main() {
       case "redact": await cmdRedact(args); break;
       case "validate": await cmdValidate(args); break;
       case "upload": await cmdUpload(args); break;
+      case "package-private-repo": await cmdPackageRepo(args); break;
       case "help": case "--help": case "-h": case undefined:
         process.stdout.write(HELP + "\n"); break;
       default:

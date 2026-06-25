@@ -136,3 +136,49 @@ test("pickToken：优先级 显式 > env > gh > 存储；全空→null", () => {
   assert.equal(pickToken({ explicit: "  ", env: " x " }), "x"); // 空白跳过+trim
   assert.equal(pickToken({}), null);
 });
+
+import { createPrivateRepo, putRepoFile, inviteCollaborator, getAuthedLogin } from "../src/lib.mjs";
+
+// 假 fetch：记录请求并按预设返回。
+function fakeFetch(routes) {
+  const calls = [];
+  const fn = async (url, init = {}) => {
+    calls.push({ url, method: init.method || "GET", body: init.body ? JSON.parse(init.body) : undefined, headers: init.headers });
+    const key = `${init.method || "GET"} ${url}`;
+    const r = routes[key] ?? { status: 404, json: {} };
+    return { status: r.status, json: async () => r.json };
+  };
+  fn.calls = calls;
+  return fn;
+}
+
+test("createPrivateRepo：POST /user/repos，private=true、auto_init", async () => {
+  const f = fakeFetch({ "POST https://api.github.com/user/repos": { status: 201, json: { html_url: "https://github.com/me/r" } } });
+  const r = await createPrivateRepo({ token: "t", name: "r", fetchImpl: f });
+  assert.equal(r.status, 201);
+  assert.equal(f.calls[0].body.private, true);
+  assert.equal(f.calls[0].body.auto_init, true);
+  assert.equal(f.calls[0].body.name, "r");
+  assert.match(f.calls[0].headers.Authorization, /^Bearer t$/);
+});
+
+test("inviteCollaborator：PUT collaborators/:user，默认只读 pull", async () => {
+  const f = fakeFetch({ "PUT https://api.github.com/repos/me/r/collaborators/bob": { status: 201, json: {} } });
+  const r = await inviteCollaborator({ token: "t", owner: "me", repo: "r", username: "bob", fetchImpl: f });
+  assert.equal(r.status, 201);
+  assert.equal(f.calls[0].body.permission, "pull");
+});
+
+test("putRepoFile：PUT contents，内容 base64 编码、保留子目录路径", async () => {
+  const f = fakeFetch({ "PUT https://api.github.com/repos/me/r/contents/a/b.md": { status: 201, json: {} } });
+  const r = await putRepoFile({ token: "t", owner: "me", repo: "r", path: "a/b.md", content: "你好", fetchImpl: f });
+  assert.equal(r.status, 201);
+  assert.equal(Buffer.from(f.calls[0].body.content, "base64").toString("utf8"), "你好");
+});
+
+test("getAuthedLogin：GET /user 取 login；非 200→null", async () => {
+  const ok = fakeFetch({ "GET https://api.github.com/user": { status: 200, json: { login: "me" } } });
+  assert.equal(await getAuthedLogin({ token: "t", fetchImpl: ok }), "me");
+  const bad = fakeFetch({ "GET https://api.github.com/user": { status: 401, json: {} } });
+  assert.equal(await getAuthedLogin({ token: "x", fetchImpl: bad }), null);
+});

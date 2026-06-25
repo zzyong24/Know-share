@@ -175,3 +175,68 @@ export function pickToken({ explicit, env, gh, stored } = {}) {
   }
   return null;
 }
+
+/* ── GitHub API：私下交付（建私有仓库 + 上传脱敏内容 + 邀请只读协作者）──────────
+   仅用于「所有者把自己的脱敏内容线下点对点交付给对方」(平台外)；平台不经手内容（INV-01）。
+   所有函数接受 fetchImpl 便于测试注入。 */
+const GH_API = "https://api.github.com";
+
+async function ghFetch(path, { token, method = "GET", body, fetchImpl } = {}) {
+  const doFetch = fetchImpl || fetch;
+  const res = await doFetch(`${GH_API}${path}`, {
+    method,
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: "application/vnd.github+json",
+      "User-Agent": "know-share",
+      ...(body ? { "Content-Type": "application/json" } : {}),
+    },
+    ...(body ? { body: JSON.stringify(body) } : {}),
+  });
+  const json = await res.json().catch(() => ({}));
+  return { status: res.status, body: json };
+}
+
+/** 当前 token 对应的 GitHub 用户名（无效 → null）。 */
+export async function getAuthedLogin({ token, fetchImpl } = {}) {
+  const { status, body } = await ghFetch("/user", { token, fetchImpl });
+  return status === 200 && body.login ? body.login : null;
+}
+
+/** 创建私有仓库（auto_init 带 README）。201=成功。 */
+export async function createPrivateRepo({ token, name, description, fetchImpl } = {}) {
+  return ghFetch("/user/repos", {
+    token,
+    method: "POST",
+    fetchImpl,
+    body: {
+      name,
+      description:
+        description ?? "Know-share 私下交换交付（脱敏内容，仅授权对方可见）",
+      private: true,
+      auto_init: true,
+    },
+  });
+}
+
+/** 上传单个文本文件到仓库（contents API；按段编码路径，保留子目录）。 */
+export async function putRepoFile({ token, owner, repo, path, content, message, fetchImpl } = {}) {
+  const encoded = String(path).split("/").map(encodeURIComponent).join("/");
+  const b64 = Buffer.from(content, "utf8").toString("base64");
+  return ghFetch(`/repos/${owner}/${repo}/contents/${encoded}`, {
+    token,
+    method: "PUT",
+    fetchImpl,
+    body: { message: message ?? `add ${path}`, content: b64 },
+  });
+}
+
+/** 邀请只读协作者（permission 默认 pull）。201=已发邀请，204=已是协作者。 */
+export async function inviteCollaborator({ token, owner, repo, username, permission = "pull", fetchImpl } = {}) {
+  return ghFetch(`/repos/${owner}/${repo}/collaborators/${encodeURIComponent(username)}`, {
+    token,
+    method: "PUT",
+    fetchImpl,
+    body: { permission },
+  });
+}

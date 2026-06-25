@@ -25,7 +25,11 @@ vi.mock("next/navigation", () => ({
   useRouter: () => ({ push: pushMock }),
 }));
 
-const server = setupServer(...moduleDetailHandlers);
+const server = setupServer(
+  ...moduleDetailHandlers,
+  // ModuleDetailView 现在用 useSession；默认匿名（owner 自看的用例经 currentUser prop 覆盖）。
+  http.get("/api/session", () => HttpResponse.json(null))
+);
 
 beforeAll(() => server.listen({ onUnhandledRequest: "error" }));
 afterEach(() => {

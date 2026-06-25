@@ -13,6 +13,7 @@ import {
   notify,
 } from "@/components/shared";
 import { useModuleDetail } from "@/lib/queries/module-detail";
+import { useSession } from "@/lib/queries/session";
 import { useFavoriteModule, useEndorseUser, useReport } from "@/lib/queries/community";
 import { ModuleDetailLayout } from "./ModuleDetailLayout";
 import { ModuleSummaryHeader } from "./ModuleSummaryHeader";
@@ -34,11 +35,17 @@ export interface ModuleDetailViewProps {
 
 export function ModuleDetailView({
   moduleId,
-  isAuthenticated = false,
-  currentUser,
+  isAuthenticated: isAuthedProp,
+  currentUser: currentUserProp,
 }: ModuleDetailViewProps) {
   const router = useRouter();
+  const { data: session } = useSession();
   const { data, isLoading, isError } = useModuleDetail(moduleId);
+
+  // 真实登录态：页面未显式传 props 时从会话取（修复登录的作者本人看自己草稿被「仅作者可预览」挡、
+  // 以及收藏/认可/发起交换误提示「请先登录」）。测试可经 props 覆盖。
+  const isAuthenticated = isAuthedProp ?? !!session?.login;
+  const currentUser = currentUserProp ?? session?.login ?? undefined;
 
   const [favorited, setFavorited] = useState(false);
   const [endorsed, setEndorsed] = useState(false);

@@ -121,13 +121,18 @@ export interface SubmitResult {
 }
 
 // ── 草稿：恢复 / 新建（COMP-070）────────────────────────────────────
-export function useSubmissionDraft(submissionId: string | null) {
+export function useSubmissionDraft(
+  submissionId: string | null,
+  opts: { enabled?: boolean } = {}
+) {
   return useQuery({
     queryKey: submissionKeys.draft(submissionId),
     queryFn: () =>
       apiFetch<SubmissionDraft>(
         submissionId ? `/api/submissions/${submissionId}` : "/api/submissions/draft"
       ),
+    // 草稿端点需登录；未登录不发起请求，避免 401 误报「加载草稿失败」。
+    enabled: opts.enabled ?? true,
   });
 }
 

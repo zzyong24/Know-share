@@ -28,6 +28,8 @@ import {
   type Step1Value,
   type StructureResult,
 } from "@/lib/queries/submission";
+import { useSession } from "@/lib/queries/session";
+import { SecondaryButton } from "@/components/shared";
 
 /*
   COMP-070 SubmitWizard（向导外壳与状态编排者，PAGE-020~024）。
@@ -67,7 +69,10 @@ function hashManifest(m: ManifestDraft | null): string {
 
 export function SubmitWizard({ submissionId, initialStep }: SubmitWizardProps) {
   const router = useRouter();
-  const draftQuery = useSubmissionDraft(submissionId);
+  const { data: session, isLoading: sessionLoading } = useSession();
+  const isAuthed = !!session?.login;
+  // 草稿端点需登录；未登录不发起（避免 401 误报「加载草稿失败」）。
+  const draftQuery = useSubmissionDraft(submissionId, { enabled: isAuthed });
   const skillsQuery = useSubmissionSkills();
   const scanMutation = useRunPrivacyScan();
   const submitMutation = useSubmitSubmission();
@@ -272,6 +277,30 @@ export function SubmitWizard({ submissionId, initialStep }: SubmitWizardProps) {
     if (target.index < currentStep) goToStep(target.index);
   };
 
+  if (sessionLoading) {
+    return (
+      <div aria-live="polite" aria-busy>
+        <SkeletonBlock variant="card" count={2} />
+      </div>
+    );
+  }
+  // 未登录：提交是私域动作（需 GitHub 身份 + 同意门），引导登录而非报错。
+  if (!isAuthed) {
+    return (
+      <div className="rounded-card border border-border bg-surface p-6 text-center">
+        <h1 className="text-lg font-semibold text-text">提交模块需先登录</h1>
+        <p className="mx-auto mt-2 max-w-md text-sm text-text-muted">
+          发布脱敏模块属于私域动作，需用 GitHub 登录以确认身份与同意边界（NFR-005）。
+          请用右上角「用 GitHub 登录」后再来提交。
+        </p>
+        <div className="mt-4">
+          <SecondaryButton iconLeft="arrow_back" onClick={() => router.push("/")}>
+            返回发现页
+          </SecondaryButton>
+        </div>
+      </div>
+    );
+  }
   if (draftQuery.isLoading) {
     return (
       <div aria-live="polite" aria-busy>

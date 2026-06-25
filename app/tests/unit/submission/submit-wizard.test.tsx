@@ -12,7 +12,18 @@ import { scanBlock } from "@/mocks/fixtures/submission";
   覆盖：步进、第 2 步生成 + 结构校验、第 3 步隐私门 block 不可绕过 / pass 推进、提交成功。
   toast 走 sonner，jsdom 下不渲染弹层，忽略副作用即可。
 */
-const server = setupServer(...submissionHandlers);
+const server = setupServer(
+  ...submissionHandlers,
+  // SubmitWizard 现在用 useSession 门控（未登录显示登录引导）；测试注入已登录会话。
+  http.get("/api/session", () =>
+    HttpResponse.json({
+      login: "test-user",
+      avatarUrl: "",
+      isAdmin: false,
+      verified: true,
+    })
+  )
+);
 
 let currentParams = new URLSearchParams();
 const pushMock = vi.fn();

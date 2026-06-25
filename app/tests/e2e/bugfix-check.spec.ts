@@ -21,11 +21,14 @@ test("开发页统计走真实 /api/stats，不再显示写死的假数 5,120", 
   await expect(page.getByText("零私有内容泄露")).toBeVisible();
 });
 
-test("技能页 /skills 正常渲染，不落错误边界", async ({ page }) => {
+test("技能页 /skills 正常渲染并展示规范技能（非空、不报错）", async ({ page }) => {
   await page.goto("/skills");
   await page.waitForLoadState("networkidle");
 
   await expect(page.getByRole("heading", { name: "Agent 技能" })).toBeVisible();
   // 不应出现错误边界/加载失败文案。
   await expect(page.getByText(/出错了|Application error|加载失败/)).toHaveCount(0);
+  // 静态规范技能目录应展示（不再空白/「暂不可用」）。
+  await expect(page.getByText("创建脱敏清单")).toBeVisible();
+  await expect(page.getByText("验证清单合规")).toBeVisible();
 });

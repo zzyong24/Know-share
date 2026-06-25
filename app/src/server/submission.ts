@@ -355,6 +355,8 @@ export async function createSubmissionFromManifest(
       status: "Draft",
       step: 5,
       draftData: {
+        // 顶层 moduleTitle 对齐草稿列表投影（account.ts），否则显示「未命名草稿」。
+        moduleTitle: m.title,
         module: {
           title: m.title,
           oneLineIntent: m.summary,

@@ -4,7 +4,7 @@
   "description": "Know-share 本机 Skill：扫描知识库 → 脱敏 → 校验 → 上传脱敏清单（不上传原文）",
   "type": "module",
   "bin": {
-    "know-share": "./src/cli.mjs"
+    "know-share": "src/cli.mjs"
   },
   "exports": {
     ".": "./src/lib.mjs"

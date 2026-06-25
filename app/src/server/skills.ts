@@ -73,7 +73,7 @@ const MCP_CONFIG_JSON = JSON.stringify(
   2
 );
 
-const SKILL_INSTALL_TEXT = "npm install -g know-share\nknow-share --help";
+const SKILL_INSTALL_TEXT = "npm install -g know-share-mcp\nknow-share --help";
 
 const CORE_PRINCIPLE = {
   title: "Know-share 的核心原则",

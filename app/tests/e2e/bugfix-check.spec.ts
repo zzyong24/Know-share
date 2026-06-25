@@ -21,6 +21,15 @@ test("开发页统计走真实 /api/stats，不再显示写死的假数 5,120", 
   await expect(page.getByText("零私有内容泄露")).toBeVisible();
 });
 
+test("用户菜单「个人中心」可跳转 /me（修复菜单键 me/profile 不匹配）", async ({ page }) => {
+  await page.goto("/");
+  await page.waitForLoadState("networkidle");
+  // 头像按钮（登录态；dev 会话注入），aria-label 含「用户菜单」。
+  await page.getByRole("button", { name: /用户菜单/ }).click();
+  await page.getByRole("menuitem", { name: "个人中心" }).click();
+  await expect(page).toHaveURL(/\/me$/);
+});
+
 test("技能页 /skills 正常渲染并展示规范技能（非空、不报错）", async ({ page }) => {
   await page.goto("/skills");
   await page.waitForLoadState("networkidle");

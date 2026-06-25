@@ -76,6 +76,7 @@ export function SiteShell({ children, containerWidth, sidebar }: SiteShellProps)
 
   const handleMenuSelect = (key: string) => {
     const map: Record<string, string> = {
+      me: "/me", // 用户菜单「个人中心」发出的是 "me"（此前误写 profile，导致点击无反应）
       profile: "/me",
       settings: "/settings",
       admin: "/admin",

@@ -13,10 +13,13 @@ export interface RequestExchangeCTAProps {
   exchangeIntent?: string;
   isAuthenticated: boolean;
   isOwnerViewing: boolean;
+  /** 生命周期：作者看自己「Draft」时给「去发布」而非「请求交换/已发布」。 */
+  lifecycleState?: "Published" | "Draft" | "Delisted" | "NotFound";
   activeExchange?: { exchangeId: string };
   contactCommitmentText?: string;
   onRequestExchange?: () => void;
   onViewActiveExchange?: () => void;
+  onPublish?: () => void;
   onRequireLogin?: () => void;
 }
 
@@ -27,12 +30,15 @@ export function RequestExchangeCTA({
   exchangeIntent,
   isAuthenticated,
   isOwnerViewing,
+  lifecycleState,
   activeExchange,
   contactCommitmentText,
   onRequestExchange,
   onViewActiveExchange,
+  onPublish,
   onRequireLogin,
 }: RequestExchangeCTAProps) {
+  const isOwnerDraft = isOwnerViewing && lifecycleState === "Draft";
   const handleRequest = () => {
     if (!isAuthenticated) {
       onRequireLogin?.();
@@ -52,7 +58,11 @@ export function RequestExchangeCTA({
         )}
 
         {/* 主 CTA：同屏唯一主色实心按钮（UI_RULES） */}
-        {isOwnerViewing ? (
+        {isOwnerDraft ? (
+          <PrimaryButton fullWidth size="lg" iconLeft="publish" onClick={onPublish}>
+            去提交发布
+          </PrimaryButton>
+        ) : isOwnerViewing ? (
           <PrimaryButton fullWidth disabled aria-disabled>
             这是你发布的模块
           </PrimaryButton>
@@ -78,7 +88,9 @@ export function RequestExchangeCTA({
 
         {isOwnerViewing && (
           <p className="text-xs text-text-muted">
-            你不能向自己的模块发起交换请求。
+            {isOwnerDraft
+              ? "这是你的草稿，仅你可见；提交并通过审核后才会公开。"
+              : "你不能向自己的模块发起交换请求。"}
           </p>
         )}
 

@@ -205,7 +205,9 @@ export function ModuleDetailView({
                 exchangeIntent={fullManifest.exchange_intent}
                 isAuthenticated={isAuthenticated}
                 isOwnerViewing={isOwnerViewing}
+                lifecycleState={lifecycleState}
                 onRequestExchange={handleRequestExchange}
+                onPublish={() => router.push("/me/drafts")}
                 onRequireLogin={requireLogin}
               />
             </>

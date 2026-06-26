@@ -89,3 +89,22 @@ describe("ModuleCard（COMP-010）", () => {
     expect(screen.queryByText("Agent 记忆系统")).not.toBeInTheDocument();
   });
 });
+
+describe("ModuleCard 本人自看（isOwner，个人中心「我的模块」）", () => {
+  it("owner + 草稿 → 显示「去提交发布」，不显示「请求交换」", () => {
+    render(
+      <ModuleCard
+        module={{ ...baseModule, status: "Draft" }}
+        href="/modules/m-1"
+        isOwner
+        onOwnerPublish={() => {}}
+      />
+    );
+    expect(screen.getByRole("button", { name: /提交发布/ })).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: /请求交换/ })).not.toBeInTheDocument();
+  });
+  it("owner + 已发布 → 不显示「请求交换」", () => {
+    render(<ModuleCard module={{ ...baseModule, status: "Published" }} href="/modules/m-1" isOwner />);
+    expect(screen.queryByRole("button", { name: /请求交换/ })).not.toBeInTheDocument();
+  });
+});

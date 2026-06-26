@@ -104,6 +104,11 @@ export function MeDashboardView({ section }: MeDashboardViewProps) {
                 router.push(`/modules/${id}`);
                 return;
               }
+              if (action === "publish") {
+                // 草稿模块「去提交发布」→ 草稿区走同意门提交审核（NFR-005）。
+                router.push("/me/drafts");
+                return;
+              }
               if (action === "delist") {
                 delistModule.mutate(id, {
                   onSuccess: () => notify("模块已下架，不再公开可见。", "success"),

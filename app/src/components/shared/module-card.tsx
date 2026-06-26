@@ -32,7 +32,10 @@ export interface ModuleCardProps {
   favorited?: boolean;
   loading?: boolean;
   isAuthenticated?: boolean;
+  /** 本人自看（个人中心「我的模块」）：不显示「请求交换」（不会跟自己换）；草稿给「去提交发布」。 */
+  isOwner?: boolean;
   onRequestExchange?: (moduleId: string) => void;
+  onOwnerPublish?: (moduleId: string) => void;
   onFavorite?: (moduleId: string) => void;
   onRequireAuth?: () => void;
 }
@@ -45,7 +48,9 @@ export function ModuleCard({
   favorited = false,
   loading = false,
   isAuthenticated = false,
+  isOwner = false,
   onRequestExchange,
+  onOwnerPublish,
   onFavorite,
   onRequireAuth,
 }: ModuleCardProps) {
@@ -112,13 +117,26 @@ export function ModuleCard({
               <Icon name="favorite" size={16} aria-hidden className={favorited ? "text-danger" : ""} />
               <span className="text-xs tabular-nums">{safe.favoriteCount}</span>
             </button>
-            <PrimaryButton
-              size="sm"
-              aria-label={`请求交换 ${safe.title}`}
-              onClick={handleRequest}
-            >
-              请求交换
-            </PrimaryButton>
+            {isOwner ? (
+              safe.status === "Draft" ? (
+                <PrimaryButton
+                  size="sm"
+                  iconLeft="send"
+                  aria-label={`提交发布 ${safe.title}`}
+                  onClick={() => onOwnerPublish?.(safe.id)}
+                >
+                  去提交发布
+                </PrimaryButton>
+              ) : null
+            ) : (
+              <PrimaryButton
+                size="sm"
+                aria-label={`请求交换 ${safe.title}`}
+                onClick={handleRequest}
+              >
+                请求交换
+              </PrimaryButton>
+            )}
           </div>
         </div>
       }

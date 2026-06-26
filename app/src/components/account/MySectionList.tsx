@@ -35,7 +35,7 @@ export interface MySectionListProps {
   loading?: boolean;
   error?: boolean;
   hasMore?: boolean;
-  onModuleAction?: (id: string, action: "edit" | "viewPublic" | "delist") => void;
+  onModuleAction?: (id: string, action: "edit" | "viewPublic" | "delist" | "publish") => void;
   onDraftAction?: (id: string, action: "continue" | "delete") => void;
   onExchangeOpen?: (id: string) => void;
   onFavoriteToggle?: (moduleId: string, on: boolean) => void;
@@ -265,12 +265,16 @@ export function MySectionList({
               href={`/modules/${m.id}`}
               favorited={section === "favorites"}
               isAuthenticated
+              // 「我的模块」是本人自己的 → 自看（不显示请求交换；草稿给去发布）。
+              // 「收藏」是别人的模块 → 可请求交换。
+              isOwner={section === "modules"}
               onFavorite={(id) =>
                 section === "favorites"
                   ? setPending({ kind: "unfavorite", id, title: m.title })
                   : onFavoriteToggle?.(id, true)
               }
               onRequestExchange={() => onModuleAction?.(m.id, "viewPublic")}
+              onOwnerPublish={() => onModuleAction?.(m.id, "publish")}
             />
           ))}
         </div>

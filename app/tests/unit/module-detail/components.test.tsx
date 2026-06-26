@@ -307,6 +307,24 @@ describe("RequestExchangeCTA（COMP-056）", () => {
     ).toBeDisabled();
   });
 
+  it("owner 自看自己的草稿 → 主 CTA「发布」并触发 onPublish（一键直发）", async () => {
+    const onPublish = vi.fn();
+    render(
+      <RequestExchangeCTA
+        moduleId="m"
+        isAuthenticated
+        isOwnerViewing
+        lifecycleState="Draft"
+        onPublish={onPublish}
+      />
+    );
+    expect(
+      screen.queryByRole("button", { name: /请求交换/ })
+    ).not.toBeInTheDocument();
+    await userEvent.click(screen.getByRole("button", { name: "发布" }));
+    expect(onPublish).toHaveBeenCalledTimes(1);
+  });
+
   it("有进行中交换改为「查看进行中的交换」", () => {
     render(
       <RequestExchangeCTA

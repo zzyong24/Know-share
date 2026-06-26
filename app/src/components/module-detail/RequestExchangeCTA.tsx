@@ -60,7 +60,7 @@ export function RequestExchangeCTA({
         {/* 主 CTA：同屏唯一主色实心按钮（UI_RULES） */}
         {isOwnerDraft ? (
           <PrimaryButton fullWidth size="lg" iconLeft="publish" onClick={onPublish}>
-            去提交发布
+            发布
           </PrimaryButton>
         ) : isOwnerViewing ? (
           <PrimaryButton fullWidth disabled aria-disabled>
@@ -89,7 +89,7 @@ export function RequestExchangeCTA({
         {isOwnerViewing && (
           <p className="text-xs text-text-muted">
             {isOwnerDraft
-              ? "这是你的草稿，仅你可见；提交并通过审核后才会公开。"
+              ? "这是你的草稿，仅你可见；点「发布」并确认后即公开（仅脱敏清单，不含原文）。"
               : "你不能向自己的模块发起交换请求。"}
           </p>
         )}

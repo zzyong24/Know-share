@@ -15,6 +15,7 @@ import {
 import { useModuleDetail } from "@/lib/queries/module-detail";
 import { useSession } from "@/lib/queries/session";
 import { useFavoriteModule, useEndorseUser, useReport } from "@/lib/queries/community";
+import { usePublishModule } from "@/lib/queries/account";
 import { ModuleDetailLayout } from "./ModuleDetailLayout";
 import { ModuleSummaryHeader } from "./ModuleSummaryHeader";
 import { SourceStatsPanel } from "./SourceStatsPanel";
@@ -40,7 +41,7 @@ export function ModuleDetailView({
 }: ModuleDetailViewProps) {
   const router = useRouter();
   const { data: session } = useSession();
-  const { data, isLoading, isError } = useModuleDetail(moduleId);
+  const { data, isLoading, isError, refetch } = useModuleDetail(moduleId);
 
   // 真实登录态：页面未显式传 props 时从会话取（修复登录的作者本人看自己草稿被「仅作者可预览」挡、
   // 以及收藏/认可/发起交换误提示「请先登录」）。测试可经 props 覆盖。
@@ -50,12 +51,25 @@ export function ModuleDetailView({
   const [favorited, setFavorited] = useState(false);
   const [endorsed, setEndorsed] = useState(false);
   const [reportOpen, setReportOpen] = useState(false);
+  const [publishOpen, setPublishOpen] = useState(false);
 
-  // 写动作接线（DEC-018）：收藏 / 认可 / 举报 / 发起交换走真实 mutation（MSW mock 可用）。
+  // 写动作接线（DEC-018）：收藏 / 认可 / 举报 / 发起交换 / 发布走真实 mutation（MSW mock 可用）。
   const favorite = useFavoriteModule(moduleId);
   const ownerHandle = data?.owner.handle ?? "";
   const endorse = useEndorseUser(ownerHandle);
   const report = useReport();
+  const publishModule = usePublishModule();
+
+  // 作者一键发布自己的草稿（Agent 编辑、人来确认；NFR-005 由本确认门兑现）：直发 Published 后刷新本页。
+  const handlePublish = () => {
+    publishModule.mutate(moduleId, {
+      onSuccess: () => {
+        notify("已发布，现已在公开发现页可见。", "success");
+        refetch();
+      },
+      onError: () => notify("发布失败，请稍后重试。", "error"),
+    });
+  };
 
   const requireLogin = () =>
     notify("请先用 GitHub 登录后再操作", "info");
@@ -207,7 +221,7 @@ export function ModuleDetailView({
                 isOwnerViewing={isOwnerViewing}
                 lifecycleState={lifecycleState}
                 onRequestExchange={handleRequestExchange}
-                onPublish={() => router.push("/me/drafts")}
+                onPublish={() => setPublishOpen(true)}
                 onRequireLogin={requireLogin}
               />
             </>
@@ -234,6 +248,19 @@ export function ModuleDetailView({
         }}
         onCancel={() => setReportOpen(false)}
         onOpenChange={setReportOpen}
+      />
+
+      <ConfirmDialog
+        open={publishOpen}
+        title="发布该模块？"
+        description="发布后将进入公开发现页、任何人可见（仅脱敏清单，不含原文）。这是你对公开的明确同意（NFR-005）。"
+        confirmLabel="发布"
+        onConfirm={() => {
+          setPublishOpen(false);
+          handlePublish();
+        }}
+        onCancel={() => setPublishOpen(false)}
+        onOpenChange={setPublishOpen}
       />
     </>
   );

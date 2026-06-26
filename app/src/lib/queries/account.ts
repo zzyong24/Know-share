@@ -85,6 +85,20 @@ export function useDelistModule() {
   });
 }
 
+/** 一键发布自己的草稿模块（POST /api/modules/:id/publish；Draft→Published）。 */
+export function usePublishModule() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) =>
+      apiFetch(`/api/modules/${id}/publish`, { method: "POST" }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: accountKeys.section("modules") });
+      qc.invalidateQueries({ queryKey: accountKeys.section("drafts") });
+      qc.invalidateQueries({ queryKey: accountKeys.dashboard });
+    },
+  });
+}
+
 /** 对自己模块发起编辑：建草稿，返回草稿 id（前端跳 /submit?draft=:id）。 */
 export function useCreateEditDraft() {
   return useMutation({

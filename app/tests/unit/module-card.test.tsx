@@ -91,7 +91,7 @@ describe("ModuleCard（COMP-010）", () => {
 });
 
 describe("ModuleCard 本人自看（isOwner，个人中心「我的模块」）", () => {
-  it("owner + 草稿 → 显示「去提交发布」，不显示「请求交换」", () => {
+  it("owner + 草稿 → 显示「发布」，不显示「请求交换」", () => {
     render(
       <ModuleCard
         module={{ ...baseModule, status: "Draft" }}
@@ -100,7 +100,7 @@ describe("ModuleCard 本人自看（isOwner，个人中心「我的模块」）"
         onOwnerPublish={() => {}}
       />
     );
-    expect(screen.getByRole("button", { name: /提交发布/ })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /发布/ })).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: /请求交换/ })).not.toBeInTheDocument();
   });
   it("owner + 已发布 → 不显示「请求交换」", () => {

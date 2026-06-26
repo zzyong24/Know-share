@@ -11,6 +11,7 @@ import { eq } from "drizzle-orm";
 
 import { POST as delistRoute } from "@/app/api/modules/[id]/delist/route";
 import { POST as editDraftRoute } from "@/app/api/modules/[id]/edit-draft/route";
+import { POST as publishRoute } from "@/app/api/modules/[id]/publish/route";
 
 let h: Harness;
 
@@ -179,5 +180,44 @@ describe("POST /api/modules/:id/edit-draft —— 本人发起编辑", () => {
     expect(
       (await editDraftRoute(post(`/api/modules/${id}/edit-draft`), ctx(id))).status
     ).toBe(401);
+  });
+});
+
+describe("POST /api/modules/:id/publish —— 本人一键发布草稿", () => {
+  it("本人发布自己的草稿 → 200，status=Published，写 audit", async () => {
+    const uid = await seedUser(OWNER.login);
+    const id = await seedModule(uid, "Draft");
+    h.setSession(OWNER);
+    const res = await publishRoute(post(`/api/modules/${id}/publish`), ctx(id));
+    expect(res.status).toBe(200);
+    const [mod] = await h.db
+      .select()
+      .from(schema.knowledgeModules)
+      .where(eq(schema.knowledgeModules.id, id));
+    expect(mod.status).toBe("Published");
+    const audit = await h.db
+      .select()
+      .from(schema.auditLog)
+      .where(eq(schema.auditLog.targetId, id));
+    expect(audit.some((a) => a.action === "module.publish")).toBe(true);
+  });
+
+  it("非本人 → 403", async () => {
+    const ownerId = await seedUser(OWNER.login);
+    await seedUser(OTHER.login);
+    const id = await seedModule(ownerId, "Draft");
+    h.setSession(OTHER);
+    expect(
+      (await publishRoute(post(`/api/modules/${id}/publish`), ctx(id))).status
+    ).toBe(403);
+  });
+
+  it("非草稿（已发布）→ 409", async () => {
+    const uid = await seedUser(OWNER.login);
+    const id = await seedModule(uid, "Published");
+    h.setSession(OWNER);
+    expect(
+      (await publishRoute(post(`/api/modules/${id}/publish`), ctx(id))).status
+    ).toBe(409);
   });
 });

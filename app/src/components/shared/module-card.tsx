@@ -122,10 +122,10 @@ export function ModuleCard({
                 <PrimaryButton
                   size="sm"
                   iconLeft="send"
-                  aria-label={`提交发布 ${safe.title}`}
+                  aria-label={`发布 ${safe.title}`}
                   onClick={() => onOwnerPublish?.(safe.id)}
                 >
-                  去提交发布
+                  发布
                 </PrimaryButton>
               ) : null
             ) : (

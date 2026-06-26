@@ -63,6 +63,7 @@ type Pending =
   | { kind: "delist"; id: string; title: string }
   | { kind: "delete"; id: string; title: string }
   | { kind: "unfavorite"; id: string; title: string }
+  | { kind: "publish"; id: string; title: string }
   | null;
 
 export function MySectionList({
@@ -140,12 +141,17 @@ export function MySectionList({
         description: `将「${pending.title}」从收藏中移除。`,
         confirmLabel: "取消收藏",
       },
+      publish: {
+        title: "发布该模块？",
+        description: `「${pending.title}」发布后将进入公开发现页、任何人可见（仅脱敏清单，不含原文）。这是你对公开的明确同意（NFR-005）。`,
+        confirmLabel: "发布",
+      },
     } as const;
     const c = map[pending.kind];
     return (
       <ConfirmDialog
         open
-        tone="danger"
+        tone={pending.kind === "publish" ? "default" : "danger"}
         title={c.title}
         description={c.description}
         confirmLabel={c.confirmLabel}
@@ -156,6 +162,7 @@ export function MySectionList({
           if (pending.kind === "delete") onDraftAction?.(pending.id, "delete");
           if (pending.kind === "unfavorite")
             onFavoriteToggle?.(pending.id, false);
+          if (pending.kind === "publish") onModuleAction?.(pending.id, "publish");
           setPending(null);
         }}
       />
@@ -274,7 +281,7 @@ export function MySectionList({
                   : onFavoriteToggle?.(id, true)
               }
               onRequestExchange={() => onModuleAction?.(m.id, "viewPublic")}
-              onOwnerPublish={() => onModuleAction?.(m.id, "publish")}
+              onOwnerPublish={() => setPending({ kind: "publish", id: m.id, title: m.title })}
             />
           ))}
         </div>

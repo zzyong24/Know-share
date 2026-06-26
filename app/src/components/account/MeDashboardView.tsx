@@ -10,6 +10,7 @@ import {
   useMeSection,
   useDeleteDraft,
   useDelistModule,
+  usePublishModule,
   useCreateEditDraft,
   useToggleFavorite,
 } from "@/lib/queries/account";
@@ -32,6 +33,7 @@ export function MeDashboardView({ section }: MeDashboardViewProps) {
 
   const dash = useDashboard();
   const sec = useMeSection<unknown>(safeSection);
+  const publishModule = usePublishModule();
   const deleteDraft = useDeleteDraft();
   const delistModule = useDelistModule();
   const editDraft = useCreateEditDraft();
@@ -105,8 +107,11 @@ export function MeDashboardView({ section }: MeDashboardViewProps) {
                 return;
               }
               if (action === "publish") {
-                // 草稿模块「去提交发布」→ 草稿区走同意门提交审核（NFR-005）。
-                router.push("/me/drafts");
+                // 草稿模块「发布」→ 一键直发（已弹确认门同意，NFR-005），无评审队列。
+                publishModule.mutate(id, {
+                  onSuccess: () => notify("已发布，现已在公开发现页可见。", "success"),
+                  onError: () => notify("发布失败，请稍后重试。", "error"),
+                });
                 return;
               }
               if (action === "delist") {
